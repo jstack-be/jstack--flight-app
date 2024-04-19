@@ -1,10 +1,10 @@
 import express from 'express';
-import axios from "axios";
+import axios, {AxiosError} from "axios";
 import bodyParser from "body-parser";
 import cors from 'cors';
 import 'dotenv/config'
 import OpenAI from "openai";
-import {ChatCompletionMessageParam} from "openai/resources";
+import {ChatCompletionMessageParam, ChatCompletionTool} from "openai/resources";
 
 
 const app = express();
@@ -17,32 +17,90 @@ const port: number = 3000;
 app.use(cors());
 app.use(bodyParser.json());
 
-const jsonFormat: string = "{\"fly_from\": \"IATA\",\"fly_to\": \"IATA\",\"date_from\": \"\",\"date_to\": \"\"}"
+let messages: ChatCompletionMessageParam[] = [];
 
-const exampleJsonRespons: string = "{fly_from: \"ANR\",fly_to: \"LON\",date_from: \"17/06/2024\",date_to: \"19/06/2024\"}";
-
-const exampleMessageHistory: string = "User: 'Show me the routes to London.' " +
-    "assistant: 'From where do you which to depart ?'" +
-    " User:'Antwerp.'" +
-    " assistant: 'When do you wish to depart?'" +
-    " User: 'Around 18 June'" +
-    " assistant: 'In which year'"+
-    " User: '2024'" +
-    ` assistant: ${exampleJsonRespons}`
-
-let messages: ChatCompletionMessageParam[] = [
-    {
-        role: "system",
-        content: `You're a travel planner assistant, returning a JSON object in this format ${jsonFormat}.` +
-            "If some values are empty or not provided, you should ask the user to provide them. Remember, you never provide code and text together." +
-            "Your task is to search for the nearest airport to the given locations and add it to the 'fly_from' and 'fly_to' properties as IATA codes." +
-            `For example: ${exampleMessageHistory}`
+const myFunc: ChatCompletionTool = {
+    type: 'function',
+    function: {
+        name: 'flightDataFinder',
+        description: "Get the data for the Flight API",
+        parameters: {
+            type: 'object',
+            properties: {
+                fly_from: {
+                    type: 'string',
+                    description: 'The IATA code from the departure metropolitan area. it accepts multiple values separated by a comma.',
+                },
+                fly_to: {
+                    type: 'string',
+                    description: 'The IATA code from the destination metropolitan area. it accepts multiple values separated by a comma.',
+                },
+                date_from: {
+                    type: 'string',
+                    description: 'The start date of the departure date range in dd/mm/yyyy format',
+                },
+                date_to: {
+                    type: 'string',
+                    description: 'The end date of the departure date range in dd/mm/yyyy format',
+                },
+                return_from: {
+                    type: 'string',
+                    description: 'The start date of the return date range in dd/mm/yyyy format',
+                },
+                return_to: {
+                    type: 'string',
+                    description: 'The end date of the return date range in dd/mm/yyyy format',
+                },
+                adults: {
+                    type: 'integer',
+                    description: 'Used to specify the number of adults. The sum of adults, children and the infants cannot be greater than 9.',
+                },
+                children: {
+                    type: 'integer',
+                    description: 'It specifies the number of children. The sum of adults, children and the infants cannot be greater than 9.',
+                },
+                infants: {
+                    type: 'integer',
+                    description: 'Used to specify the number of infants. The sum of adults, children and the infants cannot be greater than 9.',
+                },
+                selected_cabins: {
+                    type: 'integer',
+                    description: 'Specifies the preferred cabin class. ' +
+                        'Cabins can be: M (economy), W (economy premium), C (business), or F (first class).' +
+                        ' There can be only one selected cabin for one call. Cannot be used for ground (train, bus) content.',
+                },
+                //todo bags
+                price_from:{
+                    type: 'integer',
+                    description: 'result filter, minimal price',
+                },
+                price_to:{
+                    type: 'integer',
+                    description: 'result filter, maximal price',
+                },
+                //todo depart/arrival time filters
+                //todo airlines filter
+                vehicle_type:{
+                    type: 'string',
+                    description: 'this parameter allows you to specify the vehicle type. The options are aircraft (default), bus, train.',
+                },
+                sort:{
+                    type: 'string',
+                    description: 'sorts the results by quality, price, date or duration. Price is the default value.',
+                },
+                limit:{
+                    type: 'integer',
+                    description: 'limit number of results; max is 1000',
+                }
+            },
+        },
     },
-];
+};
+
 
 app.delete('/messages', async (req, res) => {
     try {
-        messages = messages.slice(0, 1)
+        messages = []
         res.sendStatus(200)
     } catch (e) {
         console.error(e)
@@ -51,34 +109,58 @@ app.delete('/messages', async (req, res) => {
 })
 
 app.post('/messages', async (req, res) => {
-    messages.push({
-        role: "user",
-        content: req.body.user
-    })
-
-    const completion = await openai.chat.completions.create({
-        messages: messages,
-        model: "gpt-3.5-turbo",
-    });
-
-    const response = completion.choices[0].message.content
-    console.log(response)
-
     try {
-        const regex = /^[a-zA-Z\s.,!?]+$/;
-        if (regex.test(response)) {
-            messages.push({
-                role: "assistant",
-                content: response
-            })
-            res.send(response)
+        messages.push({
+            role: "user",
+            content: req.body.user
+        })
+
+        const completion = await openai.chat.completions.create({
+            messages: messages,
+            tools: [myFunc],
+            tool_choice: {
+                type: 'function',
+                function: {
+                    name: 'flightDataFinder'
+                }
+            },
+            model: "gpt-3.5-turbo",
+        });
+
+        const args = completion?.choices?.[0]?.message?.tool_calls?.[0]?.function?.arguments;
+
+        console.log('Args:');
+        if (!!args) {
+            const jsonObject = JSON.parse(args)
+            console.log(jsonObject)
+
+            if (!jsonObject.fly_from) {
+                res.status(400).send("No departure place provided")
+            } else if (!jsonObject.date_from || !jsonObject.date_to)
+                res.status(400).send("No departure date provided")
+            else {
+                const flights = await getTravelData(jsonObject)
+                console.log(messages)
+                res.status(200).send(flights);
+            }
         } else {
-            const flights = await getTravelData(JSON.parse(response))
-            res.send(flights);
+            console.log('No args in response');
         }
-    } catch (e) {
-        // console.error(e)
-        res.sendStatus(500)
+        console.log('----');
+
+    } catch (error) {
+        if (error.response) {
+            // The request was made, but the server responded with a non-2xx status code
+            console.error('Server responded with an error:', error.response.status, error.response.data.error);
+            res.status(error.response.status).send(error.response.data.error);
+        } else if (error.request) {
+            // The request was made but no response was received
+            console.error('No response received from server');
+            res.status(500).send('Internal Server Error');
+        } else {
+            console.error('Error:', error.message);
+            res.status(500).send('Internal Server Error');
+        }
     }
 });
 
@@ -195,12 +277,8 @@ async function getTravelData(requestParameters: FlightApiProps): Promise<Flight[
         params: requestParameters
     }
 
-    try {
-        const response = await axios.get('https://api.tequila.kiwi.com/v2/search', config)
-        return response.data.data
-    } catch (e) {
-        // console.error(e)
-    }
+    const response = await axios.get('https://api.tequila.kiwi.com/v2/search', config)
+    return response.data.data
 }
 
 app.listen(port, () => {
