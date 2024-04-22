@@ -4,12 +4,12 @@
   "description": "backend API for the travel planner FLAPP",
   "main": "dist/app.js",
   "scripts": {
-    "start": "tsc && nodem dist/app.js",
-    "dev": "npx nodemon src/app.ts",
+    "start": "tsc && nodem dist/server.ts",
+    "dev": "npx nodemon src/server.ts",
     "lint": "eslint '**/*.ts'"
   },
   "keywords": [],
-  "author": "Tristan Huygen en Axell",
+  "author": "Tristan Huygen en Axell Tielemans",
   "license": "ISC",
   "devDependencies": {
     "@eslint/js": "^9.0.0",

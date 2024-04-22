@@ -1,21 +1,13 @@
-import express from 'express';
-import axios, {AxiosError} from "axios";
-import bodyParser from "body-parser";
-import cors from 'cors';
-import 'dotenv/config'
-import OpenAI from "openai";
+import { Request, Response } from "express";
 import {ChatCompletionMessageParam, ChatCompletionTool} from "openai/resources";
+import OpenAI from "openai";
+import axios from "axios";
+import { Flight, FlightApiProps } from "./interfaces";
 
-
-const app = express();
 const openai = new OpenAI({
     organization: process.env.OPENAI_ORGANISATION_KEY,
     apiKey: process.env.OPENAI_API_KEY
 });
-const port: number = 3000;
-
-app.use(cors());
-app.use(bodyParser.json());
 
 let messages: ChatCompletionMessageParam[] = [];
 
@@ -97,23 +89,28 @@ const myFunc: ChatCompletionTool = {
     },
 };
 
-
-app.delete('/messages', async (req, res) => {
+export async function handleDeleteMessages(res: Response): Promise<void> {
     try {
-        messages = []
-        res.sendStatus(200)
+        messages = [];
+        res.sendStatus(200);
     } catch (e) {
-        console.error(e)
-        res.sendStatus(500)
+        console.error(e);
+        res.sendStatus(500);
     }
-})
+}
 
-app.post('/messages', async (req, res) => {
+export async function handlePostMessages(req: Request, res: Response): Promise<void> {
     try {
+        const message = req.body.message;
+        if (!message) {
+            res.status(400).send("No message provided");
+            return;
+        }
+
         messages.push({
             role: "user",
-            content: req.body.user
-        })
+            content: message
+        });
 
         const completion = await openai.chat.completions.create({
             messages: messages,
@@ -131,16 +128,15 @@ app.post('/messages', async (req, res) => {
 
         console.log('Args:');
         if (!!args) {
-            const jsonObject = JSON.parse(args)
-            console.log(jsonObject)
+            const jsonObject = JSON.parse(args);
+            console.log(jsonObject);
 
             if (!jsonObject.fly_from) {
-                res.status(400).send("No departure place provided")
+                res.status(400).send("No departure place provided");
             } else if (!jsonObject.date_from || !jsonObject.date_to)
-                res.status(400).send("No departure date provided")
+                res.status(400).send("No departure date provided");
             else {
-                const flights = await getTravelData(jsonObject)
-                console.log(messages)
+                const flights = await getTravelData(jsonObject);
                 res.status(200).send(flights);
             }
         } else {
@@ -162,111 +158,6 @@ app.post('/messages', async (req, res) => {
             res.status(500).send('Internal Server Error');
         }
     }
-});
-
-interface FlightApiProps {
-    fly_from: string,
-    date_from: string,
-    date_to: string
-}
-
-interface Flight {
-    id: string;
-    nightsInDest: null | number;
-    duration: {
-        departure: number;
-        return: number;
-        total: number;
-    };
-    // flyFrom: string;
-    cityFrom: string;
-    // cityCodeFrom: string;
-    // countryFrom: {
-    //     code: string;
-    //     name: string;
-    // };
-    // flyTo: string;
-    cityTo: string;
-    cityCodeTo: string;
-    // countryTo: {
-    //     code: string;
-    //     name: string;
-    // };
-    // distance: number;
-    airlines: string[];
-    pnr_count: number;
-    has_airport_change: boolean;
-    technical_stops: number;
-    // throw_away_ticketing: boolean;
-    // hidden_city_ticketing: boolean;
-    price: number;
-    bags_price: {
-        [key: string]: number;
-    };
-    baglimit: {
-        hand_width: number;
-        hand_height: number;
-        hand_length: number;
-        hand_weight: number;
-        hold_width: number;
-        hold_height: number;
-        hold_length: number;
-        hold_dimensions_sum: number;
-        hold_weight: number;
-    };
-    availability: {
-        seats: number;
-    };
-    // facilitated_booking_available: boolean;
-    conversion: {
-        [key: string]: number;
-    };
-    quality: number; // Use it if you want to sort your flights according to quality. The lower the number the better.
-    booking_token: string;
-    fare: {
-        adults: number;
-        children: number;
-        infants: number;
-    };
-    price_dropdown: {
-        base_fare: number;
-        fees: number;
-    };
-    virtual_interlining: boolean;
-    route: Route[];
-    local_arrival: string;
-    utc_arrival: string;
-    local_departure: string;
-    utc_departure: string;
-}
-
-interface Route {
-    // fare_basis: string;
-    fare_category: string;
-    // fare_classes: string;
-    // fare_family: string;
-    return: number;
-    bags_recheck_required: boolean;
-    vi_connection: boolean;
-    guarantee: boolean;
-    id: string;
-    combination_id: string;
-    cityTo: string;
-    cityFrom: string;
-    // cityCodeFrom: string;
-    // cityCodeTo: string;
-    // flyTo: string;
-    // flyFrom: string;
-    airline: string;
-    operating_carrier: string;
-    // equipment: string;
-    flight_no: number;
-    vehicle_type: string;
-    operating_flight_no: string;
-    local_arrival: string;
-    utc_arrival: string;
-    local_departure: string;
-    utc_departure: string;
 }
 
 async function getTravelData(requestParameters: FlightApiProps): Promise<Flight[]> {
@@ -280,7 +171,3 @@ async function getTravelData(requestParameters: FlightApiProps): Promise<Flight[
     const response = await axios.get('https://api.tequila.kiwi.com/v2/search', config)
     return response.data.data
 }
-
-app.listen(port, () => {
-    console.log(`Server is running on http://localhost:${port}`);
-});
