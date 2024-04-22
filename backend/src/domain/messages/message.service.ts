@@ -1,12 +1,14 @@
-import { Request, Response } from "express";
 import {ChatCompletionMessageParam, ChatCompletionTool} from "openai/resources";
 import OpenAI from "openai";
-import axios from "axios";
-import { Flight, FlightApiProps } from "./interfaces";
+
+import {FlightApiProps} from "../flights/flight.types";
+import {environment} from "../../enviroment";
+
+
 
 const openai = new OpenAI({
-    organization: process.env.OPENAI_ORGANISATION_KEY,
-    apiKey: process.env.OPENAI_API_KEY
+    organization: environment.openAiOrgKey,
+    apiKey: environment.openAiApiKey
 });
 
 let messages: ChatCompletionMessageParam[] = [];
@@ -62,25 +64,25 @@ const myFunc: ChatCompletionTool = {
                         ' There can be only one selected cabin for one call. Cannot be used for ground (train, bus) content.',
                 },
                 //todo bags
-                price_from:{
+                price_from: {
                     type: 'integer',
                     description: 'result filter, minimal price',
                 },
-                price_to:{
+                price_to: {
                     type: 'integer',
                     description: 'result filter, maximal price',
                 },
                 //todo depart/arrival time filters
                 //todo airlines filter
-                vehicle_type:{
+                vehicle_type: {
                     type: 'string',
-                    description: 'this parameter allows you to specify the vehicle type. The options are aircraft (default), bus, train.',
+                    description: 'this parameter allows you to specify the vehicle type. The options are aircraft, bus, train. Default all options are selected',
                 },
-                sort:{
+                sort: {
                     type: 'string',
                     description: 'sorts the results by quality, price, date or duration. Price is the default value.',
                 },
-                limit:{
+                limit: {
                     type: 'integer',
                     description: 'limit number of results; max is 1000',
                 }
@@ -89,85 +91,46 @@ const myFunc: ChatCompletionTool = {
     },
 };
 
-export async function handleDeleteMessages(res: Response): Promise<void> {
-    try {
-        messages = [];
-        res.sendStatus(200);
-    } catch (e) {
-        console.error(e);
-        res.sendStatus(500);
-    }
+export async function handleDeleteMessages() {
+    messages = [];
 }
 
-export async function handlePostMessages(req: Request, res: Response): Promise<void> {
-    try {
-        const message = req.body.message;
-        if (!message) {
-            res.status(400).send("No message provided");
-            return;
-        }
+export async function handlePostMessages(message: string): Promise<FlightApiProps> {
+    messages.push({
+        role: "user",
+        content: message
+    });
 
-        messages.push({
-            role: "user",
-            content: message
-        });
-
-        const completion = await openai.chat.completions.create({
-            messages: messages,
-            tools: [myFunc],
-            tool_choice: {
-                type: 'function',
-                function: {
-                    name: 'flightDataFinder'
-                }
-            },
-            model: "gpt-3.5-turbo",
-        });
-
-        const args = completion?.choices?.[0]?.message?.tool_calls?.[0]?.function?.arguments;
-
-        console.log('Args:');
-        if (!!args) {
-            const jsonObject = JSON.parse(args);
-            console.log(jsonObject);
-
-            if (!jsonObject.fly_from) {
-                res.status(400).send("No departure place provided");
-            } else if (!jsonObject.date_from || !jsonObject.date_to)
-                res.status(400).send("No departure date provided");
-            else {
-                const flights = await getTravelData(jsonObject);
-                res.status(200).send(flights);
+    const completion = await openai.chat.completions.create({
+        messages: messages,
+        tools: [myFunc],
+        tool_choice: {
+            type: 'function',
+            function: {
+                name: 'flightDataFinder'
             }
-        } else {
-            console.log('No args in response');
-        }
-        console.log('----');
-
-    } catch (error) {
-        if (error.response) {
-            // The request was made, but the server responded with a non-2xx status code
-            console.error('Server responded with an error:', error.response.status, error.response.data.error);
-            res.status(error.response.status).send(error.response.data.error);
-        } else if (error.request) {
-            // The request was made but no response was received
-            console.error('No response received from server');
-            res.status(500).send('Internal Server Error');
-        } else {
-            console.error('Error:', error.message);
-            res.status(500).send('Internal Server Error');
-        }
-    }
-}
-
-async function getTravelData(requestParameters: FlightApiProps): Promise<Flight[]> {
-    const config = {
-        headers: {
-            apiKey: process.env.FLIGHT_API_KEY,
         },
-        params: requestParameters
-    }
+        model: "gpt-3.5-turbo",
+    });
 
-    const response = await axios.get('https://api.tequila.kiwi.com/v2/search', config)
-    return response.data.data
+    const args = completion?.choices?.[0]?.message?.tool_calls?.[0]?.function?.arguments;
+
+    console.log('Args:');
+    if (!!args) {
+        const jsonObject = JSON.parse(args);
+        console.log(jsonObject);
+
+        if (!jsonObject.fly_from) {
+            throw new Error("No departure place provided");
+        } else if (!jsonObject.date_from || !jsonObject.date_to)
+            throw new Error("No departure date provided");
+        else {
+            return jsonObject
+        }
+    } else {
+        console.log('No args in response');
+    }
+    console.log('----');
+
+
 }

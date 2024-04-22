@@ -2,6 +2,7 @@ export interface FlightApiProps {
     fly_from: string,
     date_from: string,
     date_to: string
+    //todo extend to full function object
 }
 
 export interface Flight {
