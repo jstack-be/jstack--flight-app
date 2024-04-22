@@ -4,17 +4,13 @@ import {getTravelData} from "./flight.service";
 
 export async function queryFlights(req: Request, res: Response): Promise<void> {
     try {
-        const message = req.body.message;
-        const conversationId = req.body.id;
-        if (!message) {
+        const messages: string[] = req.body.message;
+        if (!messages || messages.length === 0) {
             res.status(400).send("No message provided");
-            return;
-        } else if (!conversationId) {
-            res.status(400).send("No conversation id provided");
             return;
         }
 
-        const jsonObject = await generateFlightSearchParameters(conversationId, message);
+        const jsonObject = await generateFlightSearchParameters(messages);
         const flights = await getTravelData(jsonObject);
         res.status(200).send(flights);
     } catch (error) {

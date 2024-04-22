@@ -1,7 +1,6 @@
-import {ChatCompletionTool} from "openai/resources";
+import {ChatCompletionMessageParam, ChatCompletionTool} from "openai/resources";
 import OpenAI from "openai";
 import {environment} from "../../enviroment";
-import {addConversationMessage, getConversationMessages, removeConversationMessages} from "./message.repository";
 import {FlightSearchParameters} from "./message.types";
 
 
@@ -88,15 +87,14 @@ const filterFunction: ChatCompletionTool = {
     },
 };
 
-export async function handleDeleteMessages(conversationId: string) {
-    return removeConversationMessages(conversationId)
-}
-
-export async function generateFlightSearchParameters(conversationId: string, message: string): Promise<FlightSearchParameters> {
-    addConversationMessage(conversationId, message)
+export async function generateFlightSearchParameters(messages: string[]): Promise<FlightSearchParameters> {
+    const userConversation: ChatCompletionMessageParam[] = messages.map(message => ({
+        role: "user",
+        content: message
+    }));
 
     const completion = await openai.chat.completions.create({
-        messages: getConversationMessages(conversationId),
+        messages: userConversation,
         tools: [filterFunction],
         tool_choice: {
             type: 'function',
