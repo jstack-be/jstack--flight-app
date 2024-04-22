@@ -1,8 +1,9 @@
-import {Flight, FlightApiProps} from "./flight.types";
+import {Flight} from "./flight.types";
 import axios from "axios";
 import {environment} from "../../enviroment";
+import {FlightSearchParameters} from "../messages/message.types";
 
-export async function getTravelData(requestParameters: FlightApiProps): Promise<Flight[]> {
+export async function getTravelData(requestParameters: FlightSearchParameters): Promise<Flight[]> {
     const config = {
         headers: {
             apiKey: environment.tequilaKiwiApiKey,

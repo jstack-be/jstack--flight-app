@@ -1,7 +1,8 @@
 import {Express} from 'express';
-import {deleteMessages, postMessages} from '../domain/messages/message.controler';
+import {deleteMessages} from '../domain/messages/message.controler';
+import {queryFlights} from "../domain/flights/flight.controller";
 
 export function mountHandlers(app: Express): void {
     app.delete('/messages', deleteMessages);
-    app.post('/messages', postMessages);
+    app.get('/flights', queryFlights);
 }

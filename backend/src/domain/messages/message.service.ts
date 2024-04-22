@@ -1,9 +1,8 @@
-import {ChatCompletionMessageParam, ChatCompletionTool} from "openai/resources";
+import {ChatCompletionTool} from "openai/resources";
 import OpenAI from "openai";
-
-import {FlightApiProps} from "../flights/flight.types";
 import {environment} from "../../enviroment";
-
+import {addConversationMessage, getConversationMessages, removeConversationMessages} from "./message.repository";
+import {FlightSearchParameters} from "./message.types";
 
 
 const openai = new OpenAI({
@@ -11,12 +10,10 @@ const openai = new OpenAI({
     apiKey: environment.openAiApiKey
 });
 
-let messages: ChatCompletionMessageParam[] = [];
-
-const myFunc: ChatCompletionTool = {
+const filterFunction: ChatCompletionTool = {
     type: 'function',
     function: {
-        name: 'flightDataFinder',
+        name: 'generateFlightSearchParameters',
         description: "Get the data for the Flight API",
         parameters: {
             type: 'object',
@@ -91,23 +88,20 @@ const myFunc: ChatCompletionTool = {
     },
 };
 
-export async function handleDeleteMessages() {
-    messages = [];
+export async function handleDeleteMessages(conversationId: string) {
+    return removeConversationMessages(conversationId)
 }
 
-export async function handlePostMessages(message: string): Promise<FlightApiProps> {
-    messages.push({
-        role: "user",
-        content: message
-    });
+export async function generateFlightSearchParameters(conversationId: string, message: string): Promise<FlightSearchParameters> {
+    addConversationMessage(conversationId, message)
 
     const completion = await openai.chat.completions.create({
-        messages: messages,
-        tools: [myFunc],
+        messages: getConversationMessages(conversationId),
+        tools: [filterFunction],
         tool_choice: {
             type: 'function',
             function: {
-                name: 'flightDataFinder'
+                name: 'generateFlightSearchParameters'
             }
         },
         model: "gpt-3.5-turbo",
@@ -121,9 +115,9 @@ export async function handlePostMessages(message: string): Promise<FlightApiProp
         console.log(jsonObject);
 
         if (!jsonObject.fly_from) {
-            throw new Error("No departure place provided");
+            throw new ReferenceError("No departure place provided");
         } else if (!jsonObject.date_from || !jsonObject.date_to)
-            throw new Error("No departure date provided");
+            throw new ReferenceError("No departure date provided");
         else {
             return jsonObject
         }
@@ -131,6 +125,4 @@ export async function handlePostMessages(message: string): Promise<FlightApiProp
         console.log('No args in response');
     }
     console.log('----');
-
-
 }
