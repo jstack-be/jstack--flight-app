@@ -21,7 +21,10 @@ export async function queryFlights(req: Request, res: Response): Promise<void> {
         } else if (error.request) {
             // The request was made but no response was received
             console.error('No response received from server');
-            res.status(500).send('Internal Server Error');
+            res.status(500).send('No response received from server');
+        } else if (error instanceof ReferenceError) {
+            console.error('Bad Request: ' + error.message);
+            res.status(400).send('Bad Request: ' + error.message);
         } else {
             console.error('Error:', error.message);
             res.status(500).send('Internal Server Error');
