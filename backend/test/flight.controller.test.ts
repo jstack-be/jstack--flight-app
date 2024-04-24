@@ -5,7 +5,9 @@ import {nockedFlightAPI, nockedOpenAiAPI} from "./utils/api.mocks";
 import nock from "nock";
 
 describe('POST /api/flights', () => {
-    beforeEach(() => { nock.cleanAll(); });
+    afterEach(() => {
+        nock.cleanAll();
+    });
     it('should return 400 if no messages are provided', async () => {
         const messages = [];
 
@@ -25,7 +27,7 @@ describe('POST /api/flights', () => {
         const messages = [`I want to travel to New York on ${getDate()}`];
 
         const expectedParameters = {
-            fly_from: 'NYC',
+            fly_to: 'NYC',
             date_from: getDate(),
             date_to: getDate()
         };
@@ -91,4 +93,5 @@ describe('POST /api/flights', () => {
         expect(res.status).toBe(200);
         expect(res.body).toEqual(mockResponse.data);
     });
-});
+})
+;
