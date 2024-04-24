@@ -113,7 +113,7 @@ export async function generateFlightSearchParameters(messages: string[]): Promis
         console.log(jsonObject);
 
         if (Object.keys(jsonObject).length === 0) {
-            throw new ReferenceError("No args in response");
+            throw new ReferenceError("Missing required attributes. Please provide the departure place and date.");
         } else if (!jsonObject.fly_from) {
             throw new ReferenceError("No departure place provided");
         } else if (!jsonObject.date_from || !jsonObject.date_to)

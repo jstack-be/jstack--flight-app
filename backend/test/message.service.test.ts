@@ -1,22 +1,5 @@
 import {generateFlightSearchParameters} from '../src/domain/messages/message.service';
-import nock from 'nock';
-
-const nockResponse = (expectedParameters: object) => {
-    nock('https://api.openai.com')
-        .post('/v1/chat/completions')
-        .reply(200, {
-            choices: [{
-                index: 0,
-                message: {
-                    tool_calls: [{
-                        function: {
-                            arguments: JSON.stringify(expectedParameters)
-                        }
-                    }]
-                },
-            }],
-        });
-}
+import {nockedOpenAiAPI} from "./utils/api.mocks";
 
 describe('generateFlightSearchParameters', () => {
     it('should return flight search parameters when valid messages are provided', async () => {
@@ -27,7 +10,7 @@ describe('generateFlightSearchParameters', () => {
             date_to: '19/05/2024'
         };
 
-        nockResponse(expectedParameters);
+        nockedOpenAiAPI(expectedParameters);
 
         const result = await generateFlightSearchParameters(messages);
 
@@ -37,9 +20,9 @@ describe('generateFlightSearchParameters', () => {
     it('should throw an error when no arguments are returned from the OpenAI API', async () => {
         const messages = ['how to cook pasta'];
 
-        nockResponse({})
+        nockedOpenAiAPI({})
 
-        await expect(generateFlightSearchParameters(messages)).rejects.toThrow('No args in response');
+        await expect(generateFlightSearchParameters(messages)).rejects.toThrow('Missing required attributes. Please provide the departure place and date.');
     });
 
     it('should throw an error when no departure place is provided', async () => {
@@ -50,7 +33,7 @@ describe('generateFlightSearchParameters', () => {
             date_to: '01/02/2023'
         };
 
-        nockResponse(incompleteParameters);
+        nockedOpenAiAPI(incompleteParameters);
 
         await expect(generateFlightSearchParameters(messages)).rejects.toThrow('No departure place provided');
     });
@@ -61,7 +44,7 @@ describe('generateFlightSearchParameters', () => {
             fly_from: 'NYC'
         };
 
-        nockResponse(incompleteParameters);
+        nockedOpenAiAPI(incompleteParameters);
 
         await expect(generateFlightSearchParameters(messages)).rejects.toThrow('No departure date provided');
     });
