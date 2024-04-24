@@ -112,7 +112,9 @@ export async function generateFlightSearchParameters(messages: string[]): Promis
         const jsonObject = JSON.parse(args);
         console.log(jsonObject);
 
-        if (!jsonObject.fly_from) {
+        if (Object.keys(jsonObject).length === 0) {
+            throw new ReferenceError("No args in response");
+        } else if (!jsonObject.fly_from) {
             throw new ReferenceError("No departure place provided");
         } else if (!jsonObject.date_from || !jsonObject.date_to)
             throw new ReferenceError("No departure date provided");
