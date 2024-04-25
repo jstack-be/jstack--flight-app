@@ -2,6 +2,16 @@ import {Request, Response} from "express";
 import {generateFlightSearchParameters} from "../messages/message.service";
 import {getTravelData} from "./flight.service";
 
+
+/**
+ * Handles flight queries by generating flight search parameters based on the user's conversation,
+ * fetching travel data from the flight search API, and sending the flights as the response.
+ * This function handles exceptions internally and returns a response based on whether the operation was successful or not.
+ *
+ * @param {Request} req - The Express request object.
+ * @param {Response} res - The Express response object.
+ * @returns {Promise<void>} A promise that resolves when the response has been sent.
+ */
 export async function queryFlights(req: Request, res: Response): Promise<void> {
     try {
         const messages: string[] = req.body.messages;

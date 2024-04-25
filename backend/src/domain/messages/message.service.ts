@@ -9,6 +9,10 @@ const openai = new OpenAI({
     apiKey: environment.openAiApiKey
 });
 
+/**
+ * Function definition for the OpenAI chat completion tool.
+ * This function generates flight search parameters based on the user's conversation.
+ */
 const filterFunction: ChatCompletionTool = {
     type: 'function',
     function: {
@@ -87,6 +91,13 @@ const filterFunction: ChatCompletionTool = {
     },
 };
 
+/**
+ * Generates flight search parameters based on the user's conversation.
+ *
+ * @param {string[]} messages - The user's conversation.
+ * @returns {Promise<FlightSearchParameters>} The flight search parameters.
+ * @throws {ReferenceError} If required attributes are missing in the response from the OpenAI API.
+ */
 export async function generateFlightSearchParameters(messages: string[]): Promise<FlightSearchParameters> {
     const userConversation: ChatCompletionMessageParam[] = messages.map(message => ({
         role: "user",
