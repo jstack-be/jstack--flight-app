@@ -5,6 +5,7 @@ made by interim Tristan Huygen
 ## Table of Contents
 
 - [Introduction](#introduction)
+- [Used technologies](#used-technologies)
 - [Installation](#installation)
 - [Usage](#usage)
 - [Testing](#testing)
@@ -20,6 +21,15 @@ transform user input into a json object to filter in
 the [Tequila travel API from Kiwi](https://tequila.kiwi.com/portal/companies/hikeheaven).
 
 ![domain model](img.png)
+
+## Used technologies
+- Node.js
+- Express
+- Jest
+- Nock
+- Axios
+- OpenAi API
+- Tequila API
 
 ## Installation
 ````shell
@@ -42,14 +52,26 @@ SERVER_PORT=3000
 FLIGHT_SEARCH_URL="https://api.tequila.kiwi.com/v2/search"
 ````
 
+Start in development mode
+````shell
+npm run dev
+````
+Start in production mode
+````shell
+npm run start
+````
+
 ## Testing
-...
+Run tests
+````shell
+npm run test
+````
 
 ## Examples
 
 Get the flight data
 ```shell
-curl -X POST http://localhost:3000/flights \
+curl -X POST http://localhost:3000/api/flights \
   -H 'Content-Type: application/json' \
   -d '{
     "messages": ["I want to travel with my wife and two children from London to Antwerp on 18/05/2024 and I am planning to return on 16/06/2024"]
