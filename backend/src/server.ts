@@ -1,23 +1,27 @@
 import express from 'express';
 import bodyParser from "body-parser";
 import cors from 'cors';
-import 'dotenv/config'
-import { handleDeleteMessages, handlePostMessages } from './messageService';
-import OpenAI from "openai";
+import {mountHandlers} from "./routes/routing";
+import helmet from "helmet";
+import {environment} from "./enviroment";
 
 const app = express();
-const openai = new OpenAI({
-    organization: process.env.OPENAI_ORGANISATION_KEY,
-    apiKey: process.env.OPENAI_API_KEY
-});
-const port: number = 3000;
+
+const port: number = environment.serverPort;
+
+if (isNaN(port)) {
+    console.error('PORT is not a valid number.');
+    process.exit(1);
+}
 
 app.use(cors());
 app.use(bodyParser.json());
+app.use(helmet())
 
-app.delete('/messages', handleDeleteMessages);
-app.post('/messages', handlePostMessages);
+mountHandlers(app)
 
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
 });
+
+export {app};

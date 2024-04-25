@@ -1,9 +1,3 @@
-export interface FlightApiProps {
-    fly_from: string,
-    date_from: string,
-    date_to: string
-}
-
 export interface Flight {
     id: string;
     nightsInDest: null | number;
@@ -12,27 +6,27 @@ export interface Flight {
         return: number;
         total: number;
     };
-    // flyFrom: string;
+    flyFrom: string;
     cityFrom: string;
-    // cityCodeFrom: string;
-    // countryFrom: {
-    //     code: string;
-    //     name: string;
-    // };
-    // flyTo: string;
+    cityCodeFrom: string;
+    countryFrom: {
+        code: string;
+        name: string;
+    };
+    flyTo: string;
     cityTo: string;
     cityCodeTo: string;
-    // countryTo: {
-    //     code: string;
-    //     name: string;
-    // };
-    // distance: number;
+    countryTo: {
+        code: string;
+        name: string;
+    };
+    distance: number;
     airlines: string[];
     pnr_count: number;
     has_airport_change: boolean;
     technical_stops: number;
-    // throw_away_ticketing: boolean;
-    // hidden_city_ticketing: boolean;
+    throw_away_ticketing: boolean;
+    hidden_city_ticketing: boolean;
     price: number;
     bags_price: {
         [key: string]: number;
@@ -51,7 +45,7 @@ export interface Flight {
     availability: {
         seats: number;
     };
-    // facilitated_booking_available: boolean;
+    facilitated_booking_available: boolean;
     conversion: {
         [key: string]: number;
     };
@@ -75,10 +69,10 @@ export interface Flight {
 }
 
 interface Route {
-    // fare_basis: string;
+    fare_basis: string;
     fare_category: string;
-    // fare_classes: string;
-    // fare_family: string;
+    fare_classes: string;
+    fare_family: string;
     return: number;
     bags_recheck_required: boolean;
     vi_connection: boolean;
@@ -87,13 +81,13 @@ interface Route {
     combination_id: string;
     cityTo: string;
     cityFrom: string;
-    // cityCodeFrom: string;
-    // cityCodeTo: string;
-    // flyTo: string;
-    // flyFrom: string;
+    cityCodeFrom: string;
+    cityCodeTo: string;
+    flyTo: string;
+    flyFrom: string;
     airline: string;
     operating_carrier: string;
-    // equipment: string;
+    equipment: string;
     flight_no: number;
     vehicle_type: string;
     operating_flight_no: string;
