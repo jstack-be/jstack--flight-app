@@ -16,7 +16,6 @@ export default function MessageForm() {
         if (message) {
             // get the existing messages from session storage
             const messageHistory = JSON.parse(sessionStorage.getItem('messages') || '[]');
-            console.log(messageHistory)
             // add the new message to the array
             messageHistory.push(message);
             // store the updated array in session storage
