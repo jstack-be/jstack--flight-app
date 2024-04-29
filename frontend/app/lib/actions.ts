@@ -1,8 +1,7 @@
 "use server";
 
-import {revalidatePath} from "next/cache";
-import {redirect} from "next/navigation";
 import {environment} from "@/app/lib/environment";
+import {redirect} from "next/navigation";
 
 //todo catch errors
 export const sendMessages = async (messages: string[]) => {
@@ -21,9 +20,9 @@ export const sendMessages = async (messages: string[]) => {
         const errorData = await res.text();
         console.error(errorData);
     } else {
+        // console.log(res.body);
         console.log("Success");
     }
-
 
     // revalidatePath('')
     redirect('/dashboard')
