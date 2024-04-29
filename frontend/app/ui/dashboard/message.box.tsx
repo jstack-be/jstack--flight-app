@@ -4,12 +4,17 @@ import {sendMessages} from "@/app/lib/actions";
 import {Label} from "@/components/ui/label";
 import {Textarea} from "@/components/ui/textarea";
 import {Button} from "@/components/ui/button";
-import { useRouter } from 'next/navigation'
-import {addMessage, getAllMessages, removeAllMessages} from "@/app/lib/storage";
+import {useRouter} from 'next/navigation'
+import {getAllMessages, removeAllMessages} from "@/app/lib/storage";
 
 interface MessageBoxProps {
     onClose: () => void,
     isOpen: boolean
+}
+
+type Message = {
+    source: 'user' | 'system',
+    content: string
 }
 
 /**
@@ -18,12 +23,15 @@ interface MessageBoxProps {
  * @param isOpen - boolean to check if the message box is open
  */
 export function MessageBox({onClose, isOpen}: MessageBoxProps) {
-    const [messages, setMessages] = useState<string[]>([]);
+    const [messages, setMessages] = useState<Message[]>([]);
     const messagesEndRef = useRef<HTMLDivElement | null>(null);
     const router = useRouter()
 
     useEffect(() => {
-        setMessages(getAllMessages());
+        const messages = getAllMessages().map((message: string) => ({
+            source: 'user', content: message
+        }));
+        setMessages(messages);
     }, []);
 
     useEffect(() => {
@@ -47,10 +55,13 @@ export function MessageBox({onClose, isOpen}: MessageBoxProps) {
         event.currentTarget.reset(); // Clear the form
 
         if (message?.trim() !== "") {
-            const updatedMessages = [...messages, message];
+            const response = await sendMessages(formData);
+            const updatedMessages:Message[] = [...messages, {source: 'user', content: message}];
+            //if statement to check if the response is not a json object
+            if (typeof response !== 'object') {
+                updatedMessages.push({source: 'system', content: response});
+            }
             setMessages(updatedMessages);
-            addMessage(message);
-            await sendMessages(updatedMessages);
         }
     }
 
@@ -61,10 +72,10 @@ export function MessageBox({onClose, isOpen}: MessageBoxProps) {
                 <Button onClick={onClose}>X</Button>
             </div>
             <div className="overflow-auto w-full md:h-4/6 h-1/3 border border-gray-300 p-2">
-                {messages.map((message: string, index: number) =>
-                    <div key={index} className="bg-black text-sm text-gray-400 m-2 px-4 py-3 rounded">
-                        <strong className="font-bold">Message {index + 1}</strong><br/>
-                        <span className="block sm:inline">{message}</span>
+                {messages.map((message: Message, index: number) =>
+                    <div key={index} className={`${message.source == "user" ? "bg-black" : "bg-red-950"} text-sm text-white m-2 px-4 py-3 rounded`}>
+                        <strong className="font-bold">{message.source.toUpperCase()}:</strong><br/>
+                        <span className="block sm:inline">{message.content}</span>
                     </div>)}
                 <div ref={messagesEndRef}/>
             </div>
