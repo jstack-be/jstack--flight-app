@@ -5,6 +5,7 @@ import {Label} from "@/components/ui/label";
 import {Textarea} from "@/components/ui/textarea";
 import {Button} from "@/components/ui/button";
 import { useRouter } from 'next/navigation'
+import {addMessage, getAllMessages, removeAllMessages} from "@/app/lib/storage";
 
 interface MessageBoxProps {
     onClose: () => void,
@@ -22,7 +23,7 @@ export function MessageBox({onClose, isOpen}: MessageBoxProps) {
     const router = useRouter()
 
     useEffect(() => {
-        setMessages(JSON.parse(sessionStorage.getItem('messages') || '[]'));
+        setMessages(getAllMessages());
     }, []);
 
     useEffect(() => {
@@ -33,7 +34,7 @@ export function MessageBox({onClose, isOpen}: MessageBoxProps) {
 
     const restartConversation = async () => {
         setMessages([]);
-        sessionStorage.removeItem('messages');
+        removeAllMessages()
         router.push('/')
     };
 
@@ -48,7 +49,7 @@ export function MessageBox({onClose, isOpen}: MessageBoxProps) {
         if (message?.trim() !== "") {
             const updatedMessages = [...messages, message];
             setMessages(updatedMessages);
-            sessionStorage.setItem('messages', JSON.stringify(updatedMessages));
+            addMessage(message);
             await sendMessages(updatedMessages);
         }
     }

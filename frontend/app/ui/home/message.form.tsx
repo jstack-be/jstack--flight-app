@@ -5,6 +5,7 @@ import {sendMessages} from "@/app/lib/actions";
 import {Textarea} from "@/components/ui/textarea";
 import {Button} from "@/components/ui/button"
 import {Label} from "@/components/ui/label"
+import {addMessage} from "@/app/lib/storage";
 
 export default function MessageForm() {
 
@@ -14,12 +15,7 @@ export default function MessageForm() {
         const message = formData.get("message");
 
         if (message) {
-            // get the existing messages from session storage
-            const messageHistory = JSON.parse(sessionStorage.getItem('messages') || '[]');
-            // add the new message to the array
-            messageHistory.push(message);
-            // store the updated array in session storage
-            sessionStorage.setItem('messages', JSON.stringify(messageHistory));
+            const messageHistory = addMessage(message as string);
             await sendMessages(messageHistory);
         }
     }
