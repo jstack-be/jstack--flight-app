@@ -7,7 +7,7 @@ export default function Home() {
     return (
         <main>
             <div className={"flex justify-center"}>
-                <Image src={logo} alt={"afbeelding van toucan logo"} className={"lg:object-scale-down h-72 w72 md:"}/>
+                <Image src={logo} alt={"afbeelding van toucan logo"} className={"lg:object-scale-down h-72 w-72 md:"}/>
             </div>
             <MessageForm/>
         </main>

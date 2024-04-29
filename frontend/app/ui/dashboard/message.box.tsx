@@ -59,17 +59,11 @@ export function MessageBox({onClose, isOpen}: MessageBoxProps) {
                     </div>)}
                 <div ref={messagesEndRef}/>
             </div>
-            <form onSubmit={handleSubmit}>
-                <div className="flex justify-center m-2">
-                    <Label htmlFor="message">Ask a filter question</Label>
-                </div>
-                <div className="flex justify-center m-2">
-                    <Textarea id="message" name="message"
-                              placeholder={"Ask some more questions to filter your result"} required/>
-                </div>
-                <div className="flex justify-center m-2">
-                    <Button type="submit">Search Routes</Button>
-                </div>
+            <form className="flex flex-col items-center" onSubmit={handleSubmit}>
+                <Label className="m-2" htmlFor="message">Ask a filter question</Label>
+                <Textarea className="m-2" id="message" name="message"
+                          placeholder={"Ask some more questions to filter your result"} required/>
+                <Button className="m-2" type="submit">Search Routes</Button>
             </form>
         </div>
     );
