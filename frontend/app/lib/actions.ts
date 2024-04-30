@@ -20,8 +20,8 @@ export const sendMessages = async (messages: string[]) => {
         const errorData = await res.text();
         console.error(errorData);
     } else {
-        // console.log(res.body);
-        console.log("Success");
+        const responseBody = await res.json(); // Read the response body as JSON
+        console.log(responseBody);
     }
 
     // revalidatePath('')

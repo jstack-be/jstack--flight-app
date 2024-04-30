@@ -2,6 +2,7 @@
 import {MessageBox} from "@/app/ui/dashboard/message.box";
 import {Button} from "@/components/ui/button";
 import {useEffect, useState} from "react";
+import {FlightCards} from "@/app/ui/dashboard/FlightCard";
 
 export default function Page() {
     const [isOpen, setIsOpen] = useState(false)
@@ -40,6 +41,17 @@ export default function Page() {
                     odit, tempore. Distinctio, necessitatibus, recusandae! Deleniti earum expedita neque quos saepe!
                     Accusantium facilis illo veritatis voluptatum. Commodi.
                 </div>
+                <FlightCards cityFrom={"Brussel"}
+                             cityTo={"Madrid"}
+                             cityCodeTo={"MAD"}
+                             airlines={["Ryanair", "Vueling"]}
+                             pnr_count={105}
+                             has_airport_change={false}
+                             technical_stops={0}
+                             price={50.0}
+                             availability={{seats: 9}}
+
+                />
                 <Button className="top-10 left-10 md:hidden" onClick={openModal}>
                     Show messages
                 </Button>
