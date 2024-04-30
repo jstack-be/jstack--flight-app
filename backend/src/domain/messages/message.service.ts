@@ -27,7 +27,7 @@ const getFilterFunction = (): ChatCompletionTool => {
                     message: {
                         type: 'string',
                         description:
-                            'A response message for the user that says if he has provided all data to start searching ' +
+                            'returns a detailed response message for the user that says if he has provided all data to start searching ' +
                             'and what we are searching for. The user should at leased have specified the departure location' +
                             ' and the date range for when he wants to depart in his messages' +
                             ' Write your response in a plain human like text with no code in it.',
@@ -97,7 +97,7 @@ const getFilterFunction = (): ChatCompletionTool => {
                     },
                     limit: {
                         type: 'integer',
-                        description: 'limit number of results; if not provided use default value 20, max value is 1000',
+                        description: 'returns the number of results that will be shown. If not provided by the user use default value 20. The max value is 1000',
                     }
                 },
                 ['required']: ['message', 'date_from', 'date_to', 'limit'],
