@@ -12,15 +12,13 @@ export const formatDate = (date: Date) => {
 };
 
 /**
- * Gets the current date, optionally adds a specified number of days to it, and returns it in the format 'dd/mm/yyyy'.
+ * Adds a given number of days to a given date.
  *
- * @param {number} [dateChange] - The number of days to add to the current date. If not provided, the current date is returned.
- * @returns {string} The date after the specified number of days have been added, formatted as 'dd/mm/yyyy'.
+ * @param {Date} date - The date to which the days will be added.
+ * @param {number} dateChange - The number of days to be added to the date.
+ * @returns {string} The formatted date.
  */
-export function getDate(dateChange?: number) {
-    const date = new Date();
-    if (dateChange) {
-        date.setDate(date.getDate() + dateChange);
-    }
+export function addDays(date: Date, dateChange?: number) {
+    date.setDate(date.getDate() + dateChange);
     return formatDate(date)
 }

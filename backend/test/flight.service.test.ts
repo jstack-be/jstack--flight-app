@@ -1,17 +1,18 @@
 import {getTravelData} from '../src/domain/flights/flight.service';
 import {FlightSearchParameters} from "../src/domain/messages/message.types";
 import {nockedFlightAPI} from "./utils/api.mocks";
-import {getDate} from "./utils/date.utils";
+import {addDays, formatDate} from "./utils/date.utils";
 
 describe('getTravelData', () => {
     it('should return flight data when valid parameters are provided', async () => {
+        const currentDate = new Date();
         const requestParameters: FlightSearchParameters = {
             fly_from: 'LHR',
             fly_to: 'ANR',
-            date_from: getDate(),
-            date_to: getDate(),
-            return_from: getDate(20),
-            return_to: getDate(20),
+            date_from: formatDate(currentDate),
+            date_to: formatDate(currentDate),
+            return_from: addDays(currentDate,20),
+            return_to: addDays(currentDate,20),
             adults: 2,
             children: 2
         }

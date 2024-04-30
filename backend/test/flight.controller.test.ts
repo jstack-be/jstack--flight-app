@@ -1,6 +1,6 @@
 import request from 'supertest';
 import {app} from '../src/server';
-import {getDate} from "./utils/date.utils";
+import {formatDate} from "./utils/date.utils";
 import {nockedFlightAPI, nockedOpenAiAPI} from "./utils/api.mocks";
 import nock from "nock";
 
@@ -24,12 +24,13 @@ describe('POST /api/flights', () => {
     });
 
     it('should return 400 if no departure place is provided', async () => {
-        const messages = [`I want to travel to New York on ${getDate()}`];
+        const currentDate = new Date();
+        const messages = [`I want to travel to New York on ${formatDate(currentDate)}`];
 
         const expectedParameters = {
             fly_to: 'NYC',
-            date_from: getDate(),
-            date_to: getDate()
+            date_from: formatDate(currentDate),
+            date_to: formatDate(currentDate)
         };
 
         nockedOpenAiAPI(expectedParameters)
@@ -60,13 +61,14 @@ describe('POST /api/flights', () => {
     });
 
     it('should return 200 and flight data if messages are valid', async () => {
-        const messages = [`I want to travel from London to Antwerp on ${getDate()}`];
+        const currentDate = new Date();
+        const messages = [`I want to travel from London to Antwerp on ${formatDate(currentDate)}`];
 
         const expectedParameters = {
             fly_from: 'LHR',
             fly_to: 'ANR',
-            date_from: getDate(),
-            date_to: getDate()
+            date_from: formatDate(currentDate),
+            date_to: formatDate(currentDate)
         };
 
         const mockResponse = {

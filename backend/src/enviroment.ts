@@ -6,4 +6,4 @@ export const environment = {
     tequilaKiwiApiKey: process.env.FLIGHT_API_KEY,
     serverPort: parseInt(process.env.SERVER_PORT),
     flightSearchUrl: process.env.FLIGHT_SEARCH_URL
-}
+} as const

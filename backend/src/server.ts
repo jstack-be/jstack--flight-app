@@ -20,7 +20,7 @@ app.use(helmet())
 
 app.use((err, req, res, next) => {
     console.error(err.stack);
-    res.status(500).send('Something broke!');
+    res.status(500).send('Something went wrong!');
     // Gracefully close the server
     server.close(() => {
         console.log('Server closed due to error');
