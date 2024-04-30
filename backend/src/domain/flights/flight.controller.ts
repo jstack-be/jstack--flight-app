@@ -1,6 +1,7 @@
 import {Request, Response} from "express";
 import {generateFlightSearchParameters} from "../messages/message.service";
 import {getTravelData} from "./flight.service";
+import {clearContent, getContent, saveFlights} from "../messages/message.response";
 
 
 /**
@@ -22,7 +23,12 @@ export async function queryFlights(req: Request, res: Response): Promise<void> {
 
         const jsonObject = await generateFlightSearchParameters(messages);
         const flights = await getTravelData(jsonObject);
-        res.status(200).send(flights);
+        saveFlights(flights);
+
+        const response = getContent();
+        res.status(200).send(response);
+        clearContent();
+
     } catch (error) {
         if (error.response) {
             // The request was made, but the server responded with a non-2xx status code

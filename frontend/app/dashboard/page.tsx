@@ -4,7 +4,7 @@ import {Button} from "@/components/ui/button";
 import {useEffect, useState} from "react";
 
 export default function Page() {
-    const [isOpen, setIsOpen] = useState(false)
+    const [isOpen, setIsOpen] = useState(true)
 
     useEffect(() => {
         const handleResize = () => {

@@ -55,8 +55,8 @@ export function MessageBox({onClose, isOpen}: MessageBoxProps) {
         event.currentTarget.reset(); // Clear the form
 
         if (message?.trim() !== "") {
-            const response = await sendMessages(formData);
             const updatedMessages:Message[] = [...messages, {source: 'user', content: message}];
+            const response = await sendMessages(formData);
             //if statement to check if the response is not a json object
             if (typeof response !== 'object') {
                 updatedMessages.push({source: 'system', content: response});

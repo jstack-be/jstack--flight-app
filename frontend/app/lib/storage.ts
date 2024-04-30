@@ -4,15 +4,14 @@ export function addMessage(message: string) {
     // add the new message to the array
     messageHistory.push(message);
     // store the updated array in session storage
-    sessionStorage.setItem('messages', JSON.stringify(messageHistory));
-    console.log(sessionStorage?.getItem('messages'));
+    localStorage.setItem('messages', JSON.stringify(messageHistory));
     return messageHistory;
 }
 
 export function getAllMessages() {
-    return JSON.parse(sessionStorage.getItem('messages') || '[]');
+    return JSON.parse(localStorage.getItem('messages') || '[]');
 }
 
 export function removeAllMessages() {
-    sessionStorage.removeItem('messages');
+    localStorage.removeItem('messages');
 }
