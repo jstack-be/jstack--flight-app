@@ -97,10 +97,10 @@ const getFilterFunction = (): ChatCompletionTool => {
                     },
                     limit: {
                         type: 'integer',
-                        description: 'limit number of results; max is 1000',
+                        description: 'limit number of results; if not provided use default value 20, max value is 1000',
                     }
                 },
-                ['required']: ['message', 'date_from', 'date_to'],
+                ['required']: ['message', 'date_from', 'date_to', 'limit'],
             },
         },
     };

@@ -5,7 +5,7 @@ import {Label} from "@/components/ui/label";
 import {Textarea} from "@/components/ui/textarea";
 import {Button} from "@/components/ui/button";
 import {useRouter} from 'next/navigation'
-import {getAllMessages, removeAllMessages} from "@/app/lib/storage";
+import {addMessage, getAllMessages, removeAllMessages} from "@/app/lib/storage";
 
 interface MessageBoxProps {
     onClose: () => void,
@@ -27,11 +27,13 @@ export function MessageBox({onClose, isOpen}: MessageBoxProps) {
     const messagesEndRef = useRef<HTMLDivElement | null>(null);
     const router = useRouter()
 
-    useEffect(() => {
-        const messages = getAllMessages().map((message: string) => ({
-            source: 'user', content: message
-        }));
+    const updateMessages = () => {
+        const messages = getAllMessages()
         setMessages(messages);
+    }
+
+    useEffect(() => {
+        updateMessages()
     }, []);
 
     useEffect(() => {
@@ -41,8 +43,8 @@ export function MessageBox({onClose, isOpen}: MessageBoxProps) {
     }, [messages]);
 
     const restartConversation = async () => {
-        setMessages([]);
         removeAllMessages()
+        updateMessages()
         router.push('/')
     };
 
@@ -55,25 +57,21 @@ export function MessageBox({onClose, isOpen}: MessageBoxProps) {
         event.currentTarget.reset(); // Clear the form
 
         if (message?.trim() !== "") {
-            const updatedMessages:Message[] = [...messages, {source: 'user', content: message}];
             const response = await sendMessages(formData);
-            //if statement to check if the response is not a json object
-            if (typeof response !== 'object') {
-                updatedMessages.push({source: 'system', content: response});
-            }
-            setMessages(updatedMessages);
+            updateMessages()
         }
     }
 
     return (
-        <div className="bg-gray-200 w-full min-h-screen p-6 md:w-1/4 flex-none md:relative absolute">
+        <div className="bg-gray-200 w-full min-h-screen p-6 md:w-1/3 flex-none md:relative absolute">
             <div className="flex justify-between md:hidden my-3">
                 <h2 className="text-2xl">Message History</h2>
                 <Button onClick={onClose}>X</Button>
             </div>
             <div className="overflow-auto w-full md:h-4/6 h-1/3 border border-gray-300 p-2">
                 {messages.map((message: Message, index: number) =>
-                    <div key={index} className={`${message.source == "user" ? "bg-black" : "bg-red-950"} text-sm text-white m-2 px-4 py-3 rounded`}>
+                    <div key={index}
+                         className={`${message.source == "user" ? "bg-black" : "bg-red-950"} text-sm text-white m-2 px-4 py-3 rounded`}>
                         <strong className="font-bold">{message.source.toUpperCase()}:</strong><br/>
                         <span className="block sm:inline">{message.content}</span>
                     </div>)}

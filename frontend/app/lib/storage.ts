@@ -1,4 +1,9 @@
-export function addMessage(message: string) {
+export interface IMessage {
+    source: 'user' | 'system',
+    content: string
+}
+
+export function addMessage(message: IMessage) {
     // get the existing messages from session storage
     const messageHistory = getAllMessages()
     // add the new message to the array

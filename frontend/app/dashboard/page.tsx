@@ -2,23 +2,17 @@
 import {MessageBox} from "@/app/ui/dashboard/message.box";
 import {Button} from "@/components/ui/button";
 import {useEffect, useState} from "react";
+import {useWindowSize} from "@uidotdev/usehooks";
 
 export default function Page() {
+    const {width} = useWindowSize();
     const [isOpen, setIsOpen] = useState(true)
 
     useEffect(() => {
-        const handleResize = () => {
-            setIsOpen(window.innerWidth >= 768);
-        };
-
-        handleResize();
-        window.addEventListener('resize', handleResize);
-
-        // Cleanup function to remove the event listener when the component unmounts
-        return () => {
-            window.removeEventListener('resize', handleResize);
-        };
-    }, []);
+        if (width !== null) {
+            setIsOpen(width >= 768);
+        }
+    }, [width]);
 
     const openModal = () => {
         setIsOpen(true);
