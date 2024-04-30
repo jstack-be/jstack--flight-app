@@ -2,6 +2,7 @@ import {ChatCompletionMessageParam, ChatCompletionTool} from "openai/resources";
 import OpenAI from "openai";
 import {environment} from "../../enviroment";
 import {FlightSearchParameters} from "./message.types";
+import {getDate} from "../../../test/utils/date.utils";
 
 
 const openai = new OpenAI({
@@ -31,11 +32,11 @@ const filterFunction: ChatCompletionTool = {
                 },
                 date_from: {
                     type: 'string',
-                    description: 'The start date of the departure date range in dd/mm/yyyy format',
+                    description: 'The start date of the departure date range in dd/mm/yyyy format. if not specified use the current date' + getDate() + ' as default',
                 },
                 date_to: {
                     type: 'string',
-                    description: 'The end date of the departure date range in dd/mm/yyyy format',
+                    description: 'The end date of the departure date range in dd/mm/yyyy format. if not specified use the current date' + getDate() + ' as default',
                 },
                 return_from: {
                     type: 'string',

@@ -1,5 +1,5 @@
 import Image from "next/image";
-import AddForm from "@/app/ui/home/addForm";
+import MessageForm from "@/app/ui/home/message.form";
 
 export default function Home() {
 
@@ -7,9 +7,9 @@ export default function Home() {
     return (
         <main>
             <div className={"flex justify-center"}>
-                <Image src={logo} alt={"afbeelding van toucan logo"} className={"lg:object-scale-down h-72 w72 md:"}/>
+                <Image src={logo} alt={"afbeelding van toucan logo"} className={"lg:object-scale-down h-72 w-72 md:"}/>
             </div>
-            <AddForm/>
+            <MessageForm/>
         </main>
     );
 }
