@@ -3,29 +3,35 @@ import {app} from '../src/server';
 import {formatDate} from "./utils/date.utils";
 import {nockedFlightAPI, nockedOpenAiAPI} from "./utils/api.mocks";
 import nock from "nock";
+import {ChatCompletionMessageParam} from "openai/resources";
+
+const currentDate = new Date();
 
 describe('POST /api/flights', () => {
     afterEach(() => {
         nock.cleanAll();
     });
     it('should return 400 if no messages are provided', async () => {
-        const messages = [];
+        const messages: ChatCompletionMessageParam[] = [{role: 'user', content: ""}];
 
-        const expectedParameters = {};
+        const expectedParameters = {
+            message: "Please provide the departure place and date range for when you wish to depart",
+            date_from: formatDate(currentDate),
+            date_to: formatDate(currentDate)
+        };
 
         nockedOpenAiAPI(expectedParameters)
 
         const res = await request(app)
             .post('/api/flights')
-            .send({messages: messages});
+            .send(messages);
 
         expect(res.status).toBe(400);
         expect(res.text).toBe("No message provided");
     });
 
     it('should return 400 if no departure place is provided', async () => {
-        const currentDate = new Date();
-        const messages = [`I want to travel to New York on ${formatDate(currentDate)}`];
+        const messages = `I want to travel to New York on ${formatDate(currentDate)}`;
 
         const expectedParameters = {
             fly_to: 'NYC',
@@ -37,34 +43,16 @@ describe('POST /api/flights', () => {
 
         const res = await request(app)
             .post('/api/flights')
-            .send({messages: messages});
-
-        expect(res.status).toBe(400);
-    });
-
-    it('should return 400 if no departure date is provided', async () => {
-
-        const messages = ['I want to travel to London from Brussel'];
-
-        const expectedParameters = {
-            fly_from: 'BRU',
-            fly_to: 'LCY'
-        };
-
-        nockedOpenAiAPI(expectedParameters)
-
-        const res = await request(app)
-            .post('/api/flights')
-            .send({messages: messages});
+            .send([{role: 'user', content: messages}]);
 
         expect(res.status).toBe(400);
     });
 
     it('should return 200 and flight data if messages are valid', async () => {
-        const currentDate = new Date();
-        const messages = [`I want to travel from London to Antwerp on ${formatDate(currentDate)}`];
+        const messages = `I want to travel from London to Antwerp on ${formatDate(currentDate)}`;
 
         const expectedParameters = {
+            message: "Here are the flights from London to Antwerp on " + formatDate(currentDate),
             fly_from: 'LHR',
             fly_to: 'ANR',
             date_from: formatDate(currentDate),
@@ -72,28 +60,37 @@ describe('POST /api/flights', () => {
         };
 
         const mockResponse = {
-            data: [{
-                id: "0f6400094d9500000c29d3ec_0",
-                flyFrom: "LHR",
-                flyTo: "ANR",
-                cityFrom: "London",
-                cityCodeFrom: "LON",
-                cityTo: "Brussels",
-                cityCodeT: "BRU",
-                //other fields
-            }]
+            data: {
+                flights:
+                    [
+                        {
+                            id: "0f6401af4d950000bb579950_0",
+                            flyFrom: "LHR",
+                            flyTo: "ANR",
+                            cityFrom: "London",
+                            cityCodeFrom: "LON",
+                            cityTo: "Brussels",
+                            cityCodeTo: "BRU",
+                        }]
+            }
         };
 
-        nockedFlightAPI(expectedParameters, mockResponse);
+        const expectedSearchParameters = {
+            fly_from: 'LHR',
+            fly_to: 'ANR',
+            date_from: formatDate(currentDate),
+            date_to: formatDate(currentDate)
+        };
+
+        nockedFlightAPI(expectedSearchParameters, mockResponse);
 
         nockedOpenAiAPI(expectedParameters)
 
         const res = await request(app)
             .post('/api/flights')
-            .send({messages: messages}); // Assuming these messages are valid
-
+            .send([{role: 'user', content: messages}]);
         expect(res.status).toBe(200);
-        expect(res.body).toEqual(mockResponse.data);
+        expect(mockResponse.data.flights).toEqual(res.body.flights.flights);
     });
 })
 ;

@@ -16,8 +16,8 @@ import {ChatCompletionMessageParam} from "openai/resources";
  */
 export async function queryFlights(req: Request, res: Response): Promise<void> {
     try {
-        const messages: ChatCompletionMessageParam[] = req.body.messages;
-        if (!messages || messages.length === 0) {
+        const messages: ChatCompletionMessageParam[] = req.body;
+        if (!messages || messages.length === 0 || messages[0].content.length === 0) {
             res.status(400).send("No message provided");
             return;
         }
@@ -37,7 +37,7 @@ export async function queryFlights(req: Request, res: Response): Promise<void> {
             res.status(error.response.status).send(error.response.data.error);
         } else if (error.request) {
             // The request was made but no response was received
-            console.error('No response received from server');
+            console.error('No response received from server:',error.response.data.error);
             res.status(500).send('No response received from server');
         } else if (error instanceof ReferenceError) {
             res.status(400).send(error.message);

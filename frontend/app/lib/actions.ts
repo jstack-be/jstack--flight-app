@@ -11,7 +11,7 @@ export const sendMessages = async (formData: FormData) => {
 
     const res = await fetch(await getURL(), {
         method: 'POST',
-        body: JSON.stringify({messages: messageHistory}),
+        body: JSON.stringify(messageHistory),
         headers: {
             'Content-Type': 'application/json'
         }

@@ -21,7 +21,6 @@ app.use(helmet())
 app.use((err, req, res, next) => {
     console.error(err.stack);
     res.status(500).send('Something went wrong!');
-    // Gracefully close the server
 });
 
 mountHandlers(app)
@@ -30,4 +29,4 @@ const server = app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
 });
 
-export {app};
+export {app, server};
