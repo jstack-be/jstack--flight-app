@@ -31,11 +31,10 @@ const config = {
                     gradient: "#07ADCB",
                     dark: "#004649",
                 },
-                //"hsl(var(--background))",
                 foreground: "#0F989D",
                 primary: {
-                    DEFAULT: "#ffffff", //" hsl(var(--primary))",
-                    foreground: "#004B97", //"hsl(var(--primary-foreground))",
+                    DEFAULT: "#ffffff",
+                    foreground: "#004B97",
                 },
                 secondary: {
                     DEFAULT: "hsl(var(--secondary))",

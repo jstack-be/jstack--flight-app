@@ -1,7 +1,6 @@
 "use client"
 
 import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
-import {Label} from "@/components/ui/label";
 import React from "react";
 import {Collapsible, CollapsibleContent, CollapsibleTrigger} from "@/components/ui/collapsible";
 import {Button} from "@/components/ui/button";
@@ -22,13 +21,8 @@ export interface FlightCardProps {
 }
 
 
-export function FlightCards(flights: FlightCardProps[]) {
-
-    for (const flight of flights) {
-        return <FlightCard {...flight}/>
-
-    }
-}
+// export function FlightCards(flights: FlightCardProps[]) {
+// }
 
 export function FlightCard(props: FlightCardProps) {
     const [isOpen, setIsOpen] = React.useState(false)
