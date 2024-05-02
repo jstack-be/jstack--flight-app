@@ -26,7 +26,7 @@ const getFilterFunction = (): ChatCompletionTool => {
                 properties: {
                     message: {
                         type: 'string',
-                        description: 'returns a detailed response message for the user that says what routes we are searching for based on the given information. ',
+                        description: 'returns a detailed response message',
                     },
                     fly_from: {
                         type: 'string',
@@ -112,8 +112,8 @@ const getFilterFunction = (): ChatCompletionTool => {
 export async function generateFlightSearchParameters(messages: ChatCompletionMessageParam[]): Promise<FlightSearchParameters> {
     const systemMessage: ChatCompletionMessageParam = {
         role: 'system',
-        content: 'You are a helpful travel planner assistant that checks if the user gave all necessary information to find his flights.'
-            + ' You should check if the user provided the departure location and the date range for when he wants to depart.'
+        content: 'You are a helpful travel planner assistant that checks if the user gave all necessary information to find his flights. ' +
+            ' You should check if the user provided an departure location with an airport and the date range for when he wants to depart.'
     };
 
     messages.unshift(systemMessage);

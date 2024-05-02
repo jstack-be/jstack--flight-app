@@ -24,7 +24,9 @@ export const sendMessages = async (formData: FormData) => {
     }
 
     //todo catch errors and convert to human like string
-    addMessage(await res.text(),'assistant');
+    const errorMessage = await res.text();
+    addMessage(errorMessage, 'assistant');
+    return errorMessage;
 }
 
 
