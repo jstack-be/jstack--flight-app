@@ -22,10 +22,6 @@ app.use((err, req, res, next) => {
     console.error(err.stack);
     res.status(500).send('Something went wrong!');
     // Gracefully close the server
-    server.close(() => {
-        console.log('Server closed due to error');
-        process.exit(1); // Exit the process with failure
-    });
 });
 
 mountHandlers(app)
