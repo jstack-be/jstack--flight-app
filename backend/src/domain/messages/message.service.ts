@@ -136,16 +136,12 @@ export async function generateFlightSearchParameters(messages: ChatCompletionMes
     if (!!args) {
         let jsonObject = JSON.parse(args);
         console.log("Json object:\n", jsonObject);
-        saveMessage(jsonObject.message);
-        delete jsonObject.message;
 
-        if (Object.keys(jsonObject).length === 0) {
-            throw new ReferenceError("Missing required attributes. Please provide the departure place and date.");
-        } else if (!jsonObject.fly_from) {
-            throw new ReferenceError("No departure place provided");
-        } else if (!jsonObject.date_from || !jsonObject.date_to)
-            throw new ReferenceError("No departure date provided");
-        else {
+        if (Object.keys(jsonObject).length === 0 || !jsonObject.fly_from) {
+            throw new ReferenceError(jsonObject.message);
+        } else {
+            saveMessage(jsonObject.message);
+            delete jsonObject.message;
             return jsonObject
         }
     } else {
