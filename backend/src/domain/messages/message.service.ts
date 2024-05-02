@@ -26,15 +26,11 @@ const getFilterFunction = (): ChatCompletionTool => {
                 properties: {
                     message: {
                         type: 'string',
-                        description:
-                            'returns a detailed response message for the user that says if he has provided all data to start searching ' +
-                            'and what we are searching for. The user should at leased have specified the departure location' +
-                            ' and the date range for when he wants to depart in his messages' +
-                            ' Write your response in a plain human like text with no code in it.',
+                        description: 'returns a detailed response message for the user that says what routes we are searching for based on the given information. ',
                     },
                     fly_from: {
                         type: 'string',
-                        description: 'The IATA code from the departure metropolitan area. it accepts multiple values separated by a comma. Ask the user to provide the departure location in the message if it is missing.',
+                        description: 'The IATA code from the departure metropolitan area. it accepts multiple values separated by a comma.',
                     },
                     fly_to: {
                         type: 'string',
@@ -114,6 +110,13 @@ const getFilterFunction = (): ChatCompletionTool => {
  * @throws {ReferenceError} If required attributes are missing in the response from the OpenAI API.
  */
 export async function generateFlightSearchParameters(messages: ChatCompletionMessageParam[]): Promise<FlightSearchParameters> {
+    const systemMessage: ChatCompletionMessageParam = {
+        role: 'system',
+        content: 'You are a helpful travel planner assistant that checks if the user gave all necessary information to find his flights.'
+            + ' You should check if the user provided the departure location and the date range for when he wants to depart.'
+    };
+
+    messages.unshift(systemMessage);
 
     const completion = await openai.chat.completions.create({
         messages: messages,
