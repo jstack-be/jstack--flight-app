@@ -1,11 +1,11 @@
 import {generateFlightSearchParameters} from '../src/domain/messages/message.service';
 import {nockedOpenAiAPI} from "./utils/api.mocks";
 import {ChatCompletionMessageParam} from "openai/resources";
-import {server} from "../src/server";
+import nock from "nock";
 
 describe('generateFlightSearchParameters', () => {
-    afterAll(() => {
-        server.close()
+    afterEach(() => {
+        nock.cleanAll();
     });
     it('should return flight search parameters when valid messages are provided', async () => {
         const messages: ChatCompletionMessageParam[] = [{
