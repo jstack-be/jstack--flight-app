@@ -2,6 +2,7 @@ import {Request, Response} from "express";
 import {generateFlightSearchParameters} from "../messages/message.service";
 import {getTravelData} from "./flight.service";
 import {clearContent, getContent, saveFlights} from "../messages/message.response";
+import {ChatCompletionMessageParam} from "openai/resources";
 
 
 /**
@@ -15,7 +16,7 @@ import {clearContent, getContent, saveFlights} from "../messages/message.respons
  */
 export async function queryFlights(req: Request, res: Response): Promise<void> {
     try {
-        const messages: string[] = req.body.messages;
+        const messages: ChatCompletionMessageParam[] = req.body.messages;
         if (!messages || messages.length === 0) {
             res.status(400).send("No message provided");
             return;

@@ -5,16 +5,11 @@ import {Label} from "@/components/ui/label";
 import {Textarea} from "@/components/ui/textarea";
 import {Button} from "@/components/ui/button";
 import {useRouter} from 'next/navigation'
-import {addMessage, getAllMessages, removeAllMessages} from "@/app/lib/storage";
+import {addMessage, ChatCompletionMessageParam, getAllMessages, removeAllMessages} from "@/app/lib/storage";
 
 interface MessageBoxProps {
     onClose: () => void,
     isOpen: boolean
-}
-
-type Message = {
-    source: 'user' | 'system',
-    content: string
 }
 
 /**
@@ -23,7 +18,7 @@ type Message = {
  * @param isOpen - boolean to check if the message box is open
  */
 export function MessageBox({onClose, isOpen}: MessageBoxProps) {
-    const [messages, setMessages] = useState<Message[]>([]);
+    const [messages, setMessages] = useState<ChatCompletionMessageParam[]>([]);
     const messagesEndRef = useRef<HTMLDivElement | null>(null);
     const router = useRouter()
 
@@ -69,10 +64,10 @@ export function MessageBox({onClose, isOpen}: MessageBoxProps) {
                 <Button onClick={onClose}>X</Button>
             </div>
             <div className="overflow-auto w-full md:h-4/6 h-1/3 border border-gray-300 p-2">
-                {messages.map((message: Message, index: number) =>
+                {messages.map((message: ChatCompletionMessageParam, index: number) =>
                     <div key={index}
-                         className={`${message.source == "user" ? "bg-black" : "bg-red-950"} text-sm text-white m-2 px-4 py-3 rounded`}>
-                        <strong className="font-bold">{message.source.toUpperCase()}:</strong><br/>
+                         className={`${message.role == "user" ? "bg-black" : "bg-red-950"} text-sm text-white m-2 px-4 py-3 rounded`}>
+                        <strong className="font-bold">{message.role.toUpperCase()}:</strong><br/>
                         <span className="block sm:inline">{message.content}</span>
                     </div>)}
                 <div ref={messagesEndRef}/>

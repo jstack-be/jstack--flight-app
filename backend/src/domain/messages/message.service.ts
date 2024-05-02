@@ -113,14 +113,10 @@ const getFilterFunction = (): ChatCompletionTool => {
  * @returns {Promise<FlightSearchParameters>} The flight search parameters.
  * @throws {ReferenceError} If required attributes are missing in the response from the OpenAI API.
  */
-export async function generateFlightSearchParameters(messages: string[]): Promise<FlightSearchParameters> {
-    const userConversation: ChatCompletionMessageParam[] = messages.map(message => ({
-        role: "user",
-        content: message
-    }));
+export async function generateFlightSearchParameters(messages: ChatCompletionMessageParam[]): Promise<FlightSearchParameters> {
 
     const completion = await openai.chat.completions.create({
-        messages: userConversation,
+        messages: messages,
         tools: [getFilterFunction()],
         tool_choice: {
             type: 'function',
