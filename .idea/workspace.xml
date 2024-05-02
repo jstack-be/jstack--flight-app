@@ -4,15 +4,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="89885e14-66bc-4019-8f14-2abca173b7e9" name="Changes" comment="Feature 1 As a user i want to be able to fill in my travel request in a text area">
-      <change beforePath="$PROJECT_DIR$/frontend/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/.gitignore" afterDir="false" />
+    <list default="true" id="89885e14-66bc-4019-8f14-2abca173b7e9" name="Changes" comment="Feat 2_flightCard">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/app/dashboard/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/dashboard/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/app/globals.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/globals.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/app/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/layout.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/app/lib/actions.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/lib/actions.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/app/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/app/ui/home/message.form.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/ui/home/message.form.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/app/ui/dashboard/FlightCard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/domain/dashboard/flights/FlightCard.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/app/ui/dashboard/message.box.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/domain/dashboard/messages/message.box.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/app/ui/home/message.form.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/domain/home/message.form.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/public/ToucanLogo.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/public/background.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/tailwind.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/tailwind.config.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,23 +58,28 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;#9 on 5-as-a-user-i-want-to-be-able-to-…ckend&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/Users/Gebruiker/Desktop/stage project/jstack--flight-app&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;npm.dev.executor&quot;: &quot;Run&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;D:\\Users\\Gebruiker\\Desktop\\stage project\\jstack--flight-app\\frontend\\node_modules\\typescript\\lib&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "Feat-2",
+    "last_opened_file_path": "D:/Users/Gebruiker/Desktop/stage project/jstack--flight-app",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "npm.dev.executor": "Run",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "ts.external.directory.path": "D:\\Users\\Gebruiker\\Desktop\\stage project\\jstack--flight-app\\frontend\\node_modules\\typescript\\lib",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Users\Gebruiker\Desktop\stage project\jstack--flight-app\frontend\app\domain\dashboard\messages" />
+      <recent name="D:\Users\Gebruiker\Desktop\stage project\jstack--flight-app\frontend\app\domain\dashboard\flights" />
+      <recent name="D:\Users\Gebruiker\Desktop\stage project\jstack--flight-app\frontend\app\domain" />
+      <recent name="D:\Users\Gebruiker\Desktop\stage project\jstack--flight-app\frontend\app\domain\dashboard" />
       <recent name="D:\Users\Gebruiker\Desktop\stage project\jstack--flight-app\backend" />
     </key>
   </component>
@@ -116,7 +125,8 @@
       <workItem from="1714378743509" duration="3243000" />
       <workItem from="1714385046235" duration="5473000" />
       <workItem from="1714399771637" duration="4882000" />
-      <workItem from="1714456289854" duration="2939000" />
+      <workItem from="1714456289854" duration="21374000" />
+      <workItem from="1714633720181" duration="15804000" />
     </task>
     <task id="LOCAL-00001" summary="Feature 1 As a user i want to be able to fill in my travel request in a text area">
       <option name="closed" value="true" />
@@ -126,7 +136,23 @@
       <option name="project" value="LOCAL" />
       <updated>1714046012800</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Feat 2_flightCard">
+      <option name="closed" value="true" />
+      <created>1714460318550</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1714460318550</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Feat 2_flightCard">
+      <option name="closed" value="true" />
+      <created>1714460329319</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1714460329319</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -134,6 +160,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Feature 1 As a user i want to be able to fill in my travel request in a text area" />
-    <option name="LAST_COMMIT_MESSAGE" value="Feature 1 As a user i want to be able to fill in my travel request in a text area" />
+    <MESSAGE value="Feat 2_flightCard" />
+    <option name="LAST_COMMIT_MESSAGE" value="Feat 2_flightCard" />
   </component>
 </project>

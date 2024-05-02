@@ -22,32 +22,41 @@ export interface FlightCardProps {
 }
 
 
-export function FlightCards(props: FlightCardProps) {
+export function FlightCards(flights: FlightCardProps[]) {
+
+    for (const flight of flights) {
+        return <FlightCard {...flight}/>
+
+    }
+}
+
+export function FlightCard(props: FlightCardProps) {
     const [isOpen, setIsOpen] = React.useState(false)
 
     return (
         <Card>
             <Collapsible open={isOpen} onOpenChange={setIsOpen}>
-            <div className="flex items-center justify-around space-x-4 px-4">
-                <CardHeader>
-                    <CardTitle>Flight</CardTitle>
-                </CardHeader>
-                <CollapsibleTrigger asChild>
-                <Button variant="ghost" size="sm" className="w-9 p-0">
-                    <ChevronsUpDown className="h-4 w-4"/>
-                    <span className="sr-only">Toggle</span>
-                </Button>
-            </CollapsibleTrigger>
-            </div>
+                <div className=" flex items-center justify-between space-x-4 px-4">
+                    <CardHeader>
+                        <CardTitle>{props.cityFrom} to {props.cityTo}</CardTitle>
+                    </CardHeader>
 
+                    <div>
+                        <CollapsibleTrigger asChild >
+                            <Button variant="ghost" size="sm" className="w-9 p-0">
+                                <ChevronsUpDown className="h-4 w-4"/>
+                                <span className="sr-only">Toggle</span>
+                            </Button>
+                        </CollapsibleTrigger>
+                    </div>
+
+
+                </div>
 
 
                 <CollapsibleContent>
                     <CardContent className="space-y-2">
 
-                        <div>
-                            leaving from {props.cityFrom} to {props.cityTo}
-                        </div>
                         <div>
                             {props.has_airport_change ? "Has airport change" : "No airport change"}
                         </div>
