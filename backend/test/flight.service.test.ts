@@ -2,8 +2,12 @@ import {getTravelData} from '../src/domain/flights/flight.service';
 import {FlightSearchParameters} from "../src/domain/messages/message.types";
 import {nockedFlightAPI} from "./utils/api.mocks";
 import {addDays, formatDate} from "./utils/date.utils";
+import {server} from "../src/server";
 
 describe('getTravelData', () => {
+    afterAll(() => {
+        server.close()
+    });
     it('should return flight data when valid parameters are provided', async () => {
         const currentDate = new Date();
         const requestParameters: FlightSearchParameters = {

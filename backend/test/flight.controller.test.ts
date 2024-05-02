@@ -1,5 +1,5 @@
 import request from 'supertest';
-import {app} from '../src/server';
+import {app, server} from '../src/server';
 import {formatDate} from "./utils/date.utils";
 import {nockedFlightAPI, nockedOpenAiAPI} from "./utils/api.mocks";
 import nock from "nock";
@@ -10,6 +10,9 @@ const currentDate = new Date();
 describe('POST /api/flights', () => {
     afterEach(() => {
         nock.cleanAll();
+    });
+    afterAll(() => {
+        server.close()
     });
     it('should return 400 if no messages are provided', async () => {
         const messages: ChatCompletionMessageParam[] = [{role: 'user', content: ""}];
