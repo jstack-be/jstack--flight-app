@@ -1,5 +1,5 @@
 import request from 'supertest';
-import {formatDate} from "./utils/date.utils";
+import {formatDate} from "../src/utils/date.utils";
 import {nockedFlightAPI, nockedOpenAiAPI} from "./utils/api.mocks";
 import {ChatCompletionMessageParam} from "openai/resources";
 import {app} from "../src/app";
