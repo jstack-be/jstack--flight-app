@@ -6,10 +6,11 @@ import {addMessage} from "@/app/lib/storage";
 //todo catch errors
 export const sendMessages = async (formData: FormData) => {
     const message = formData.get("message");
-    if (!message) return 'No message provided';
+    console.info(message)
+    if (!message) {return 'No message provided';}
     const messageHistory = addMessage(message.toString(), 'user');
 
-    const res = await fetch(await getURL(), {
+    const res = await fetch( await getURL(), {
         method: 'POST',
         body: JSON.stringify(messageHistory),
         headers: {

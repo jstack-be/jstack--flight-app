@@ -20,6 +20,7 @@ export default function MessageForm() {
         if (message?.trim() !== "") {
             const result = await sendMessages(formData);
             if (typeof result === 'object' && result !== null) {
+                localStorage.setItem('responseData', JSON.stringify(result));
                 router.push('/dashboard')
             } else {
                 setErrorMessage(result);

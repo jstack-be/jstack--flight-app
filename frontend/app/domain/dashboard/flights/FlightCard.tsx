@@ -7,22 +7,32 @@ import {Button} from "@/components/ui/button";
 import {ChevronsUpDown} from "lucide-react";
 
 export interface FlightCardProps {
-    cityFrom: string | "Brussel";
-    cityTo: string | "Madrid";
-    cityCodeTo: string | "MAD";
-    airlines: string[] | ["Ryanair", "Vueling"];
-    pnr_count: number | 105;
+    id: string;
+    cityFrom: string;
+    cityTo: string;
+    cityCodeTo: string;
+    airlines: string[] ;
+    pnr_count: number ;
     has_airport_change: boolean | false;
-    technical_stops: number | 0;
-    price: number | 50.0;
+    technical_stops: number ;
+    price: number ;
     availability: {
-        seats: number | 9;
+        seats: number ;
     };
 }
 
 
-// export function FlightCards(flights: FlightCardProps[]) {
-// }
+export function FlightCards({ flights }: { flights: FlightCardProps[] }) {
+    if (flights.length === 0) {
+        return <div>No flights found</div>
+    }else
+    return (
+
+        <div className="space-y-4">
+            {flights.map(flight => <FlightCard key={flight.id} {...flight}/>)}
+        </div>
+    );
+}
 
 export function FlightCard(props: FlightCardProps) {
     const [isOpen, setIsOpen] = React.useState(false)

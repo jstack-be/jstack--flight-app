@@ -5,7 +5,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="89885e14-66bc-4019-8f14-2abca173b7e9" name="Changes" comment="theme aangepast">
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_29_04_2024_11_58__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_29_04_2024_11_58__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_3_05_2024_10_28__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_3_05_2024_10_28__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_3_05_2024_10_35__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_3_05_2024_10_35__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_3_05_2024_10_35__Changes_1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_3_05_2024_10_35__Changes_1.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_3_05_2024_10_37__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_3_05_2024_10_37__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_29_04_2024_14_19__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_29_04_2024_14_19__Changes_.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/domain/flights/flight.types.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/domain/flights/flight.types.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/domain/messages/message.response.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/domain/messages/message.response.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/app/dashboard/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/dashboard/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/app/domain/dashboard/flights/FlightCard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/domain/dashboard/flights/FlightCard.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/app/domain/home/message.form.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/domain/home/message.form.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/app/lib/actions.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app/lib/actions.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package-lock.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,8 +63,8 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "Feat-2",
-    "last_opened_file_path": "D:/Users/Gebruiker/Desktop/stage project/jstack--flight-app",
+    "git-widget-placeholder": "Feat__2__As-a-user,-I-want-to-be-able-to-see-my-travel-routes,-in-a-list",
+    "last_opened_file_path": "D:/Users/Gebruiker/Desktop/new stage http upload/jstack--flight-app/backend",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -59,11 +72,15 @@
     "nodejs_package_manager_path": "npm",
     "npm.dev.executor": "Run",
     "settings.editor.selected.configurable": "preferences.pluginManager",
-    "ts.external.directory.path": "D:\\Users\\Gebruiker\\Desktop\\stage project\\jstack--flight-app\\frontend\\node_modules\\typescript\\lib",
+    "ts.external.directory.path": "D:\\Users\\Gebruiker\\Desktop\\new stage http upload\\jstack--flight-app\\backend\\node_modules\\typescript\\lib",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Users\Gebruiker\Desktop\new stage http upload\jstack--flight-app\backend" />
+      <recent name="D:\Users\Gebruiker\Desktop\new stage http upload\jstack--flight-app\frontend" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\Users\Gebruiker\Desktop\stage project\jstack--flight-app\frontend\app\domain\dashboard\messages" />
       <recent name="D:\Users\Gebruiker\Desktop\stage project\jstack--flight-app\frontend\app\domain\dashboard\flights" />
@@ -116,6 +133,8 @@
       <workItem from="1714399771637" duration="4882000" />
       <workItem from="1714456289854" duration="21374000" />
       <workItem from="1714633720181" duration="16792000" />
+      <workItem from="1714726655262" duration="1334000" />
+      <workItem from="1714728091035" duration="9877000" />
     </task>
     <task id="LOCAL-00001" summary="Feature 1 As a user i want to be able to fill in my travel request in a text area">
       <option name="closed" value="true" />
