@@ -3,7 +3,7 @@ import {MessageBox} from "@/app/domain/dashboard/messages/message.box";
 import {Button} from "@/components/ui/button";
 import {useEffect, useState} from "react";
 import {useWindowSize} from "@uidotdev/usehooks";
-import {FlightCards, FlightCard} from "@/app/domain/dashboard/flights/FlightCard";
+import {FlightCard} from "@/app/domain/dashboard/flights/FlightCard";
 
 export default function Page() {
     const {width} = useWindowSize();
