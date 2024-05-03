@@ -1,13 +1,17 @@
 import Image from "next/image";
-import MessageForm from "@/app/ui/home/message.form";
+import MessageForm from "@/app/domain/home/message.form";
+import {Suspense} from "react";
+
+
+import logo from '../public/logo.png'
 
 export default function Home() {
 
-    const logo = require("@/public/ToucanLogo.png");
+
     return (
         <main>
             <div className={"flex justify-center"}>
-                <Image src={logo} alt={"afbeelding van toucan logo"} className={"lg:object-scale-down h-72 w-72 md:"}/>
+                <Image src={logo} alt={"afbeelding van vliegtuig logo"}  className={"h-72 w-auto"}/>
             </div>
             <MessageForm/>
         </main>

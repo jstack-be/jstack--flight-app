@@ -64,9 +64,13 @@
       --border: 217.2 32.6% 17.5%;
       --input: 217.2 32.6% 17.5%;
       --ring: 212.7 26.8% 83.9%;
-      --background-image: url("/frontend/public/background.png");
 
     }
+
+    .flight {
+      --textBlue:""#004B97""
+    }
+
   }
 
   @layer base {

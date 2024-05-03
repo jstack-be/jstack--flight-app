@@ -3,6 +3,7 @@ import OpenAI from "openai";
 import {environment} from "../../enviroment";
 import {FlightSearchParameters} from "./message.types";
 import {formatDate} from "../../../test/utils/date.utils";
+import {saveMessage} from "./message.response";
 
 const openai = new OpenAI({
     organization: environment.openAiOrgKey,
@@ -23,10 +24,9 @@ const getFilterFunction = (): ChatCompletionTool => {
             parameters: {
                 type: 'object',
                 properties: {
-                    message:{
+                    message: {
                         type: 'string',
-                        description: 'A response to the users messages that confirms if the found data is the requested data. You also tell the user what data is missing.' +
-                            ' Write your response in a plain text format with no code in it.',
+                        description: 'returns a detailed response message',
                     },
                     fly_from: {
                         type: 'string',
@@ -38,13 +38,13 @@ const getFilterFunction = (): ChatCompletionTool => {
                     },
                     date_from: {
                         type: 'string',
-                        description: 'The start date of the departure date range in dd/mm/yyyy format. if not specified use the current date ' +
-                            formatDate(currentDate) + ' as default',
+                        description: 'The start date of the departure date range in dd/mm/yyyy format. The current date is ' +
+                            formatDate(currentDate),
                     },
                     date_to: {
                         type: 'string',
-                        description: 'The end date of the departure date range in dd/mm/yyyy format. if not specified use the current date ' +
-                            formatDate(currentDate) + ' as default',
+                        description: 'The end date of the departure date range in dd/mm/yyyy format. The current date is ' +
+                            formatDate(currentDate),
                     },
                     return_from: {
                         type: 'string',
@@ -93,10 +93,10 @@ const getFilterFunction = (): ChatCompletionTool => {
                     },
                     limit: {
                         type: 'integer',
-                        description: 'limit number of results; max is 1000',
+                        description: 'returns the number of results that will be shown. If not provided by the user use default value 20. The max value is 1000',
                     }
                 },
-                ['required']: ['message', 'fly_from', 'date_from', 'date_to'],
+                ['required']: ['message', 'date_from', 'date_to', 'limit'],
             },
         },
     };
@@ -109,14 +109,17 @@ const getFilterFunction = (): ChatCompletionTool => {
  * @returns {Promise<FlightSearchParameters>} The flight search parameters.
  * @throws {ReferenceError} If required attributes are missing in the response from the OpenAI API.
  */
-export async function generateFlightSearchParameters(messages: string[]): Promise<FlightSearchParameters> {
-    const userConversation: ChatCompletionMessageParam[] = messages.map(message => ({
-        role: "user",
-        content: message
-    }));
+export async function generateFlightSearchParameters(messages: ChatCompletionMessageParam[]): Promise<FlightSearchParameters> {
+    const systemMessage: ChatCompletionMessageParam = {
+        role: 'system',
+        content: 'You are a helpful travel planner assistant that checks if the user gave all necessary information to find his flights. ' +
+            ' You should check if the user provided an departure location with an airport and the date range for when he wants to depart.'
+    };
+
+    messages.unshift(systemMessage);
 
     const completion = await openai.chat.completions.create({
-        messages: userConversation,
+        messages: messages,
         tools: [getFilterFunction()],
         tool_choice: {
             type: 'function',
@@ -132,16 +135,13 @@ export async function generateFlightSearchParameters(messages: string[]): Promis
     console.log('Args:');
     if (!!args) {
         let jsonObject = JSON.parse(args);
-        console.log("Json object:\n",jsonObject);
-        delete jsonObject.message;
+        console.log("Json object:\n", jsonObject);
 
-        if (Object.keys(jsonObject).length === 0) {
-            throw new ReferenceError("Missing required attributes. Please provide the departure place and date.");
-        } else if (!jsonObject.fly_from) {
-            throw new ReferenceError("No departure place provided");
-        } else if (!jsonObject.date_from || !jsonObject.date_to)
-            throw new ReferenceError("No departure date provided");
-        else {
+        if (Object.keys(jsonObject).length === 0 || !jsonObject.fly_from) {
+            throw new ReferenceError(jsonObject.message);
+        } else {
+            saveMessage(jsonObject.message);
+            delete jsonObject.message;
             return jsonObject
         }
     } else {

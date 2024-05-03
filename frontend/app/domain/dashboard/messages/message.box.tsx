@@ -5,16 +5,11 @@ import {Label} from "@/components/ui/label";
 import {Textarea} from "@/components/ui/textarea";
 import {Button} from "@/components/ui/button";
 import {useRouter} from 'next/navigation'
-import {getAllMessages, removeAllMessages} from "@/app/lib/storage";
+import {addMessage, ChatCompletionMessageParam, getAllMessages, removeAllMessages} from "@/app/lib/storage";
 
 interface MessageBoxProps {
     onClose: () => void,
     isOpen: boolean
-}
-
-type Message = {
-    source: 'user' | 'system',
-    content: string
 }
 
 /**
@@ -23,15 +18,17 @@ type Message = {
  * @param isOpen - boolean to check if the message box is open
  */
 export function MessageBox({onClose, isOpen}: MessageBoxProps) {
-    const [messages, setMessages] = useState<Message[]>([]);
+    const [messages, setMessages] = useState<ChatCompletionMessageParam[]>([]);
     const messagesEndRef = useRef<HTMLDivElement | null>(null);
     const router = useRouter()
 
-    useEffect(() => {
-        const messages = getAllMessages().map((message: string) => ({
-            source: 'user', content: message
-        }));
+    const updateMessages = () => {
+        const messages = getAllMessages()
         setMessages(messages);
+    }
+
+    useEffect(() => {
+        updateMessages()
     }, []);
 
     useEffect(() => {
@@ -41,8 +38,8 @@ export function MessageBox({onClose, isOpen}: MessageBoxProps) {
     }, [messages]);
 
     const restartConversation = async () => {
-        setMessages([]);
         removeAllMessages()
+        updateMessages()
         router.push('/')
     };
 
@@ -56,25 +53,21 @@ export function MessageBox({onClose, isOpen}: MessageBoxProps) {
 
         if (message?.trim() !== "") {
             const response = await sendMessages(formData);
-            const updatedMessages:Message[] = [...messages, {source: 'user', content: message}];
-            //if statement to check if the response is not a json object
-            if (typeof response !== 'object') {
-                updatedMessages.push({source: 'system', content: response});
-            }
-            setMessages(updatedMessages);
+            updateMessages()
         }
     }
 
     return (
-        <div className="bg-gray-200 w-full min-h-screen p-6 md:w-1/4 flex-none md:relative absolute">
+        <div className="bg-gray-200 w-full min-h-screen p-6 md:w-1/3 flex-none md:relative absolute">
             <div className="flex justify-between md:hidden my-3">
                 <h2 className="text-2xl">Message History</h2>
                 <Button onClick={onClose}>X</Button>
             </div>
             <div className="overflow-auto w-full md:h-4/6 h-1/3 border border-gray-300 p-2">
-                {messages.map((message: Message, index: number) =>
-                    <div key={index} className={`${message.source == "user" ? "bg-black" : "bg-red-950"} text-sm text-white m-2 px-4 py-3 rounded`}>
-                        <strong className="font-bold">{message.source.toUpperCase()}:</strong><br/>
+                {messages.map((message: ChatCompletionMessageParam, index: number) =>
+                    <div key={index}
+                         className={`${message.role == "user" ? "bg-black" : "bg-red-950"} text-sm text-white m-2 px-4 py-3 rounded`}>
+                        <strong className="font-bold">{message.role.toUpperCase()}:</strong><br/>
                         <span className="block sm:inline">{message.content}</span>
                     </div>)}
                 <div ref={messagesEndRef}/>
