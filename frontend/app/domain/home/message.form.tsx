@@ -32,20 +32,28 @@ export default function MessageForm() {
             <div className="flex justify-center m-2">
                 <Label htmlFor="message">Where do you which to travel to?</Label>
             </div>
-            <div className="flex justify-center m-2">
-                <Textarea className="w-8/12 h-22" id="message" name="message"
-                          placeholder={"Please provide as much detail as possible"} required/>
-                <Button type="submit" className="h-22">Search Routes</Button>
+
+            <div className="flex justify-center relative m-2">
+                <div className="relative w-8/12">
+                    <Textarea  className="w-full min-h-32 bg-background-text block resize-none" id="message" name="message"
+                              placeholder={"Please provide as much detail as possible"} required/>
+                    <div className="absolute bottom-0 right-3 p-2 focus:border-ring">
+                        <Button type="submit" className="">Search Routes</Button>
+                    </div>
+                </div>
             </div>
+
             <div className="flex justify-center m-2">
-            {errorMessage && <div className="text-sm text-red-600">{errorMessage}</div>}
+                {errorMessage && <div className="text-sm text-red-600">{errorMessage}</div>}
             </div>
-            <div className="flex justify-center m-2">
-            <Label htmlFor="message" className="text-sm text-center text-slate-400 w-8/12">Example:<br/>
-                &quot; Show me the routes from London to Paris on the 12th of December 2024 for 2 adults and 1
-                child.
-                We plan to return between the 20th and 25th of December 2024. &quot;
-            </Label>
+            <div className="flex flex-col items-center">
+                <p className="font-bold text-md text-center w-8/12">Example:
+                </p>
+                <p className="text-md text-center w-8/12">
+                    &quot; Show me the routes from London to Paris on the 12th of December 2024 for 2 adults and 1
+                    child.
+                    We plan to return between the 20th and 25th of December 2024. &quot;
+                </p>
             </div>
         </form>
     );

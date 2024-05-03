@@ -1,8 +1,9 @@
 "use client"
-import {MessageBox} from "@/app/ui/dashboard/message.box";
+import {MessageBox} from "@/app/domain/dashboard/messages/message.box";
 import {Button} from "@/components/ui/button";
 import {useEffect, useState} from "react";
 import {useWindowSize} from "@uidotdev/usehooks";
+import {FlightCards, FlightCard} from "@/app/domain/dashboard/flights/FlightCard";
 
 export default function Page() {
     const {width} = useWindowSize();
@@ -34,6 +35,17 @@ export default function Page() {
                     odit, tempore. Distinctio, necessitatibus, recusandae! Deleniti earum expedita neque quos saepe!
                     Accusantium facilis illo veritatis voluptatum. Commodi.
                 </div>
+                <FlightCard cityFrom={"Brussel"}
+                             cityTo={"Madrid"}
+                             cityCodeTo={"MAD"}
+                             airlines={["Ryanair", "Vueling"]}
+                             pnr_count={105}
+                             has_airport_change={false}
+                             technical_stops={0}
+                             price={50.0}
+                             availability={{seats: 9}}
+
+                />
                 <Button className="top-10 left-10 md:hidden" onClick={openModal}>
                     Show messages
                 </Button>
