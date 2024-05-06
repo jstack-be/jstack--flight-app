@@ -35,8 +35,7 @@ export async function queryFlights(req: Request, res: Response): Promise<void> {
         clearContent();
 
     } catch (error) {
-        if (error instanceof ReferenceError || error instanceof InvalidDateError) {
-            //todo return status code 200 and use a more specific error than ReferenceError
+        if (error instanceof ResponseError || error instanceof InvalidDateError) {
             res.status(400).send(error.message);
         } else {
             console.error(error);

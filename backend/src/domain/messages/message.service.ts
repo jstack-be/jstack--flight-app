@@ -56,7 +56,7 @@ function validateIataCodes(fly_from: string, fly_to: string) {
     const iata_code_regex = /^[A-Z]{3}$/;
 
     if (!fly_from) {
-        throw new ReferenceError("Could not find a provided departure cities or airports. Please change your request and try again.");
+        throw new ResponseError("Could not find a provided departure cities or airports. Please change your request and try again.");
     }
 
     const fly_from_codes = fly_from?.split(',');
@@ -65,14 +65,14 @@ function validateIataCodes(fly_from: string, fly_to: string) {
 
     for (const code of fly_from_codes) {
         if (!iata_code_regex.test(code.trim())) {
-            throw new ReferenceError("Could not find all provided departure cities or airports. Please change your request and try again.");
+            throw new ResponseError("Could not find all provided departure cities or airports. Please change your request and try again.");
         }
     }
 
     if (!!fly_to_codes && fly_to_codes?.length !== 0) {
         for (const code of fly_to_codes) {
             if (!iata_code_regex.test(code.trim())) {
-                throw new ReferenceError("Could not find all provided destination cities or airports. Please change your request and try again.");
+                throw new ResponseError("Could not find all provided destination cities or airports. Please change your request and try again.");
             }
         }
     }
@@ -99,7 +99,7 @@ function processResponse(completion: any) {
 
         return jsonObject;
     } else {
-        throw new ReferenceError(responseMessage.content);
+        throw new ResponseError(responseMessage.content);
     }
 }
 
