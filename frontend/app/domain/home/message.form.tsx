@@ -57,7 +57,7 @@ export default function MessageForm() {
             {errorMessage &&
                 <div className="flex justify-center">
                     <Alert className="bg-red-400 text-white w-6/12">
-                        <AlertTitle> An Error Occurred! </AlertTitle>
+                        <AlertTitle> Planely could not resolve your request: </AlertTitle>
                         <AlertDescription>
                             {errorMessage}
                         </AlertDescription>
