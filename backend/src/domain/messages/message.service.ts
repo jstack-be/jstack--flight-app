@@ -71,7 +71,8 @@ export async function generateFlightSearchParameters(messages: ChatCompletionMes
     const systemMessage: ChatCompletionMessageParam = {
         role: 'system',
         content: 'You are a helpful travel planner assistant that checks if the user gave all necessary information to find his flights. ' +
-            ' You should check if the user provided an real departure location with an airport'
+            ' You should check if the user provided an real departure location with an airport.' +
+            ` The current date is ${new Date().toLocaleDateString()}.`,
     };
 
     messages.unshift(systemMessage);

@@ -6,6 +6,7 @@ import {Textarea} from "@/components/ui/textarea";
 import {Button} from "@/components/ui/button"
 import {Label} from "@/components/ui/label"
 import {useRouter} from "next/navigation";
+import {removeAllMessages} from "@/app/lib/storage";
 
 export default function MessageForm() {
     const router = useRouter()
@@ -15,13 +16,13 @@ export default function MessageForm() {
         event.preventDefault();
         const formData = new FormData(event.currentTarget);
         const message = formData.get("message") as string;
-        event.currentTarget.reset(); // Clear the form
 
         if (message?.trim() !== "") {
             const result = await sendMessages(formData);
             if (typeof result === 'object' && result !== null) {
                 router.push('/dashboard')
             } else {
+                removeAllMessages();
                 setErrorMessage(result);
             }
         }

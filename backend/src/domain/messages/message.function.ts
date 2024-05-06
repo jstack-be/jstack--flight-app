@@ -29,12 +29,12 @@ export const getFilterFunction = (): ChatCompletionTool => {
                     },
                     date_from: {
                         type: 'string',
-                        description: 'The start date of the departure date range in dd/mm/yyyy format. The given date can not be before the date ' +
+                        description: 'The start date of the departure date range in dd/mm/yyyy format. The given date can not be before the current date' +
                             formatDate(currentDate),
                     },
                     date_to: {
                         type: 'string',
-                        description: 'The end date of the departure date range in dd/mm/yyyy format. The given date can not be before the date ' +
+                        description: 'The end date of the departure date range in dd/mm/yyyy format. The given date can not be before the current date ' +
                             formatDate(currentDate),
                     },
                     return_from: {
