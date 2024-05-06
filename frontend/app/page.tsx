@@ -10,8 +10,11 @@ export default function Home() {
 
     return (
         <main>
-            <div className={"flex justify-center"}>
-                <Image src={logo} alt={"afbeelding van vliegtuig logo"}  className={"h-72 w-auto"}/>
+            <div className={"flex-col flex items-center justify-between"}>
+                <Image src={logo} alt={"afbeelding van vliegtuig logo"} className="h-72 w-auto "/>
+                <h1 className="items-center justify-center text-primary text-6xl flex">
+                    PLANELY
+                </h1>
             </div>
             <MessageForm/>
         </main>
