@@ -52,10 +52,29 @@ function validateDates(jsonObject: any) {
  * @param {string} fly_to - The IATA code of the destination airport
  * @throws {ReferenceError} If the IATA codes are not valid
  */
-function validateIataCodes(fly_from, fly_to) {
+function validateIataCodes(fly_from: string, fly_to: string) {
     const iata_code_regex = /^[A-Z]{3}$/;
-    if (!iata_code_regex.test(fly_from) || !iata_code_regex.test(fly_to)) {
-        throw new ReferenceError("Could not find all locations change your request and try again.");
+
+    if (!fly_from) {
+        throw new ReferenceError("Could not find a provided departure cities or airports. Please change your request and try again.");
+    }
+
+    const fly_from_codes = fly_from?.split(',');
+    const fly_to_codes = fly_to?.split(',');
+
+
+    for (const code of fly_from_codes) {
+        if (!iata_code_regex.test(code.trim())) {
+            throw new ReferenceError("Could not find all provided departure cities or airports. Please change your request and try again.");
+        }
+    }
+
+    if (!!fly_to_codes && fly_to_codes?.length !== 0) {
+        for (const code of fly_to_codes) {
+            if (!iata_code_regex.test(code.trim())) {
+                throw new ReferenceError("Could not find all provided destination cities or airports. Please change your request and try again.");
+            }
+        }
     }
 }
 

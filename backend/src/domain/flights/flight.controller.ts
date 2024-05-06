@@ -39,6 +39,7 @@ export async function queryFlights(req: Request, res: Response): Promise<void> {
             //todo return status code 200 and use a more specific error than ReferenceError
             res.status(400).send(error.message);
         } else {
+            console.error(error);
             res.status(error.status).send("An error occurred while processing the request. " +
                 "Please change your request and try again.");
         }
