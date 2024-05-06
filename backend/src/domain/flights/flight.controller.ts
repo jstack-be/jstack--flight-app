@@ -4,6 +4,7 @@ import {getTravelData} from "./flight.service";
 import {clearContent, getContent, saveFlights, saveMessage} from "../messages/message.response";
 import {ChatCompletionMessageParam} from "openai/resources";
 import InvalidDateError from "../../errors/InvalidDateError";
+import ResponseError from "../../errors/ResponseError";
 
 
 /**

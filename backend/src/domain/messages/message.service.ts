@@ -1,11 +1,12 @@
 import InvalidDateError from "../../errors/InvalidDateError";
-import {saveMessage} from "./message.response";
-import {ChatCompletionMessageParam} from "openai/resources";
+import ResponseError from "../../errors/ResponseError";
+import {parseDate} from "../../utils/date.utils";
 import {environment} from "../../enviroment";
-import OpenAI from "openai";
+import {saveMessage} from "./message.response";
 import {getFilterFunction} from "./message.function";
 import {FlightSearchParameters} from "./message.types";
-import {parseDate} from "../../utils/date.utils";
+import {ChatCompletionMessageParam} from "openai/resources";
+import OpenAI from "openai";
 
 /**
  * Function to validate dates

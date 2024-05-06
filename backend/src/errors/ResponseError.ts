@@ -1,4 +1,4 @@
-class ResponseError extends Error {
+export default class ResponseError extends Error {
     constructor(message?: string) {
         super(message);
         this.name = "ResponseError";
