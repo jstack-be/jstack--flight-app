@@ -84,10 +84,10 @@ export const getFilterFunction = (): ChatCompletionTool => {
                     },
                     limit: {
                         type: 'integer',
-                        description: 'returns the number of results that will be shown. If not provided by the user use default value 20. The max value is 1000',
+                        description: 'returns the number of results that the user wants to be shown. If not provided by the user use default value 20. The max value is 1000',
                     }
                 },
-                ['required']: ['message', 'date_from', 'date_to'],
+                ['required']: ['message', 'date_from', 'date_to','limit'],
             },
         },
     };
