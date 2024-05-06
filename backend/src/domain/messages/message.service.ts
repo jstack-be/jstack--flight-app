@@ -42,6 +42,13 @@ function validateDates(jsonObject: any) {
     }
 }
 
+function validateIataCodes(fly_from, fly_to) {
+    const iata_code_regex = /^[A-Z]{3}$/;
+    if (!iata_code_regex.test(fly_from) || !iata_code_regex.test(fly_to)) {
+        throw new ReferenceError("Could not find all locations change your request and try again.");
+    }
+}
+
 // Function to process the response from the OpenAI API
 function processResponse(completion: any) {
     const responseMessage = completion?.choices?.[0]?.message;
@@ -50,8 +57,8 @@ function processResponse(completion: any) {
         let jsonObject = JSON.parse(args);
         console.log(jsonObject);
 
-
         validateDates(jsonObject);
+        validateIataCodes(jsonObject.fly_from, jsonObject.fly_to);
 
         saveMessage(jsonObject.message);
         delete jsonObject.message;

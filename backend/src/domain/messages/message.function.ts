@@ -21,11 +21,11 @@ export const getFilterFunction = (): ChatCompletionTool => {
                     },
                     fly_from: {
                         type: 'string',
-                        description: 'The IATA code from the departure metropolitan area. it accepts multiple values separated by a comma.',
+                        description: 'Always returns the IATA code from the departure metropolitan area. it accepts multiple values separated by a comma.',
                     },
                     fly_to: {
                         type: 'string',
-                        description: 'The IATA code from the destination metropolitan area. it accepts multiple values separated by a comma.',
+                        description: 'Always returns the IATA code from the destination metropolitan area. it accepts multiple values separated by a comma.',
                     },
                     date_from: {
                         type: 'string',
