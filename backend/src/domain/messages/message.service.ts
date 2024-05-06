@@ -37,8 +37,8 @@ function validateDates(jsonObject: any) {
         const returnFrom = parseDate(jsonObject.return_from);
         const returnTo = parseDate(jsonObject.return_to);
 
-        if (returnFrom < dateTo) {
-            throw new InvalidDateError("The return date cannot be before the the end date of the departure date range.");
+        if (returnTo < dateTo) {
+            throw new InvalidDateError("The return date cannot be before the the start date of the departure date range.");
         } else if (returnTo < returnFrom) {
             throw new InvalidDateError("The end date of the return date range cannot be before the return_from.");
         } else if (returnFrom > threeYearsFromNow || returnTo > threeYearsFromNow) {
