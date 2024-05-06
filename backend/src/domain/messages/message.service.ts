@@ -1,4 +1,3 @@
-// Function to validate dates
 import InvalidDateError from "../../errors/InvalidDateError";
 import {saveMessage} from "./message.response";
 import {ChatCompletionMessageParam} from "openai/resources";
@@ -8,6 +7,11 @@ import {getFilterFunction} from "./message.function";
 import {FlightSearchParameters} from "./message.types";
 import {parseDate} from "../../utils/date.utils";
 
+/**
+ * Function to validate dates
+ * @param {any} jsonObject - The object containing the dates to validate
+ * @throws {InvalidDateError} If the dates are not within the valid range
+ */
 function validateDates(jsonObject: any) {
     const currentDate = new Date();
     const dateFrom = parseDate(jsonObject.date_from);
@@ -42,6 +46,12 @@ function validateDates(jsonObject: any) {
     }
 }
 
+/**
+ * Function to validate IATA codes
+ * @param {string} fly_from - The IATA code of the departure airport
+ * @param {string} fly_to - The IATA code of the destination airport
+ * @throws {ReferenceError} If the IATA codes are not valid
+ */
 function validateIataCodes(fly_from, fly_to) {
     const iata_code_regex = /^[A-Z]{3}$/;
     if (!iata_code_regex.test(fly_from) || !iata_code_regex.test(fly_to)) {
@@ -49,7 +59,12 @@ function validateIataCodes(fly_from, fly_to) {
     }
 }
 
-// Function to process the response from the OpenAI API
+/**
+ * Function to process the response from the OpenAI API
+ * @param {any} completion - The response from the OpenAI API
+ * @returns {any} The processed response
+ * @throws {ReferenceError} If the response does not contain the function json object
+ */
 function processResponse(completion: any) {
     const responseMessage = completion?.choices?.[0]?.message;
     const args = responseMessage?.tool_calls?.[0]?.function?.arguments;
@@ -74,6 +89,11 @@ const openai = new OpenAI({
     apiKey: environment.openAiApiKey
 });
 
+/**
+ * Function to generate flight search parameters
+ * @param {ChatCompletionMessageParam[]} messages - The messages to send to the OpenAI API
+ * @returns {Promise<FlightSearchParameters>} The flight search parameters
+ */
 export async function generateFlightSearchParameters(messages: ChatCompletionMessageParam[]): Promise<FlightSearchParameters> {
     const systemMessage: ChatCompletionMessageParam = {
         role: 'system',
