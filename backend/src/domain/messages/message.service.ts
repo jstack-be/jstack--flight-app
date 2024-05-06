@@ -43,13 +43,13 @@ function validateDates(jsonObject: any) {
 }
 
 // Function to process the response from the OpenAI API
-function processResponse(args: any) {
+function processResponse(completion: any) {
+    const responseMessage = completion?.choices?.[0]?.message;
+    const args = responseMessage?.tool_calls?.[0]?.function?.arguments;
     if (!!args) {
         let jsonObject = JSON.parse(args);
         console.log(jsonObject);
-        if (Object.keys(jsonObject).length === 0 || !jsonObject.fly_from) {
-            throw new ReferenceError(jsonObject.message);
-        }
+
 
         validateDates(jsonObject);
 
@@ -58,7 +58,7 @@ function processResponse(args: any) {
 
         return jsonObject;
     } else {
-        console.log('No args in response');
+        throw new ReferenceError(responseMessage.content);
     }
 }
 
@@ -70,9 +70,10 @@ const openai = new OpenAI({
 export async function generateFlightSearchParameters(messages: ChatCompletionMessageParam[]): Promise<FlightSearchParameters> {
     const systemMessage: ChatCompletionMessageParam = {
         role: 'system',
-        content: 'You are a helpful travel planner assistant that checks if the user gave all necessary information to find his flights. ' +
-            ' You should check if the user provided an real departure location with an airport.' +
-            ` The current date is ${new Date().toLocaleDateString()}.`,
+        content: 'You are a helpful travel planner assistant that only checks if the user gave all required information to find flights. ' +
+            ' You should let the user know that you can only answer questions about travel routes and not any other information ' +
+            ` The current date is ${new Date().toLocaleDateString()}.` +
+            ' The given dates should not be more than 45 day before the current date and more than 3 years in the future. '
     };
 
     messages.unshift(systemMessage);
@@ -80,16 +81,9 @@ export async function generateFlightSearchParameters(messages: ChatCompletionMes
     const completion = await openai.chat.completions.create({
         messages: messages,
         tools: [getFilterFunction()],
-        tool_choice: {
-            type: 'function',
-            function: {
-                name: 'generateFlightSearchParameters'
-            }
-        },
+        tool_choice: 'auto',
         model: "gpt-3.5-turbo",
     });
 
-    const args = completion?.choices?.[0]?.message?.tool_calls?.[0]?.function?.arguments;
-
-    return processResponse(args);
+    return processResponse(completion);
 }
