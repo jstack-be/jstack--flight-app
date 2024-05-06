@@ -25,24 +25,24 @@ export interface FlightCardProps {
 export function FlightCards({flights}: { flights: FlightCardProps[] }) {
     if (flights === null || flights === undefined || flights.length == 0) {
         return (
-            // <div className={"flex-grow flex text-primary items-center justify-center text-3xl w-auto sm:text-justify"}>
-            //     <Frown size={72} className="m-2"/> Sorry, er zijn geen vluchten gevonden.
-            // </div>
-
-            // TODO: remove this mock*
-            <div>
-                <FlightCard key={"1"} id={"1"}
-                            cityTo={"Brussel"}
-                            cityFrom={"New York City"}
-                            has_airport_change={false}
-                            cityCodeTo={"NYC"}
-                            technical_stops={0}
-                            price={1000}
-                            availability={{seats: 100}}
-                            pnr_count={100}
-                            airlines={["BLA", "Delta"]}
-                />
+            <div className={"flex-grow flex text-primary items-center justify-center text-3xl w-auto sm:text-justify"}>
+                <Frown size={72} className="m-2"/> Sorry, er zijn geen vluchten gevonden.
             </div>
+
+            // // TODO: remove this mock*
+            // <div>
+            //     <FlightCard key={"1"} id={"1"}
+            //                 cityTo={"Brussel"}
+            //                 cityFrom={"New York City"}
+            //                 has_airport_change={false}
+            //                 cityCodeTo={"NYC"}
+            //                 technical_stops={0}
+            //                 price={1000}
+            //                 availability={{seats: 100}}
+            //                 pnr_count={100}
+            //                 airlines={["BLA", "Delta"]}
+            //     />
+            // </div>
         );
 
     } else
