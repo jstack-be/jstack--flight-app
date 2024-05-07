@@ -54,6 +54,7 @@ function validateDates(jsonObject: any) {
  * @throws {ReferenceError} If the IATA codes are not valid
  */
 function validateIataCodes(fly_from: string, fly_to: string) {
+    //todo allow 2 letter country codes
     const iata_code_regex = /^[A-Z]{3}$/;
 
     if (!fly_from) {
@@ -117,7 +118,7 @@ const openai = new OpenAI({
 export async function generateFlightSearchParameters(messages: ChatCompletionMessageParam[]): Promise<FlightSearchParameters> {
     const systemMessage: ChatCompletionMessageParam = {
         role: 'system',
-        content: 'You are a helpful travel planner assistant that only checks if the user gave all required information to find flights. ' +
+        content: 'You are a helpful travel planner assistant ' +
             ' Your answers should be short and to the point. ' +
             ' You should let the user know that you can only answer questions about travel routes and not any other information ' +
             ` The current date is ${new Date().toLocaleDateString()}.` +

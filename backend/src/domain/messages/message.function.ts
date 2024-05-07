@@ -17,7 +17,7 @@ export const getFilterFunction = (): ChatCompletionTool => {
                 properties: {
                     message: {
                         type: 'string',
-                        description: 'returns a detailed response message about what flight date we are using.',
+                        description: 'returns a response message in the users natural language about what flights we will be showing the user.',
                     },
                     fly_from: {
                         type: 'string',
