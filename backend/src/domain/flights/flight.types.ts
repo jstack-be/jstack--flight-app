@@ -96,3 +96,18 @@ interface Route {
     local_departure: string;
     utc_departure: string;
 }
+
+export interface FlightsResponse {
+    id: string;
+    cityFrom: string ;
+    cityTo: string ;
+    cityCodeTo: string ;
+    airlines: string[] ;
+    pnr_count: number ;
+    has_airport_change: boolean ;
+    technical_stops: number ;
+    price: number ;
+    availability: {
+        seats: number ;
+    }
+}

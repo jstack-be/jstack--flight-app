@@ -1,15 +1,16 @@
-import {Flight} from "../flights/flight.types";
+import {Flight, FlightsResponse} from "../flights/flight.types";
 
 type MessageResponse = {
     message: string | null;
-    flights: Flight[] | null;
+    flights: FlightsResponse[] | null;
 }
 
 // Holds the temporary message data
 let message: string | null = null;
 
 // Holds the temporary flight data
-let flights: Flight[] | null = null;
+let flights: FlightsResponse[] | null = null;
+
 
 /**
  * Saves a message into the temporary storage
@@ -24,7 +25,28 @@ export function saveMessage(newMessage: string): void {
  * @param newFlights - The flights to be saved
  */
 export function saveFlights(newFlights: Flight[]): void {
-    flights = newFlights; //todo format flights in the required format
+    var responseFlights: FlightsResponse[] = [];
+
+    for (const newFlight of newFlights) {
+
+        const flightres: FlightsResponse = {
+            id: newFlight.id,
+            cityFrom: newFlight.cityFrom,
+            cityTo: newFlight.cityTo,
+            cityCodeTo: newFlight.cityCodeTo,
+            airlines: newFlight.airlines,
+            pnr_count: newFlight.pnr_count,
+            has_airport_change: newFlight.has_airport_change,
+            technical_stops: newFlight.technical_stops,
+            price: newFlight.price,
+            availability: {
+                seats: newFlight.availability.seats,
+            }
+        }
+
+        responseFlights.push(flightres)
+        flights = responseFlights; //todo format flights in the required format
+    }
 }
 
 /**

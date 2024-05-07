@@ -29,7 +29,7 @@ const config = {
                 background: {
                     DEFAULT: "#3BF7FE",
                     gradient: "#07ADCB",
-                    dark: "#004649",
+                    dark: "#003336",
                 },
                 foreground: "#0F989D",
                 primary: {
@@ -37,7 +37,8 @@ const config = {
                     foreground: "#004B97",
                 },
                 secondary: {
-                    DEFAULT: "hsl(var(--secondary))",
+                    DEFAULT: "#04636A",
+                    dark: "#C1E7EA",
                     foreground: "hsl(var(--secondary-foreground))",
                 },
                 destructive: {
