@@ -16,7 +16,7 @@ export const getFilterFunction = (): ChatCompletionTool => {
                 properties: {
                     message: {
                         type: 'string',
-                        description: 'Returns a message that tells the user what flight data information is found in the response',
+                        description: 'Returns a message that tells the user what flight data information is found in the response using the same language as the user.',
                     },
                     fly_from: {
                         type: 'string',
@@ -65,19 +65,30 @@ export const getFilterFunction = (): ChatCompletionTool => {
                         type: 'string',
                         description: 'Specifies the number of hold bags for adults  separated by commas. ' +
                             'The first number represents the number of bags for passenger 1, the second number is for passenger 2,' +
-                            ' etc. Can only contain up to two hold bags per passenger.',
+                            ' etc. Can only contain up to two hold bags per passenger. ' +
+                            'All adult passenger should have a value bv 2 adults  = 1,0 or 1,1 or 0,1 or 1,2 etc.',
                     },
                     adult_hand_bag: {
                         type: 'string',
                         description: 'Specifies the number of hand bags for adults separated by commas. ' +
                             'The first number represents the number of bags for passenger 1, the second number is for passenger 2,' +
-                            ' etc. Can only contain up to one hand bags per passenger.',
+                            ' etc. Can only contain up to one hand bags per passenger.' +
+                            'All adult passenger should have a value bv 2 adults  = 1,0 or 1,1 or 0,1 or 1,2 etc.',
+                    },
+                    child_hold_bag: {
+                        type: 'string',
+                        description: 'Specifies the number of hold bags for children separated by commas. ' +
+                            'The first number represents the number of bags for passenger 1, the second number is for passenger 2,' +
+                            ' etc. Can only contain up to two hold bags per passenger. ' +
+                            'All child passenger should have a value bv 2 children  = 1,0 or 1,1 or 0,1 or 1,2 etc.',
                     },
                     child_hand_bag: {
                         type: 'string',
                         description: 'Specifies the number of hand bags for children separated by commas. ' +
                             'The first number represents the number of bags for passenger 1, the second number is for passenger 2,' +
-                            ' etc. Can only contain up to one hand bags per passenger.',
+                            ' etc. Can only contain up to one hand bags per passenger. ' +
+                            'All child passenger should have a value bv 2 children  = 1,0 or 1,1 or 0,1 or 1,2 etc.',
+
                     },
                     price_from: {
                         type: 'integer',
@@ -110,38 +121,38 @@ export const getFilterFunction = (): ChatCompletionTool => {
                             ' ja, jo, jp, ko, kr, kw, kz, lt, mx, my, nl, no, nz, om, pe, ph, pl, pt, qa, ro, rs, ru, ' +
                             'sa, se, sg, sk, sr, sv, th, tr, tw, ua, uk, us, vn, za',
                     },
-                    dtime_from: {
-                        type: 'string',
-                        description: 'result filter, minimal departure time (use only time in whole hours, not minutes; 11:00 means 11AM, 23:00 means 11PM)',
-                    },
-                    dtime_to: {
-                        type: 'string',
-                        description: 'result filter, maximal departure time (use only time in whole hours, not minutes; 11:00 means 11AM, 23:00 means 11PM)',
-                    },
-                    atime_from: {
-                        type:'string',
-                        description: 'result filter, minimal arrival time (use only time in whole hours, not minutes; 11:00 means 11AM, 23:00 means 11PM)',
-                    },
-                    atime_to: {
-                        type: 'string',
-                        description: 'result filter, maximal arrival time (use only time in whole hours, not minutes; 11:00 means 11AM, 23:00 means 11PM)',
-                    },
-                    ret_dtime_from: {
-                        type: 'string',
-                        description: 'result filter, minimal return departure time (use only time in whole hours, not minutes; 11:00 means 11AM, 23:00 means 11PM)',
-                    },
-                    ret_dtime_to: {
-                        type: 'string',
-                        description: 'result filter, maximal return departure time (use only time in whole hours, not minutes; 11:00 means 11AM, 23:00 means 11PM)',
-                    },
-                    ret_atime_from: {
-                        type: 'string',
-                        description: 'result filter, minimal return arrival time (use only time in whole hours, not minutes; 11:00 means 11AM, 23:00 means 11PM)',
-                    },
-                    ret_atime_to: {
-                        type: 'string',
-                        description: 'result filter, maximal return arrival time (use only time in whole hours, not minutes; 11:00 means 11AM, 23:00 means 11PM)',
-                    },
+                    // dtime_from: {
+                    //     type: 'string',
+                    //     description: 'result filter, minimal departure time (use only time in whole hours, not minutes; 11:00 means 11AM, 23:00 means 11PM)',
+                    // },
+                    // dtime_to: {
+                    //     type: 'string',
+                    //     description: 'result filter, maximal departure time (use only time in whole hours, not minutes; 11:00 means 11AM, 23:00 means 11PM)',
+                    // },
+                    // atime_from: {
+                    //     type: 'string',
+                    //     description: 'result filter, minimal arrival time (use only time in whole hours, not minutes; 11:00 means 11AM, 23:00 means 11PM)',
+                    // },
+                    // atime_to: {
+                    //     type: 'string',
+                    //     description: 'result filter, maximal arrival time (use only time in whole hours, not minutes; 11:00 means 11AM, 23:00 means 11PM)',
+                    // },
+                    // ret_dtime_from: {
+                    //     type: 'string',
+                    //     description: 'result filter, minimal return departure time (use only time in whole hours, not minutes; 11:00 means 11AM, 23:00 means 11PM)',
+                    // },
+                    // ret_dtime_to: {
+                    //     type: 'string',
+                    //     description: 'result filter, maximal return departure time (use only time in whole hours, not minutes; 11:00 means 11AM, 23:00 means 11PM)',
+                    // },
+                    // ret_atime_from: {
+                    //     type: 'string',
+                    //     description: 'result filter, minimal return arrival time (use only time in whole hours, not minutes; 11:00 means 11AM, 23:00 means 11PM)',
+                    // },
+                    // ret_atime_to: {
+                    //     type: 'string',
+                    //     description: 'result filter, maximal return arrival time (use only time in whole hours, not minutes; 11:00 means 11AM, 23:00 means 11PM)',
+                    // },
                     //todo airlines filter
                     vehicle_type: {
                         type: 'string',
@@ -156,7 +167,7 @@ export const getFilterFunction = (): ChatCompletionTool => {
                     //     description: 'returns the number of results that the user wants to be shown. If not provided by the user use default value 20. The max value is 1000',
                     // }
                 },
-                ['required']: ['message', 'date_from', 'date_to'],
+                ['required']: ['message', 'date_from', 'date_to','locale','curr'],
             },
         },
     };

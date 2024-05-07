@@ -47,6 +47,27 @@ function validateDates(jsonObject: any) {
     }
 }
 
+function validateBaggage(jsonObject: any) {
+    const adults = jsonObject.adults;
+    const children = jsonObject.children;
+    const adultHandbags: string[] = jsonObject.adult_hand_bag?.split(',') || [];
+    const adultHoldbags: string[] = jsonObject.adult_hold_bag?.split(',') || [];
+    const childrenHandbags: string[] = jsonObject.child_hand_bag?.split(',') || [];
+    const childrenHoldbags: string[] = jsonObject.child_hold_bag?.split(',') || [];
+
+    if (adults && adults > 0) {
+        if ((adultHandbags.length !== adults && adultHandbags.length !== 0) || (adultHoldbags.length !== adults && adultHoldbags.length !== 0)) {
+            throw new ResponseError("The number of adult baggage does not match the number of adults. Please change your request and try again.");
+        }
+    }
+
+    if (children && children > 0) {
+        if ((childrenHandbags.length !== children && childrenHandbags.length !== 0) || (childrenHoldbags.length !== children && childrenHoldbags.length !== 0) ) {
+            throw new ResponseError("The number of children's baggage does not match the number of children. Please change your request and try again.");
+        }
+    }
+}
+
 /**
  * Function to validate IATA codes
  * @param {string} fly_from - The IATA code of the departure airport
@@ -95,6 +116,7 @@ function processResponse(completion: any) {
 
         validateIataCodes(jsonObject.fly_from, jsonObject.fly_to);
         validateDates(jsonObject);
+        validateBaggage(jsonObject);
 
         saveMessage(jsonObject.message);
         delete jsonObject.message;
