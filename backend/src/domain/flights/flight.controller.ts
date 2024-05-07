@@ -1,8 +1,10 @@
 import {Request, Response} from "express";
 import {generateFlightSearchParameters} from "../messages/message.service";
 import {getTravelData} from "./flight.service";
-import {clearContent, getContent, saveFlights} from "../messages/message.response";
+import {clearContent, getContent, saveFlights, saveMessage} from "../messages/message.response";
 import {ChatCompletionMessageParam} from "openai/resources";
+import InvalidDateError from "../../errors/InvalidDateError";
+import ResponseError from "../../errors/ResponseError";
 
 
 /**
@@ -24,6 +26,9 @@ export async function queryFlights(req: Request, res: Response): Promise<void> {
 
         const jsonObject = await generateFlightSearchParameters(messages);
         const flights = await getTravelData(jsonObject);
+        if (flights.length === 0) {
+            saveMessage("No fights found");
+        }
         saveFlights(flights);
 
         const response = getContent();
@@ -31,19 +36,12 @@ export async function queryFlights(req: Request, res: Response): Promise<void> {
         clearContent();
 
     } catch (error) {
-        if (error.response) {
-            // The request was made, but the server responded with a non-2xx status code
-            console.error('Server responded with an error:', error.response.status, error.response.data.error);
-            res.status(error.response.status).send(error.response.data.error);
-        } else if (error.request) {
-            // The request was made but no response was received
-            console.error('No response received from server:',error.response.data.error);
-            res.status(500).send('No response received from server');
-        } else if (error instanceof ReferenceError) {
+        if (error instanceof ResponseError || error instanceof InvalidDateError) {
             res.status(400).send(error.message);
         } else {
-            console.error('Error:', error.message);
-            res.status(500).send('Internal Server Error');
+            console.error(error);
+            res.status(500).send("An error occurred while processing the request. " +
+                "Please change your request and try again.");
         }
     }
 }

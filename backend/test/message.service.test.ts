@@ -2,20 +2,26 @@ import {generateFlightSearchParameters} from '../src/domain/messages/message.ser
 import {nockedOpenAiAPI} from "./utils/api.mocks";
 import {ChatCompletionMessageParam} from "openai/resources";
 import nock from "nock";
+import InvalidDateError from "../src/errors/InvalidDateError";
+import ResponseError from "../src/errors/ResponseError";
+import {addDays, formatDate} from "../src/utils/date.utils";
+
+const currentDate = formatDate(new Date());
 
 describe('generateFlightSearchParameters', () => {
     afterEach(() => {
         nock.cleanAll();
     });
     it('should return flight search parameters when valid messages are provided', async () => {
+
         const messages: ChatCompletionMessageParam[] = [{
             role: 'user',
-            content: 'I want to travel from New York on 19/05/2024'
+            content: `I want to travel from New York on ${currentDate}`
         }];
         const expectedParameters = {
             fly_from: 'NYC',
-            date_from: '19/05/2024',
-            date_to: '19/05/2024'
+            date_from: currentDate,
+            date_to: currentDate
         };
 
         nockedOpenAiAPI(expectedParameters);
@@ -30,7 +36,7 @@ describe('generateFlightSearchParameters', () => {
 
         nockedOpenAiAPI({})
 
-        await expect(generateFlightSearchParameters(messages)).rejects.toThrow('');
+        await expect(generateFlightSearchParameters(messages)).rejects.toThrow(ResponseError);
     });
 
     it('should throw an error when no departure place is provided', async () => {
@@ -44,5 +50,98 @@ describe('generateFlightSearchParameters', () => {
         nockedOpenAiAPI(incompleteParameters);
 
         await expect(generateFlightSearchParameters(messages)).rejects.toThrow('');
+    });
+    it('should throw an error when departure date is more than 45 days in the past', async () => {
+        const messages: ChatCompletionMessageParam[] = [{
+            role: 'user',
+            content: 'I want to travel from New York to London on 01/01/2022'
+        }];
+        const invalidParameters = {
+            fly_from: 'NYC',
+            fly_to: 'LON',
+            date_from: '01/01/2022',
+            date_to: '01/02/2022'
+        };
+
+        nockedOpenAiAPI(invalidParameters);
+
+        await expect(generateFlightSearchParameters(messages)).rejects.toThrow(InvalidDateError);
+    });
+
+    it('should throw an error when return date is before the departure date', async () => {
+        const nextWeek = addDays(new Date(),7);
+
+        const messages: ChatCompletionMessageParam[] = [{
+            role: 'user',
+            content: `I want to travel from New York to London on ${nextWeek} and return on ${currentDate}`
+        }];
+        const invalidParameters = {
+            fly_from: 'NYC',
+            fly_to: 'LON',
+            date_from: nextWeek,
+            date_to: nextWeek,
+            return_from: currentDate,
+            return_to: currentDate
+        };
+
+        nockedOpenAiAPI(invalidParameters);
+
+        await expect(generateFlightSearchParameters(messages)).rejects.toThrow(InvalidDateError);
+    });
+
+    it('should throw an error when IATA code is not valid', async () => {
+        const messages: ChatCompletionMessageParam[] = [{
+            role: 'user',
+            content: 'I want to travel from NYC to London on 01/01/2024'
+        }];
+        const invalidParameters = {
+            fly_from: 'NYC',
+            fly_to: 'London',
+            date_from: currentDate,
+            date_to: currentDate
+        };
+
+        nockedOpenAiAPI(invalidParameters);
+
+        await expect(generateFlightSearchParameters(messages)).rejects.toThrow(ResponseError);
+    });
+    it('should throw an error when the number of adult baggage does not match the number of adults', () => {
+        const messages: ChatCompletionMessageParam[] = [{
+            role: 'user',
+            content: `I want to travel from Antwerp to London on ${currentDate} with 2 adults with handbags and 2 hold bags`
+        }];
+        const invalidParameters = {
+            fly_from: 'ANR',
+            fly_to: 'LON',
+            date_from: currentDate,
+            date_to: currentDate,
+            adults: 2,
+            adult_hand_bag: '1,1',
+            adult_hold_bag: '2'
+        };
+
+        nockedOpenAiAPI(invalidParameters);
+
+        expect(() => generateFlightSearchParameters(messages)).rejects.toThrow(ResponseError);
+    });
+
+    it('should throw an error when the number of children baggage does not match the number of children', () => {
+        const messages: ChatCompletionMessageParam[] = [{
+            role: 'user',
+            content: `I want to travel from Antwerp to London on ${currentDate} with 2 children with handbags and 2 hold bags`
+        }];
+        const invalidParameters = {
+            fly_from: 'ANR',
+            fly_to: 'LON',
+            date_from: currentDate,
+            date_to: currentDate,
+            children: 2,
+            child_hand_bag: '1,1',
+            child_hold_bag: '2'
+        };
+
+        nockedOpenAiAPI(invalidParameters);
+
+        expect(() => generateFlightSearchParameters(messages)).rejects.toThrow(ResponseError);
     });
 });
