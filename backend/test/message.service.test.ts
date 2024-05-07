@@ -111,10 +111,10 @@ describe('generateFlightSearchParameters', () => {
             content: `I want to travel from Antwerp to London on ${currentDate} with 2 adults with handbags and 2 hold bags`
         }];
         const invalidParameters = {
-            fly_from: 'NYC',
-            fly_to: 'London',
-            date_from: '01/01/2024',
-            date_to: '01/02/2024',
+            fly_from: 'ANR',
+            fly_to: 'LON',
+            date_from: currentDate,
+            date_to: currentDate,
             adults: 2,
             adult_hand_bag: '1,1',
             adult_hold_bag: '2'
@@ -122,7 +122,7 @@ describe('generateFlightSearchParameters', () => {
 
         nockedOpenAiAPI(invalidParameters);
 
-        expect(() => generateFlightSearchParameters(messages)).toThrow(ResponseError);
+        expect(() => generateFlightSearchParameters(messages)).rejects.toThrow(ResponseError);
     });
 
     it('should throw an error when the number of children baggage does not match the number of children', () => {
@@ -131,10 +131,10 @@ describe('generateFlightSearchParameters', () => {
             content: `I want to travel from Antwerp to London on ${currentDate} with 2 children with handbags and 2 hold bags`
         }];
         const invalidParameters = {
-            fly_from: 'NYC',
-            fly_to: 'London',
-            date_from: '01/01/2024',
-            date_to: '01/02/2024',
+            fly_from: 'ANR',
+            fly_to: 'LON',
+            date_from: currentDate,
+            date_to: currentDate,
             children: 2,
             child_hand_bag: '1,1',
             child_hold_bag: '2'
@@ -142,6 +142,6 @@ describe('generateFlightSearchParameters', () => {
 
         nockedOpenAiAPI(invalidParameters);
 
-        expect(() => generateFlightSearchParameters(messages)).toThrow(ResponseError);
+        expect(() => generateFlightSearchParameters(messages)).rejects.toThrow(ResponseError);
     });
 });
