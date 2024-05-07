@@ -58,18 +58,18 @@ export function FlightCard(props: FlightCardProps) {
     const [isOpen, setIsOpen] = React.useState(false)
 
     return (
-        <Card>
+        <Card >
             <Collapsible open={isOpen} onOpenChange={setIsOpen}>
-                <div className=" flex items-center justify-between space-x-4 ">
+                <div className=" flex items-center justify-around space-x-4 ">
                     <CardHeader className="flex">
                         <CardTitle>{props.cityFrom} to {props.cityTo}</CardTitle>
 
                     </CardHeader>
 
-                    <div className="flex">
-                        <div className="flex items-center mr-0">Price: {props.price}</div>
+                    <div className="flex mx-3">
+                        <div className="flex items-center mx-3 ">Price: {props.price}</div>
                         <CollapsibleTrigger asChild>
-                            <Button variant="ghost" size="sm" className="w-9 p-0">
+                            <Button variant="ghost" size="default" className="w-9 p-0">
                                 <ChevronsUpDown className="h-4 w-4"/>
                                 <span className="sr-only">Toggle</span>
                             </Button>

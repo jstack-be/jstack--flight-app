@@ -5,7 +5,7 @@ import {Label} from "@/components/ui/label";
 import {Textarea} from "@/components/ui/textarea";
 import {Button} from "@/components/ui/button";
 import {useRouter} from 'next/navigation'
-import {addMessage, ChatCompletionMessageParam, getAllMessages, removeAllMessages} from "@/app/lib/storage";
+import {ChatCompletionMessageParam, getAllMessages, removeAllMessages} from "@/app/lib/storage";
 
 interface MessageBoxProps {
     onClose: () => void,
@@ -58,7 +58,7 @@ export function MessageBox({onClose, isOpen}: MessageBoxProps) {
     }
 
     return (
-        <div className="bg-gray-200 w-full min-h-screen p-6 md:w-1/3 flex-none md:relative absolute">
+        <div className="bg-gray-200 max-h-screen p-6 md:w-1/4 md:relative absolute">
             <div className="flex justify-between md:hidden my-3">
                 <h2 className="text-2xl">Message History</h2>
                 <Button onClick={onClose}>X</Button>
