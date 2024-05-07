@@ -7,19 +7,20 @@ import ResponseError from "../src/errors/ResponseError";
 import {addDays, formatDate} from "../src/utils/date.utils";
 
 describe('generateFlightSearchParameters', () => {
-    const currentDate = new Date();
     afterEach(() => {
         nock.cleanAll();
     });
     it('should return flight search parameters when valid messages are provided', async () => {
+        const currentDate = formatDate(new Date());
+
         const messages: ChatCompletionMessageParam[] = [{
             role: 'user',
-            content: `I want to travel from New York on ${formatDate(currentDate)}`
+            content: `I want to travel from New York on ${currentDate}`
         }];
         const expectedParameters = {
             fly_from: 'NYC',
-            date_from: formatDate(currentDate),
-            date_to: formatDate(currentDate)
+            date_from: currentDate,
+            date_to: currentDate
         };
 
         nockedOpenAiAPI(expectedParameters);
@@ -67,17 +68,21 @@ describe('generateFlightSearchParameters', () => {
     });
 
     it('should throw an error when return date is before the departure date', async () => {
+        const currentDate = new Date();
+        const currentDateFormatted = formatDate(currentDate);
+        const nextWeek = addDays(currentDate,7);
+
         const messages: ChatCompletionMessageParam[] = [{
             role: 'user',
-            content: `I want to travel from New York to London on ${addDays(currentDate,7)} and return on ${formatDate(currentDate)}`
+            content: `I want to travel from New York to London on ${nextWeek} and return on ${currentDateFormatted}`
         }];
         const invalidParameters = {
             fly_from: 'NYC',
             fly_to: 'LON',
-            date_from: addDays(currentDate,7),
-            date_to: addDays(currentDate,7),
-            return_from: formatDate(currentDate),
-            return_to: formatDate(currentDate)
+            date_from: nextWeek,
+            date_to: nextWeek,
+            return_from: currentDateFormatted,
+            return_to: currentDateFormatted
         };
 
         nockedOpenAiAPI(invalidParameters);
