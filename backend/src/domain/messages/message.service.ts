@@ -1,9 +1,131 @@
-import {ChatCompletionMessageParam, ChatCompletionTool} from "openai/resources";
-import OpenAI from "openai";
+import InvalidDateError from "../../errors/InvalidDateError";
+import ResponseError from "../../errors/ResponseError";
+import {parseDate} from "../../utils/date.utils";
 import {environment} from "../../enviroment";
-import {FlightSearchParameters} from "./message.types";
-import {formatDate} from "../../../test/utils/date.utils";
 import {saveMessage} from "./message.response";
+import {getFilterFunction} from "./message.function";
+import {FlightSearchParameters} from "./message.types";
+import {ChatCompletionMessageParam} from "openai/resources";
+import OpenAI from "openai";
+
+/**
+ * Function to validate dates
+ * @param {any} jsonObject - The object containing the dates to validate
+ * @throws {InvalidDateError} If the dates are not within the valid range
+ */
+function validateDates(jsonObject: any) {
+    const currentDate = new Date();
+    const dateFrom = parseDate(jsonObject.date_from);
+    const dateTo = parseDate(jsonObject.date_to);
+
+    const fortyFiveDaysBeforeNow = new Date();
+    fortyFiveDaysBeforeNow.setDate(currentDate.getDate() - 45);
+
+    const threeYearsFromNow = new Date();
+    threeYearsFromNow.setFullYear(currentDate.getFullYear() + 3);
+
+    if (dateFrom < fortyFiveDaysBeforeNow) {
+        throw new InvalidDateError("The departure date cannot be more than 45 days in the past.");
+    } else if (dateTo < dateFrom) {
+        throw new InvalidDateError("The end date of the departure date range cannot be before the start date.");
+    } else if (dateFrom > threeYearsFromNow || dateTo > threeYearsFromNow) {
+        throw new InvalidDateError("The dates can not be more than 3 years in the future.");
+    }
+
+    // Check if return dates are provided before parsing and validating them
+    if (jsonObject.return_from && jsonObject.return_to) {
+        const returnFrom = parseDate(jsonObject.return_from);
+        const returnTo = parseDate(jsonObject.return_to);
+
+        if (returnFrom < dateFrom) {
+            throw new InvalidDateError("The return date cannot be before the the start date of the departure date range.");
+        } else if (returnTo < returnFrom) {
+            throw new InvalidDateError("The end date of the return date range cannot be before the return_from.");
+        } else if (returnFrom > threeYearsFromNow || returnTo > threeYearsFromNow) {
+            throw new InvalidDateError("The dates can not be more than 3 years in the future.");
+        }
+    }
+}
+
+function validateBaggage(jsonObject: any) {
+    const adults = jsonObject.adults;
+    const children = jsonObject.children;
+    const adultHandbags: string[] = jsonObject.adult_hand_bag?.split(',') || [];
+    const adultHoldbags: string[] = jsonObject.adult_hold_bag?.split(',') || [];
+    const childrenHandbags: string[] = jsonObject.child_hand_bag?.split(',') || [];
+    const childrenHoldbags: string[] = jsonObject.child_hold_bag?.split(',') || [];
+
+    if (adults && adults > 0) {
+        if ((adultHandbags.length !== adults && adultHandbags.length !== 0) || (adultHoldbags.length !== adults && adultHoldbags.length !== 0)) {
+            throw new ResponseError("The number of adult baggage does not match the number of adults. Please change your request and try again.");
+        }
+    }
+
+    if (children && children > 0) {
+        if ((childrenHandbags.length !== children && childrenHandbags.length !== 0) || (childrenHoldbags.length !== children && childrenHoldbags.length !== 0) ) {
+            throw new ResponseError("The number of children's baggage does not match the number of children. Please change your request and try again.");
+        }
+    }
+}
+
+/**
+ * Function to validate IATA codes
+ * @param {string} fly_from - The IATA code of the departure airport
+ * @param {string} fly_to - The IATA code of the destination airport
+ * @throws {ReferenceError} If the IATA codes are not valid
+ */
+function validateIataCodes(fly_from: string, fly_to: string) {
+    //todo allow 2 letter country codes
+    const iata_code_regex = /^[A-Z]{3}$/;
+
+    if (!fly_from) {
+        throw new ResponseError("Could not find a provided departure cities or airports. Please change your request and try again.");
+    }
+
+    const fly_from_codes = fly_from?.split(',');
+    const fly_to_codes = fly_to?.split(',');
+
+
+    for (const code of fly_from_codes) {
+        if (!iata_code_regex.test(code.trim())) {
+            throw new ResponseError("Could not find all provided departure cities or airports. Please change your request and try again.");
+        }
+    }
+
+    if (!!fly_to_codes && fly_to_codes?.length !== 0) {
+        for (const code of fly_to_codes) {
+            if (!iata_code_regex.test(code.trim())) {
+                throw new ResponseError("Could not find all provided destination cities or airports. Please change your request and try again.");
+            }
+        }
+    }
+}
+
+/**
+ * Function to process the response from the OpenAI API
+ * @param {any} completion - The response from the OpenAI API
+ * @returns {any} The processed response
+ * @throws {ReferenceError} If the response does not contain the function json object
+ */
+function processResponse(completion: any) {
+    const responseMessage = completion?.choices?.[0]?.message;
+    const args = responseMessage?.tool_calls?.[0]?.function?.arguments;
+    if (!!args) {
+        let jsonObject = JSON.parse(args);
+        console.log(jsonObject);
+
+        validateIataCodes(jsonObject.fly_from, jsonObject.fly_to);
+        validateDates(jsonObject);
+        validateBaggage(jsonObject);
+
+        saveMessage(jsonObject.message);
+        delete jsonObject.message;
+
+        return jsonObject;
+    } else {
+        throw new ResponseError(responseMessage.content);
+    }
+}
 
 const openai = new OpenAI({
     organization: environment.openAiOrgKey,
@@ -11,109 +133,18 @@ const openai = new OpenAI({
 });
 
 /**
- * Function definition for the OpenAI chat completion tool.
- * This function generates flight search parameters based on the user's conversation.
- */
-const getFilterFunction = (): ChatCompletionTool => {
-    const currentDate = new Date();
-    return {
-        type: 'function',
-        function: {
-            name: 'generateFlightSearchParameters',
-            description: "Get the data for the Flight API",
-            parameters: {
-                type: 'object',
-                properties: {
-                    message: {
-                        type: 'string',
-                        description: 'returns a detailed response message',
-                    },
-                    fly_from: {
-                        type: 'string',
-                        description: 'The IATA code from the departure metropolitan area. it accepts multiple values separated by a comma.',
-                    },
-                    fly_to: {
-                        type: 'string',
-                        description: 'The IATA code from the destination metropolitan area. it accepts multiple values separated by a comma.',
-                    },
-                    date_from: {
-                        type: 'string',
-                        description: 'The start date of the departure date range in dd/mm/yyyy format. The current date is ' +
-                            formatDate(currentDate),
-                    },
-                    date_to: {
-                        type: 'string',
-                        description: 'The end date of the departure date range in dd/mm/yyyy format. The current date is ' +
-                            formatDate(currentDate),
-                    },
-                    return_from: {
-                        type: 'string',
-                        description: 'The start date of the return date range in dd/mm/yyyy format',
-                    },
-                    return_to: {
-                        type: 'string',
-                        description: 'The end date of the return date range in dd/mm/yyyy format',
-                    },
-                    adults: {
-                        type: 'integer',
-                        description: 'Used to specify the number of adults. The sum of adults, children and the infants cannot be greater than 9.',
-                    },
-                    children: {
-                        type: 'integer',
-                        description: 'It specifies the number of children. The sum of adults, children and the infants cannot be greater than 9.',
-                    },
-                    infants: {
-                        type: 'integer',
-                        description: 'Used to specify the number of infants. The sum of adults, children and the infants cannot be greater than 9.',
-                    },
-                    selected_cabins: {
-                        type: 'integer',
-                        description: 'Specifies the preferred cabin class. ' +
-                            'Cabins can be: M (economy), W (economy premium), C (business), or F (first class).' +
-                            ' There can be only one selected cabin for one call. Cannot be used for ground (train, bus) content.',
-                    },
-                    //todo bags
-                    price_from: {
-                        type: 'integer',
-                        description: 'result filter, minimal price',
-                    },
-                    price_to: {
-                        type: 'integer',
-                        description: 'result filter, maximal price',
-                    },
-                    //todo depart/arrival time filters
-                    //todo airlines filter
-                    vehicle_type: {
-                        type: 'string',
-                        description: 'this parameter allows you to specify the vehicle type. The options are aircraft, bus, train. Default all options are selected',
-                    },
-                    sort: {
-                        type: 'string',
-                        description: 'sorts the results by quality, price, date or duration. Price is the default value.',
-                    },
-                    limit: {
-                        type: 'integer',
-                        description: 'returns the number of results that will be shown. If not provided by the user use default value 20. The max value is 1000',
-                    }
-                },
-                ['required']: ['message', 'date_from', 'date_to', 'limit'],
-            },
-        },
-    };
-}
-
-/**
- * Generates flight search parameters based on the user's conversation.
- *
- * @param {string[]} messages - The user's conversation.
- * @returns {Promise<FlightSearchParameters>} The flight search parameters.
- * @throws {ReferenceError} If required attributes are missing in the response from the OpenAI API.
+ * Function to generate flight search parameters
+ * @param {ChatCompletionMessageParam[]} messages - The messages to send to the OpenAI API
+ * @returns {Promise<FlightSearchParameters>} The flight search parameters
  */
 export async function generateFlightSearchParameters(messages: ChatCompletionMessageParam[]): Promise<FlightSearchParameters> {
     const systemMessage: ChatCompletionMessageParam = {
         role: 'system',
-        content: 'You are a helpful travel planner assistant that checks if the user gave all necessary information to find his flights. ' +
-            ' You should check if the user provided an departure location with an airport and the date range for when he wants to depart.'
+        content: 'You are a helpful travel planner assistant ' +
+            ' Your answers should be short and to the point. ' +
+            ' You should let the user know that you can only answer questions about travel routes and not any other information ' +
+            ` The current date is ${new Date().toLocaleDateString()}.` +
+            ' The given dates should not be more than 45 day before the current date and more than 3 years in the future. '
     };
 
     messages.unshift(systemMessage);
@@ -121,31 +152,9 @@ export async function generateFlightSearchParameters(messages: ChatCompletionMes
     const completion = await openai.chat.completions.create({
         messages: messages,
         tools: [getFilterFunction()],
-        tool_choice: {
-            type: 'function',
-            function: {
-                name: 'generateFlightSearchParameters'
-            }
-        },
+        tool_choice: 'auto',
         model: "gpt-3.5-turbo",
     });
 
-    const args = completion?.choices?.[0]?.message?.tool_calls?.[0]?.function?.arguments;
-
-    console.log('Args:');
-    if (!!args) {
-        let jsonObject = JSON.parse(args);
-        console.log("Json object:\n", jsonObject);
-
-        if (Object.keys(jsonObject).length === 0 || !jsonObject.fly_from) {
-            throw new ReferenceError(jsonObject.message);
-        } else {
-            saveMessage(jsonObject.message);
-            delete jsonObject.message;
-            return jsonObject
-        }
-    } else {
-        console.log('No args in response');
-    }
-    console.log('----');
+    return processResponse(completion);
 }

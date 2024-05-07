@@ -18,7 +18,19 @@ export const formatDate = (date: Date) => {
  * @param {number} dateChange - The number of days to be added to the date.
  * @returns {string} The formatted date.
  */
-export function addDays(date: Date, dateChange?: number) {
+export function addDays(date: Date, dateChange: number) {
     date.setDate(date.getDate() + dateChange);
     return formatDate(date)
+}
+
+
+/**
+ * Parses a string in the format 'dd/mm/yyyy' into a Date object.
+ *
+ * @param {string} input - The string to be parsed.
+ * @returns {Date} The parsed date.
+ */
+export function parseDate(input: string): Date {
+    const [day, month, year] = input.split("/");
+    return new Date(Number(year), Number(month) - 1, Number(day));
 }
