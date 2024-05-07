@@ -121,38 +121,38 @@ export const getFilterFunction = (): ChatCompletionTool => {
                             ' ja, jo, jp, ko, kr, kw, kz, lt, mx, my, nl, no, nz, om, pe, ph, pl, pt, qa, ro, rs, ru, ' +
                             'sa, se, sg, sk, sr, sv, th, tr, tw, ua, uk, us, vn, za',
                     },
-                    // dtime_from: {
-                    //     type: 'string',
-                    //     description: 'result filter, minimal departure time (use only time in whole hours, not minutes; 11:00 means 11AM, 23:00 means 11PM)',
-                    // },
-                    // dtime_to: {
-                    //     type: 'string',
-                    //     description: 'result filter, maximal departure time (use only time in whole hours, not minutes; 11:00 means 11AM, 23:00 means 11PM)',
-                    // },
-                    // atime_from: {
-                    //     type: 'string',
-                    //     description: 'result filter, minimal arrival time (use only time in whole hours, not minutes; 11:00 means 11AM, 23:00 means 11PM)',
-                    // },
-                    // atime_to: {
-                    //     type: 'string',
-                    //     description: 'result filter, maximal arrival time (use only time in whole hours, not minutes; 11:00 means 11AM, 23:00 means 11PM)',
-                    // },
-                    // ret_dtime_from: {
-                    //     type: 'string',
-                    //     description: 'result filter, minimal return departure time (use only time in whole hours, not minutes; 11:00 means 11AM, 23:00 means 11PM)',
-                    // },
-                    // ret_dtime_to: {
-                    //     type: 'string',
-                    //     description: 'result filter, maximal return departure time (use only time in whole hours, not minutes; 11:00 means 11AM, 23:00 means 11PM)',
-                    // },
-                    // ret_atime_from: {
-                    //     type: 'string',
-                    //     description: 'result filter, minimal return arrival time (use only time in whole hours, not minutes; 11:00 means 11AM, 23:00 means 11PM)',
-                    // },
-                    // ret_atime_to: {
-                    //     type: 'string',
-                    //     description: 'result filter, maximal return arrival time (use only time in whole hours, not minutes; 11:00 means 11AM, 23:00 means 11PM)',
-                    // },
+                    dtime_from: {
+                        type: 'string',
+                        description: 'result filter, minimal departure time (use only time in whole hours, not minutes; 11:00 means 11AM, 23:00 means 11PM)',
+                    },
+                    dtime_to: {
+                        type: 'string',
+                        description: 'result filter, maximal departure time (use only time in whole hours, not minutes; 11:00 means 11AM, 23:00 means 11PM)',
+                    },
+                    atime_from: {
+                        type: 'string',
+                        description: 'result filter, minimal arrival time (use only time in whole hours, not minutes; 11:00 means 11AM, 23:00 means 11PM)',
+                    },
+                    atime_to: {
+                        type: 'string',
+                        description: 'result filter, maximal arrival time (use only time in whole hours, not minutes; 11:00 means 11AM, 23:00 means 11PM)',
+                    },
+                    ret_dtime_from: {
+                        type: 'string',
+                        description: 'result filter, minimal return departure time (use only time in whole hours, not minutes; 11:00 means 11AM, 23:00 means 11PM)',
+                    },
+                    ret_dtime_to: {
+                        type: 'string',
+                        description: 'result filter, maximal return departure time (use only time in whole hours, not minutes; 11:00 means 11AM, 23:00 means 11PM)',
+                    },
+                    ret_atime_from: {
+                        type: 'string',
+                        description: 'result filter, minimal return arrival time (use only time in whole hours, not minutes; 11:00 means 11AM, 23:00 means 11PM)',
+                    },
+                    ret_atime_to: {
+                        type: 'string',
+                        description: 'result filter, maximal return arrival time (use only time in whole hours, not minutes; 11:00 means 11AM, 23:00 means 11PM)',
+                    },
                     //todo airlines filter
                     vehicle_type: {
                         type: 'string',
