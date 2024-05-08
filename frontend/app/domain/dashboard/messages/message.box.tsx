@@ -57,8 +57,8 @@ export function MessageBox({onClose, isOpen}: MessageBoxProps) {
         }
     }
 
-    return (
-        <div className="bg-gray-200 max-h-screen p-6 md:w-1/4 md:relative absolute">
+    return  (
+        <div className="bg-gray-200 max-h-max p-6 md:w-1/4 md:relative absolute">
             <div className="flex justify-between md:hidden my-3">
                 <h2 className="text-2xl">Message History</h2>
                 <Button onClick={onClose}>X</Button>

@@ -31,9 +31,9 @@ export default function Page() {
     const responseData = JSON.parse(localStorage.getItem('responseData') ?? 'null');
 
     return (
-        <main className="flex">
+        <main className="flex h-screen">
             <MessageBox isOpen={isOpen} onClose={closeModal}/>
-            <div className="flex-grow p-6 md:overflow-y-hidden md:p-12">
+            <div className="flex-grow p-6 overflow-y-auto mb-0 md:p-12">
                 <div className={"flex justify-center"}>
                     <Image src={logo} alt={"afbeelding van vliegtuig logo"} className={" h-28 w-auto "}/>
                     <h1 className="items-center justify-center text-primary text-6xl hidden sm:flex">
