@@ -112,6 +112,7 @@ function processResponse(completion: any) {
     const args = responseMessage?.tool_calls?.[0]?.function?.arguments;
     if (!!args) {
         let jsonObject = JSON.parse(args);
+        jsonObject.limit = 20;
         console.log(jsonObject);
 
         validateIataCodes(jsonObject.fly_from, jsonObject.fly_to);

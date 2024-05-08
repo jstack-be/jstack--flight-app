@@ -82,7 +82,8 @@ describe('POST /api/flights', () => {
             fly_from: 'LHR',
             fly_to: 'ANR',
             date_from: formatDate(currentDate),
-            date_to: formatDate(currentDate)
+            date_to: formatDate(currentDate),
+            limit: 20
         };
 
         nockedFlightAPI(expectedSearchParameters, mockResponse);
