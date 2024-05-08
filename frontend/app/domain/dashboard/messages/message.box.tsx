@@ -66,20 +66,20 @@ export function MessageBox({onClose, isOpen}: MessageBoxProps) {
             <div className="overflow-auto w-full md:h-4/6 h-1/3 border border-gray-300 p-2">
                 {messages.map((message: ChatCompletionMessageParam, index: number) =>
                     <div key={index}
-                         className={`${message.role == "user" ? "bg-black" : "bg-red-950"} text-sm text-white m-2 px-4 py-3 rounded`}>
+                         className={`${message.role == "user" ? "bg-message text-primary" : "bg-primary text-black"} text-sm m-2 px-4 py-3 rounded`}>
                         <strong className="font-bold">{message.role.toUpperCase()}:</strong><br/>
                         <span className="block sm:inline">{message.content}</span>
                     </div>)}
                 <div ref={messagesEndRef}/>
             </div>
             <div className="mb-4 flex flex-col items-center">
-                <Button onClick={restartConversation}>Restart conversation</Button>
+                <Button className="bg-button" onClick={restartConversation}>Restart conversation</Button>
             </div>
             <form className="flex flex-col items-center" onSubmit={handleSubmit}>
                 <Label className="m-2" htmlFor="message">Ask a filter question</Label>
-                <Textarea className="m-2" id="message" name="message"
+                <Textarea className="m-2 bg-background-text" id="message" name="message"
                           placeholder={"Ask some more questions to filter your result"} required/>
-                <Button className="m-2" type="submit">Search Routes</Button>
+                <Button className="m-2 bg-button" type="submit">Search Routes</Button>
             </form>
         </div>
     );
