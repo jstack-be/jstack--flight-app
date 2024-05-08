@@ -1,11 +1,11 @@
 "use client"
 import React, {useEffect, useRef, useState} from "react";
-import {sendMessages} from "@/app/lib/actions";
 import {Label} from "@/components/ui/label";
 import {Textarea} from "@/components/ui/textarea";
 import {Button} from "@/components/ui/button";
 import {useRouter} from 'next/navigation'
-import {ChatCompletionMessageParam, getAllMessages, removeAllMessages} from "@/app/lib/storage";
+import useFlights from "@/app/lib/useFlights";
+import {ChatCompletionMessageParam} from "@/app/domain/dashboard/messages/message.types";
 
 interface MessageBoxProps {
     onClose: () => void,
@@ -18,18 +18,9 @@ interface MessageBoxProps {
  * @param isOpen - boolean to check if the message box is open
  */
 export function MessageBox({onClose, isOpen}: MessageBoxProps) {
-    const [messages, setMessages] = useState<ChatCompletionMessageParam[]>([]);
+    const {messages, sendMessage, removeAllMessages} = useFlights();
     const messagesEndRef = useRef<HTMLDivElement | null>(null);
     const router = useRouter()
-
-    const updateMessages = () => {
-        const messages = getAllMessages()
-        setMessages(messages);
-    }
-
-    useEffect(() => {
-        updateMessages()
-    }, []);
 
     useEffect(() => {
         if (messagesEndRef.current) {
@@ -39,7 +30,6 @@ export function MessageBox({onClose, isOpen}: MessageBoxProps) {
 
     const restartConversation = async () => {
         removeAllMessages()
-        updateMessages()
         router.push('/')
     };
 
@@ -50,21 +40,18 @@ export function MessageBox({onClose, isOpen}: MessageBoxProps) {
         const formData = new FormData(event.currentTarget);
         const message = formData.get("message") as string;
         event.currentTarget.reset(); // Clear the form
+        await sendMessage(message);
 
-        if (message?.trim() !== "") {
-            const response = await sendMessages(formData);
-            updateMessages()
-        }
     }
 
-    return  (
+    return (
         <div className="bg-gray-200 max-h-max p-6 md:w-1/4 md:relative absolute">
             <div className="flex justify-between md:hidden my-3">
                 <h2 className="text-2xl">Message History</h2>
                 <Button onClick={onClose}>X</Button>
             </div>
             <div className="overflow-auto w-full md:h-4/6 h-1/3 border border-gray-300 p-2">
-                {messages.map((message: ChatCompletionMessageParam, index: number) =>
+                {messages?.map((message: ChatCompletionMessageParam, index: number) =>
                     <div key={index}
                          className={`${message.role == "user" ? "bg-message text-primary" : "bg-primary text-black"} text-sm m-2 px-4 py-3 rounded`}>
                         <strong className="font-bold">{message.role.toUpperCase()}:</strong><br/>

@@ -1,34 +1,27 @@
 "use client";
-import React, {useState} from "react";
-import {sendMessages} from "@/app/lib/actions";
-
+import React from "react";
 import {Textarea} from "@/components/ui/textarea";
 import {Button} from "@/components/ui/button"
 import {Label} from "@/components/ui/label"
 import {useRouter} from "next/navigation";
-import {removeAllMessages} from "@/app/lib/storage";
 import {Alert, AlertDescription, AlertTitle} from "@/components/ui/alert";
+import useFlights from "@/app/lib/useFlights";
 
 export default function MessageForm() {
     const router = useRouter()
-    const [errorMessage, setErrorMessage] = useState("");
+    const {removeAllMessages, sendMessage, isError, errorMessage, isSuccess,isLoading} = useFlights()
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const formData = new FormData(event.currentTarget);
         const message = formData.get("message") as string;
 
-        if (message?.trim() !== "") {
-            const result = await sendMessages(formData);
-            if (typeof result === 'object' && result !== null) {
-                localStorage.setItem('responseData', JSON.stringify(result));
-                router.push('/dashboard')
-            } else {
-                removeAllMessages();
-                setErrorMessage(result);
-            }
-        }
+        await sendMessage(message);
     }
+
+    if (isError) removeAllMessages()
+    if (isLoading) return (<div>Loading...</div>)
+    if (isSuccess) router.push('/dashboard');
 
     return (
         <form onSubmit={handleSubmit}>
@@ -46,9 +39,6 @@ export default function MessageForm() {
                     </div>
                 </div>
             </div>
-            <div className="flex justify-center m-2">
-                {errorMessage && <div className="text-sm text-red-600">{errorMessage}</div>}
-            </div>
             <div className="flex flex-col items-center">
                 <p className="font-bold text-md text-center w-8/12 text-secondary">Example:
 
@@ -59,7 +49,7 @@ export default function MessageForm() {
                     We plan to return between the 20th and 25th of December 2024. &quot;
                 </p>
             </div>
-            {errorMessage &&
+            {isError &&
                 <div className="flex justify-center">
                     <Alert className="bg-red-400 text-white w-6/12">
                         <AlertTitle> Planely could not resolve your request: </AlertTitle>

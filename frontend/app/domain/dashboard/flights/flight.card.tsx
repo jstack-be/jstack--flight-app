@@ -1,27 +1,15 @@
 "use client"
 
 import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Collapsible, CollapsibleContent, CollapsibleTrigger} from "@/components/ui/collapsible";
 import {Button} from "@/components/ui/button";
 import {ChevronsUpDown, Frown} from "lucide-react";
+import {Flight} from "@/app/domain/dashboard/flights/flight.types";
+import useFlights from "@/app/lib/useFlights";
 
-export interface FlightCardProps {
-    id: string;
-    cityFrom: string;
-    cityTo: string;
-    cityCodeTo: string;
-    airlines: string[];
-    pnr_count: number;
-    has_airport_change: boolean | false;
-    technical_stops: number;
-    price: number;
-    availability: {
-        seats: number;
-    };
-}
 
-const Pagination = ({flights}: { flights: FlightCardProps[] }) => {
+const Pagination = ({flights}: { flights: Flight[] }) => {
     const [currentPage, setCurrentPage] = useState(1);
     const flightsPerPage: number = 5;
 
@@ -59,11 +47,17 @@ const Pagination = ({flights}: { flights: FlightCardProps[] }) => {
     );
 };
 
-export function FlightCards({flights}: { flights: FlightCardProps[] }) {
+export function FlightCards() {
+    const {flights,isLoading} = useFlights();
+    useEffect(() => {
+        console.log('Card:'+flights)
+    }, [flights]);
+
+    if (isLoading) return <div>Loading...</div>
     if (flights === null || flights === undefined || flights.length == 0) {
         return (
             <div className={"flex-grow flex text-primary items-center justify-center text-3xl w-auto sm:text-justify"}>
-                <Frown size={72} className="m-2"/> Sorry, er zijn geen vluchten gevonden.
+                <Frown size={72} className="m-2"/> Sorry, no flights found.
             </div>
 
             // // TODO: remove this mock*
@@ -89,7 +83,7 @@ export function FlightCards({flights}: { flights: FlightCardProps[] }) {
     }
 }
 
-export function FlightCard(props: FlightCardProps) {
+export function FlightCard(props: Flight) {
     const [isOpen, setIsOpen] = React.useState(false)
 
     return (

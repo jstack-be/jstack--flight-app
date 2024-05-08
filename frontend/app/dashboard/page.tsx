@@ -7,7 +7,7 @@ import {useWindowSize} from "@uidotdev/usehooks";
 
 
 import logo from "@/public/logo.png";
-import {FlightCards} from "@/app/domain/dashboard/flights/FlightCard";
+import {FlightCards} from "@/app/domain/dashboard/flights/flight.card";
 
 export default function Page() {
     const {width} = useWindowSize();
@@ -27,9 +27,6 @@ export default function Page() {
         setIsOpen(false);
     };
 
-
-    const responseData = JSON.parse(localStorage.getItem('responseData') ?? 'null');
-
     return (
         <main className="flex h-screen">
             <MessageBox isOpen={isOpen} onClose={closeModal}/>
@@ -40,7 +37,7 @@ export default function Page() {
                         PLANELY
                     </h1>
                 </div>
-                <FlightCards flights={responseData}/>
+                <FlightCards/>
 
                 <Button className="top-10 left-10 md:hidden" onClick={openModal}>
                     Show messages
