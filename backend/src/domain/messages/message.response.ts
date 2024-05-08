@@ -9,7 +9,7 @@ type MessageResponse = {
 let message: string | null = null;
 
 // Holds the temporary flight data
-let flights: FlightsResponse[] | null = null;
+let flights: FlightsResponse[] = [];
 
 
 /**
@@ -62,5 +62,5 @@ export function getContent(): MessageResponse {
  */
 export function clearContent(): void {
     message = null;
-    flights = null;
+    flights = [];
 }
