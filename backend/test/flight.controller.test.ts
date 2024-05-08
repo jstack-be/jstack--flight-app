@@ -60,19 +60,22 @@ describe('POST /api/flights', () => {
         };
 
         const mockResponse = {
-            data: {
-                flights:
-                    [
-                        {
-                            id: "0f6401af4d950000bb579950_0",
-                            flyFrom: "LHR",
-                            flyTo: "ANR",
-                            cityFrom: "London",
-                            cityCodeFrom: "LON",
-                            cityTo: "Brussels",
-                            cityCodeTo: "BRU",
-                        }]
-            }
+            data:
+                [
+                    {
+                        id: "0f6401af4d950000bb579950_0",
+                        cityFrom: "London",
+                        cityTo: "Brussels",
+                        cityCodeTo: "BRU",
+                        airlines: ["TB", "U2"],
+                        pnr_count: 2,
+                        has_airport_change: false,
+                        technical_stops: 0,
+                        price: 207,
+                        availability: {
+                            seats: 9,
+                        }
+                    }]
         };
 
         const expectedSearchParameters = {
@@ -90,7 +93,7 @@ describe('POST /api/flights', () => {
             .post('/api/flights')
             .send([{role: 'user', content: messages}]);
         expect(res.status).toBe(200);
-        expect(mockResponse.data.flights).toEqual(res.body.flights.flights);
+        expect(mockResponse.data).toEqual(res.body.flights);
     });
 })
 ;

@@ -33,7 +33,7 @@ export default function Page() {
     return (
         <main className="flex h-screen">
             <MessageBox isOpen={isOpen} onClose={closeModal}/>
-            <div className="flex-grow p-6 overflow-y-auto mb-0 md:p-12">
+            <div className="flex-grow overflow-y-auto md:p-12">
                 <div className={"flex justify-center"}>
                     <Image src={logo} alt={"afbeelding van vliegtuig logo"} className={" h-28 w-auto "}/>
                     <h1 className="items-center justify-center text-primary text-6xl hidden sm:flex">
@@ -45,7 +45,6 @@ export default function Page() {
                 <Button className="top-10 left-10 md:hidden" onClick={openModal}>
                     Show messages
                 </Button>
-
             </div>
         </main>
     );

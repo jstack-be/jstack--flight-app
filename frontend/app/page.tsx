@@ -1,13 +1,9 @@
 import Image from "next/image";
 import MessageForm from "@/app/domain/home/message.form";
-import {Suspense} from "react";
-
 
 import logo from '../public/logo.png'
 
 export default function Home() {
-
-
     return (
         <main>
             <div className={"flex-col flex items-center justify-between"}>
