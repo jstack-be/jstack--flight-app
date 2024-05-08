@@ -1,0 +1,263 @@
+[
+  {
+    "id": "1",
+    "cityTo": "Brussel",
+    "cityFrom": "New York City",
+    "has_airport_change": false,
+    "cityCodeTo": "NYC",
+    "technical_stops": 0,
+    "price": 1000,
+    "availability": [
+      {
+        "seats": 100
+      }
+    ],
+    "pnr_count": "100",
+    "airlines": [
+      "BLA",
+      "Delta"
+    ]
+  },
+  {
+    "id": "2",
+    "cityTo": "Brussel",
+    "cityFrom": "New York City",
+    "has_airport_change": false,
+    "cityCodeTo": "NYC",
+    "technical_stops": 0,
+    "price": 1000,
+    "availability": [
+      {
+        "seats": 100
+      }
+    ],
+    "pnr_count": "100",
+    "airlines": [
+      "BLA",
+      "Delta"
+    ]
+  },
+  {
+    "id": "3",
+    "cityTo": "Brussel",
+    "cityFrom": "New York City",
+    "has_airport_change": false,
+    "cityCodeTo": "NYC",
+    "technical_stops": 0,
+    "price": 1000,
+    "availability": [
+      {
+        "seats": 100
+      }
+    ],
+    "pnr_count": "100",
+    "airlines": [
+      "BLA",
+      "Delta"
+    ]
+  },
+  {
+    "id": "4",
+    "cityTo": "Brussel",
+    "cityFrom": "New York City",
+    "has_airport_change": false,
+    "cityCodeTo": "NYC",
+    "technical_stops": 0,
+    "price": 1000,
+    "availability": [
+      {
+        "seats": 100
+      }
+    ],
+    "pnr_count": "100",
+    "airlines": [
+      "BLA",
+      "Delta"
+    ]
+  },
+  {
+    "id": "5",
+    "cityTo": "Brussel",
+    "cityFrom": "New York City",
+    "has_airport_change": false,
+    "cityCodeTo": "NYC",
+    "technical_stops": 0,
+    "price": 1000,
+    "availability": [
+      {
+        "seats": 100
+      }
+    ],
+    "pnr_count": "100",
+    "airlines": [
+      "BLA",
+      "Delta"
+    ]
+  },{
+  "id": "6",
+  "cityTo": "Brussel",
+  "cityFrom": "New York City",
+  "has_airport_change": false,
+  "cityCodeTo": "NYC",
+  "technical_stops": 0,
+  "price": 1000,
+  "availability": [
+    {
+      "seats": 100
+    }
+  ],
+  "pnr_count": "100",
+  "airlines": [
+    "BLA",
+    "Delta"
+  ]
+},{
+  "id": "7",
+  "cityTo": "Brussel",
+  "cityFrom": "New York City",
+  "has_airport_change": false,
+  "cityCodeTo": "NYC",
+  "technical_stops": 0,
+  "price": 1000,
+  "availability": [
+    {
+      "seats": 100
+    }
+  ],
+  "pnr_count": "100",
+  "airlines": [
+    "BLA",
+    "Delta"
+  ]
+},{
+  "id": "8",
+  "cityTo": "Brussel",
+  "cityFrom": "New York City",
+  "has_airport_change": false,
+  "cityCodeTo": "NYC",
+  "technical_stops": 0,
+  "price": 1000,
+  "availability": [
+    {
+      "seats": 100
+    }
+  ],
+  "pnr_count": "100",
+  "airlines": [
+    "BLA",
+    "Delta"
+  ]
+},{
+  "id": "9",
+  "cityTo": "Brussel",
+  "cityFrom": "New York City",
+  "has_airport_change": false,
+  "cityCodeTo": "NYC",
+  "technical_stops": 0,
+  "price": 1000,
+  "availability": [
+    {
+      "seats": 100
+    }
+  ],
+  "pnr_count": "100",
+  "airlines": [
+    "BLA",
+    "Delta"
+  ]
+},{
+  "id": "10",
+  "cityTo": "Brussel",
+  "cityFrom": "New York City",
+  "has_airport_change": false,
+  "cityCodeTo": "NYC",
+  "technical_stops": 0,
+  "price": 1000,
+  "availability": [
+    {
+      "seats": 100
+    }
+  ],
+  "pnr_count": "100",
+  "airlines": [
+    "BLA",
+    "Delta"
+  ]
+},{
+  "id": "11",
+  "cityTo": "Brussel",
+  "cityFrom": "New York City",
+  "has_airport_change": false,
+  "cityCodeTo": "NYC",
+  "technical_stops": 0,
+  "price": 1000,
+  "availability": [
+    {
+      "seats": 100
+    }
+  ],
+  "pnr_count": "100",
+  "airlines": [
+    "BLA",
+    "Delta"
+  ]
+},{
+  "id": "12",
+  "cityTo": "Brussel",
+  "cityFrom": "New York City",
+  "has_airport_change": false,
+  "cityCodeTo": "NYC",
+  "technical_stops": 0,
+  "price": 1000,
+  "availability": [
+    {
+      "seats": 100
+    }
+  ],
+  "pnr_count": "100",
+  "airlines": [
+    "BLA",
+    "Delta"
+  ]
+},{
+  "id": "13",
+  "cityTo": "Brussel",
+  "cityFrom": "New York City",
+  "has_airport_change": false,
+  "cityCodeTo": "NYC",
+  "technical_stops": 0,
+  "price": 1000,
+  "availability": [
+    {
+      "seats": 100
+    }
+  ],
+  "pnr_count": "100",
+  "airlines": [
+    "BLA",
+    "Delta"
+  ]
+},{
+  "id": "14",
+  "cityTo": "Brussel",
+  "cityFrom": "New York City",
+  "has_airport_change": false,
+  "cityCodeTo": "NYC",
+  "technical_stops": 0,
+  "price": 1000,
+  "availability": [
+    {
+      "seats": 100
+    }
+  ],
+  "pnr_count": "100",
+  "airlines": [
+    "BLA",
+    "Delta"
+  ]
+}
+]
+
+
+
+

@@ -84,7 +84,12 @@ export function FlightCards({flights}: { flights: FlightCardProps[] }) {
 
     } else {
         return (
-            <Pagination flights={flights}/>
+            // <Pagination flights={flights}/>
+            <div className="space-y-4 overflow-auto">
+                {flights.map(flight => (
+                    <FlightCard key={flight.id} {...flight} />
+                ))}
+            </div>
         );
     }
 }
