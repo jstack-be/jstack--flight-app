@@ -30,7 +30,7 @@ export default function Page() {
 
     // const responseData = JSON.parse(localStorage.getItem('responseData') ?? 'null');
 
-    const responseData = require("@/app/domain/dashboard/flights/data.json")
+    const testData = require("@/app/domain/dashboard/flights/data.json")
 
     return (
         <main className="flex h-screen">
@@ -42,7 +42,8 @@ export default function Page() {
                         PLANELY
                     </h1>
                 </div>
-                <FlightCards flights={responseData}/>
+                {/*<FlightCards flights={responseData}/>*/}
+                <FlightCards flights={testData}/>
 
                 <Button className="top-10 left-10 md:hidden" onClick={openModal}>
                     Show messages
