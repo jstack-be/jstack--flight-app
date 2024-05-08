@@ -1,7 +1,7 @@
 "use client"
 
 import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
-import React from "react";
+import React, {useState} from "react";
 import {Collapsible, CollapsibleContent, CollapsibleTrigger} from "@/components/ui/collapsible";
 import {Button} from "@/components/ui/button";
 import {ChevronsUpDown, Frown} from "lucide-react";
@@ -21,6 +21,43 @@ export interface FlightCardProps {
     };
 }
 
+const Pagination = ({flights}: { flights: FlightCardProps[] }) => {
+    const [currentPage, setCurrentPage] = useState(1);
+    const flightsPerPage: number = 5;
+
+    // Calculate index of the first and last flight of the current page
+    const indexOfLastFlight = currentPage * flightsPerPage;
+    const indexOfFirstFlight = indexOfLastFlight - flightsPerPage;
+    const currentFlights = flights.slice(indexOfFirstFlight, indexOfLastFlight);
+
+    // Change page
+    const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
+
+    return (
+        <div className="space-y-4">
+            {currentFlights.map(flight => (
+                <FlightCard key={flight.id} {...flight} />
+            ))}
+            {/* Pagination controls */}
+            <div className="flex justify-end mt-4">
+                <button
+                    onClick={() => paginate(currentPage - 1)}
+                    disabled={currentPage === 1}
+                    className={`${currentPage === 1 ? 'hidden' : ''} mr-2 px-4 py-2 bg-gray-200 rounded-md`}
+                >
+                    Previous
+                </button>
+                <button
+                    onClick={() => paginate(currentPage + 1)}
+                    disabled={indexOfLastFlight >= flights.length}
+                    className={`${indexOfLastFlight >= flights.length ? 'hidden' : ''} ml-2 px-4 py-2 bg-gray-200 rounded-md`}
+                >
+                    Next
+                </button>
+            </div>
+        </div>
+    );
+};
 
 export function FlightCards({flights}: { flights: FlightCardProps[] }) {
     if (flights === null || flights === undefined || flights.length == 0) {
@@ -45,20 +82,18 @@ export function FlightCards({flights}: { flights: FlightCardProps[] }) {
             // </div>
         );
 
-    } else
+    } else {
         return (
-
-            <div className="space-y-4">
-                {flights.map(flight => <FlightCard key={flight.id} {...flight}/>)}
-            </div>
+            <Pagination flights={flights}/>
         );
+    }
 }
 
 export function FlightCard(props: FlightCardProps) {
     const [isOpen, setIsOpen] = React.useState(false)
 
     return (
-        <Card >
+        <Card>
             <Collapsible open={isOpen} onOpenChange={setIsOpen}>
                 <div className=" flex items-center justify-around space-x-4 ">
                     <CardHeader className="flex">

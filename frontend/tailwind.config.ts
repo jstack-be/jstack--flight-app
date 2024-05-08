@@ -32,6 +32,8 @@ const config = {
                     dark: "#003336",
                 },
                 foreground: "#0F989D",
+                message: "#08AECC",
+                button: "#BDFBFF" ,
                 primary: {
                     DEFAULT: "#ffffff",
                     foreground: "#004B97",

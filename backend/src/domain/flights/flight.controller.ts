@@ -28,8 +28,9 @@ export async function queryFlights(req: Request, res: Response): Promise<void> {
         const flights = await getTravelData(jsonObject);
         if (flights.length === 0) {
             saveMessage("No fights found");
+        } else {
+            saveFlights(flights);
         }
-        saveFlights(flights);
 
         const response = getContent();
         res.status(200).send(response);
