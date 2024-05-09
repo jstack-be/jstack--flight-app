@@ -1,31 +1,33 @@
 "use client"
-import {useMutation, useQueryClient} from "@tanstack/react-query";
+import {useMutation} from "@tanstack/react-query";
 import {queryFlights} from "@/app/lib/actions";
 import {Flight} from "@/app/domain/dashboard/flights/flight.types";
 import {ChatCompletionMessageParam} from "@/app/domain/dashboard/messages/message.types";
 import {useLocalStorage} from "@uidotdev/usehooks";
 
 export default function useFlights() {
-    const [messages, saveMessages] = useLocalStorage<ChatCompletionMessageParam[]>("message", []);
-    const [flights, setFlights] = useLocalStorage<Flight[]>("flights",[]); //todo remove from local storage
-    const queryClient = useQueryClient()
+    const [messages, saveMessages] = useLocalStorage<ChatCompletionMessageParam[]>("messages", []);
+    const [flights, setFlights] = useLocalStorage<Flight[]>("flights", []);
     const mutation = useMutation({
         mutationFn: queryFlights,
-        onSuccess: () => {
+        onSuccess: (data) => {
             // Invalidate and refetch
-            queryClient.invalidateQueries({queryKey: ['flights']})
+            setFlights(data.flights);
+            saveMessages([...messages, {role: 'assistant', content: data.message}])
+        },
+        onError: (error) => {
+            saveMessages([...messages, {role: 'assistant', content: error.message}])
         },
     })
 
-    async function sendMessage(content: string) {
+    function sendMessage(content: string) {
         if (!content.trim() || messages === undefined) return;
+        const messageHistory: ChatCompletionMessageParam[] = [...messages, {role: 'user', content}];
+        saveMessages(messageHistory)
         try {
-            const messageHistory: ChatCompletionMessageParam[] = [...messages, {role: 'user', content}];
-            const respons = await mutation.mutateAsync(messageHistory);
-            saveMessages([...messageHistory, {role: 'assistant', content: respons.message}]);
-            setFlights(respons.flights);
+            mutation.mutate(messageHistory);
         } catch (error) {
-            console.error('Error:', error);
+            // console.error('Error:', error);
         }
     }
 

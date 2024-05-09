@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, {useEffect} from "react";
 import {Textarea} from "@/components/ui/textarea";
 import {Button} from "@/components/ui/button"
 import {Label} from "@/components/ui/label"
@@ -9,19 +9,31 @@ import useFlights from "@/app/lib/useFlights";
 
 export default function MessageForm() {
     const router = useRouter()
-    const {removeAllMessages, sendMessage, isError, errorMessage, isSuccess,isLoading} = useFlights()
+    const {removeAllMessages, sendMessage, isError, errorMessage, isSuccess, isLoading} = useFlights()
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const formData = new FormData(event.currentTarget);
         const message = formData.get("message") as string;
 
-        await sendMessage(message);
+        sendMessage(message);
     }
 
-    if (isError) removeAllMessages()
-    if (isLoading) return (<div>Loading...</div>)
-    if (isSuccess) router.push('/dashboard');
+    useEffect(() => {
+        if (isError) {
+            //todo check why it does not clear
+            removeAllMessages();
+            console.log("cleard history")
+        }
+    }, [isError, errorMessage, removeAllMessages]);
+
+    useEffect(() => {
+        if (isSuccess) {
+            router.push('/dashboard')
+            return;
+        }
+    }, [isSuccess, router]);
+
 
     return (
         <form onSubmit={handleSubmit}>
@@ -35,7 +47,10 @@ export default function MessageForm() {
                               name="message"
                               placeholder={"Please provide as much detail as possible"} required/>
                     <div className="absolute bottom-0 right-3 p-2 focus:border-ring text-secondary">
-                        <Button type="submit" className="">Search Routes</Button>
+                        {isLoading ?
+                            <Button disabled type="submit" className="">Loading...</Button> :
+                            <Button type="submit" className="">Search Routes</Button>
+                        }
                     </div>
                 </div>
             </div>

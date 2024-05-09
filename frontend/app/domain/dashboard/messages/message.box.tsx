@@ -1,5 +1,5 @@
 "use client"
-import React, {useEffect, useRef, useState} from "react";
+import React, {useEffect, useRef} from "react";
 import {Label} from "@/components/ui/label";
 import {Textarea} from "@/components/ui/textarea";
 import {Button} from "@/components/ui/button";
@@ -18,7 +18,7 @@ interface MessageBoxProps {
  * @param isOpen - boolean to check if the message box is open
  */
 export function MessageBox({onClose, isOpen}: MessageBoxProps) {
-    const {messages, sendMessage, removeAllMessages} = useFlights();
+    const {messages, sendMessage, removeAllMessages, isLoading} = useFlights();
     const messagesEndRef = useRef<HTMLDivElement | null>(null);
     const router = useRouter()
 
@@ -40,7 +40,7 @@ export function MessageBox({onClose, isOpen}: MessageBoxProps) {
         const formData = new FormData(event.currentTarget);
         const message = formData.get("message") as string;
         event.currentTarget.reset(); // Clear the form
-        await sendMessage(message);
+        sendMessage(message);
 
     }
 
@@ -66,7 +66,10 @@ export function MessageBox({onClose, isOpen}: MessageBoxProps) {
                 <Label className="m-2" htmlFor="message">Ask a filter question</Label>
                 <Textarea className="m-2 bg-background-text" id="message" name="message"
                           placeholder={"Ask some more questions to filter your result"} required/>
-                <Button className="m-2 bg-button" type="submit">Search Routes</Button>
+                {isLoading ?
+                    <Button disabled className="m-2 bg-button" type="submit">Loading ...</Button> :
+                    <Button className="m-2 bg-button" type="submit">Search Routes</Button>
+                }
             </form>
         </div>
     );

@@ -1,7 +1,7 @@
 "use client"
 
 import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import {Collapsible, CollapsibleContent, CollapsibleTrigger} from "@/components/ui/collapsible";
 import {Button} from "@/components/ui/button";
 import {ChevronsUpDown, Frown} from "lucide-react";
@@ -48,13 +48,10 @@ const Pagination = ({flights}: { flights: Flight[] }) => {
 };
 
 export function FlightCards() {
-    const {flights,isLoading} = useFlights();
-    useEffect(() => {
-        console.log('Card:'+flights)
-    }, [flights]);
+    const {flights, isLoading,isError} = useFlights();
 
     if (isLoading) return <div>Loading...</div>
-    if (flights === null || flights === undefined || flights.length == 0) {
+    if (flights === null || flights === undefined || flights.length == 0 || isError) {
         return (
             <div className={"flex-grow flex text-primary items-center justify-center text-3xl w-auto sm:text-justify"}>
                 <Frown size={72} className="m-2"/> Sorry, no flights found.

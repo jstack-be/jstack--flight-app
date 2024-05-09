@@ -3,7 +3,7 @@
 import {getURL} from "./environment";
 import {ChatCompletionMessageParam} from "@/app/domain/dashboard/messages/message.types";
 
-export async function queryFlights(messageHistory: ChatCompletionMessageParam[]){
+export async function queryFlights(messageHistory: ChatCompletionMessageParam[]) {
     if (messageHistory.length === 0) return Promise.resolve({flights: []});
     const res = await fetch(await getURL(), {
         method: 'POST',
@@ -16,8 +16,6 @@ export async function queryFlights(messageHistory: ChatCompletionMessageParam[])
         const errorMessage = await res.text();
         throw new Error(errorMessage || 'Could not connect to the server');
     }
-    const data = await res.json();
-    console.log(data);
-    return data;
+    return await res.json();
 }
 
