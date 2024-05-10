@@ -17,7 +17,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.className} 
-      bg-gradient-to-br from-background to-background-gradient overflow-hidden`}> {children}</body>
+      bg-gradient-to-br from-background to-background-gradient min-h-screen flex-col`}> {children}</body>
     </html>
   );
 }

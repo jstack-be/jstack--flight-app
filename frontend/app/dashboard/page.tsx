@@ -33,18 +33,19 @@ export default function Page() {
     const testData = require("@/app/domain/dashboard/flights/data.json")
 
     return (
-        <main className="flex h-screen">
+        <main className="h-screen flex w-full fixed">
             <MessageBox isOpen={isOpen} onClose={closeModal}/>
-            <div className="flex-grow p-6 md:overflow-y-auto md:p-12">
-                <div className={"flex justify-center"}>
-                    <Image src={logo} alt={"afbeelding van vliegtuig logo"} className={" h-28 w-auto "}/>
-                    <h1 className="items-center justify-center text-primary text-6xl hidden sm:flex">
-                        PLANELY
-                    </h1>
+            <div className="flex-grow flex flex-col">
+                <div className="p-6 md:p-12 overflow-y-scroll">
+                    <div className={"flex justify-center"}>
+                        <Image src={logo} alt={"afbeelding van vliegtuig logo"} className={" h-28 w-auto "}/>
+                        <h1 className="items-center justify-center text-primary text-6xl hidden sm:flex">
+                            PLANELY
+                        </h1>
+                    </div>
+                    {/*<FlightCards flights={responseData}/>*/}
+                    <FlightCards flights={testData}/>
                 </div>
-                {/*<FlightCards flights={responseData}/>*/}
-                <FlightCards flights={testData}/>
-
                 <Button className="top-10 left-10 md:hidden" onClick={openModal}>
                     Show messages
                 </Button>
