@@ -32,7 +32,8 @@ export default function useFlights() {
     }
 
     function removeAllMessages() {
-        window.localStorage.clear();
+        saveMessages([]);
+        setFlights([])
     }
 
     return {

@@ -21,9 +21,7 @@ export default function MessageForm() {
 
     useEffect(() => {
         if (isError) {
-            //todo check why it does not clear
             removeAllMessages();
-            console.log("cleard history")
         }
     }, [isError, errorMessage, removeAllMessages]);
 
