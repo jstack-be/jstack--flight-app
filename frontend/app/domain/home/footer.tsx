@@ -5,7 +5,7 @@ import {Facebook, Mail, Twitter} from "lucide-react";
 
 export function Footer() {
     return (
-        <footer className="h-3/6 md:h-2/6 bg-background-gradient flex md:flex-row flex-col items-center md:justify-around text-primary">
+        <footer className="h-full md:h-2/6 bg-background-gradient flex md:flex-row flex-col items-center md:justify-around text-primary">
             <section className="flex flex-row">
                 <Image src={logo} alt={"afbeelding van Planely logo"} className="h-2/3 w-1/3 md:h-full md:w-auto"/>
                 <div className="flex flex-col justify-center">
