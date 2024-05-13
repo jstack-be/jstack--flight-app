@@ -3,28 +3,39 @@ import MessageForm from "@/app/domain/home/message.form";
 
 import logo from '../public/logo.png'
 import {ClientOnly} from "@/app/client.only";
+import styles from "./domain/home/home.module.css";
+import ScrollToSection from "@/app/domain/home/section.scroll";
+import {useRef} from "react";
 import {Footer} from "@/app/domain/home/footer";
 
 export default function Home() {
+    const home = useRef<HTMLDivElement | null>(null);
+    const about = useRef<HTMLDivElement | null>(null);
     return (
-        <main>
-            <section className="h-screen">
-                <div className={"  flex-col flex items-center justify-between"}>
-                    <Image src={logo} alt={"afbeelding van vliegtuig logo"} className="h-72 w-auto "/>
-                    <h1 className="items-center justify-center text-primary text-6xl flex">
-                        PLANELY
-                    </h1>
-                </div>
-                <ClientOnly>
-                    <MessageForm/>
-                </ClientOnly>
+        <main className={styles.homeContainer}>
+            <section className="h-screen" ref={home}>
+                <ScrollToSection goToSectionRef={about} showArrow={true}>
+                    <div className={"flex-col flex items-center justify-between"}>
+                        <Image src={logo} alt={"afbeelding van vliegtuig logo"} className="h-72 w-auto "/>
+                        <h1 className="items-center justify-center text-primary text-6xl flex">
+                            PLANELY
+                        </h1>
+                    </div>
+                    <ClientOnly>
+                        <MessageForm/>
+                    </ClientOnly>                </ScrollToSection>
             </section>
-            <section className="h-screen">
-                <div className="h-4/6">
-                    <h2 className="items-center justify-center text-primary text-6xl flex">
-                        About us
-                    </h2>
-                </div>
+            <section ref={about} className="h-screen">
+                <ScrollToSection goToSectionRef={home} showArrow={false}>
+                    <h2 className="text-2xl text-primary">About</h2>
+                    <p className="text-secondary">
+                        Planelly is a flight booking assistant that helps you find the best flights for your travel
+                        needs.
+                        Simply provide as much detail as possible about your travel plans and we will provide you with
+                        the
+                        best options available.
+                    </p>
+                </ScrollToSection>
                 <Footer/>
             </section>
         </main>
