@@ -37,6 +37,7 @@ export default function Home() {
                         best options available.
                     </p>
                 </ScrollToSection>
+
             </div>
         </main>
     );
