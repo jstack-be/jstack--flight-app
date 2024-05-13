@@ -4,6 +4,7 @@ import Image from "next/image";
 import MessageForm from "@/app/domain/home/message.form";
 
 import logo from '../public/logo.png'
+import {ClientOnly} from "@/app/client.only";
 import styles from "./domain/home/home.module.css";
 import ScrollToSection from "@/app/domain/home/section.scroll";
 import {useRef} from "react";
@@ -21,8 +22,9 @@ export default function Home() {
                             PLANELY
                         </h1>
                     </div>
-                    <MessageForm/>
-                </ScrollToSection>
+                    <ClientOnly>
+                        <MessageForm/>
+                    </ClientOnly>                </ScrollToSection>
             </div>
             <div ref={about} className="h-screen">
                 <ScrollToSection goToSectionRef={home} showArrow={false}>
