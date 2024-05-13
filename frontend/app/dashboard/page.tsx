@@ -28,10 +28,6 @@ export default function Page() {
         setIsOpen(false);
     };
 
-//TODO weghalen en bekijken
-    // const responseData = JSON.parse(localStorage.getItem('responseData') ?? 'null');
-    const testData = require("@/app/domain/dashboard/flights/data.json")
-
     return (
         <main className="flex h-screen w-full fixed">
             <ClientOnly>
