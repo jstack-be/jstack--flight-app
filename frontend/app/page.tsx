@@ -2,6 +2,7 @@ import Image from "next/image";
 import MessageForm from "@/app/domain/home/message.form";
 
 import logo from '../public/logo.png'
+import {ClientOnly} from "@/app/client.only";
 
 export default function Home() {
     return (
@@ -12,7 +13,9 @@ export default function Home() {
                     PLANELY
                 </h1>
             </div>
-            <MessageForm/>
+            <ClientOnly>
+                <MessageForm/>
+            </ClientOnly>
         </main>
     );
 }

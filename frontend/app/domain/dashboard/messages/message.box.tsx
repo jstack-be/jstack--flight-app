@@ -1,11 +1,11 @@
 "use client"
-import React, {useEffect, useRef, useState} from "react";
-import {sendMessages} from "@/app/lib/actions";
+import React, {useEffect, useRef} from "react";
 import {Label} from "@/components/ui/label";
 import {Textarea} from "@/components/ui/textarea";
 import {Button} from "@/components/ui/button";
 import {useRouter} from 'next/navigation'
-import {ChatCompletionMessageParam, getAllMessages, removeAllMessages} from "@/app/lib/storage";
+import useFlights from "@/app/lib/useFlights";
+import {ChatCompletionMessageParam} from "@/app/domain/dashboard/messages/message.types";
 
 interface MessageBoxProps {
     onClose: () => void,
@@ -18,18 +18,9 @@ interface MessageBoxProps {
  * @param isOpen - boolean to check if the message box is open
  */
 export function MessageBox({onClose, isOpen}: MessageBoxProps) {
-    const [messages, setMessages] = useState<ChatCompletionMessageParam[]>([]);
+    const {messages, sendMessage, removeAllMessages, isLoading} = useFlights();
     const messagesEndRef = useRef<HTMLDivElement | null>(null);
     const router = useRouter()
-
-    const updateMessages = () => {
-        const messages = getAllMessages()
-        setMessages(messages);
-    }
-
-    useEffect(() => {
-        updateMessages()
-    }, []);
 
     useEffect(() => {
         if (messagesEndRef.current) {
@@ -39,7 +30,6 @@ export function MessageBox({onClose, isOpen}: MessageBoxProps) {
 
     const restartConversation = async () => {
         removeAllMessages()
-        updateMessages()
         router.push('/')
     };
 
@@ -50,11 +40,8 @@ export function MessageBox({onClose, isOpen}: MessageBoxProps) {
         const formData = new FormData(event.currentTarget);
         const message = formData.get("message") as string;
         event.currentTarget.reset(); // Clear the form
+        sendMessage(message);
 
-        if (message?.trim() !== "") {
-            const response = await sendMessages(formData);
-            updateMessages()
-        }
     }
 
     return  (
@@ -79,7 +66,10 @@ export function MessageBox({onClose, isOpen}: MessageBoxProps) {
                 <Label className="m-2" htmlFor="message">Ask a filter question</Label>
                 <Textarea className="m-2 bg-background-text" id="message" name="message"
                           placeholder={"Ask some more questions to filter your result"} required/>
-                <Button className="m-2 bg-button" type="submit">Search Routes</Button>
+                {isLoading ?
+                    <Button disabled className="m-2 bg-button" type="submit">Loading ...</Button> :
+                    <Button className="m-2 bg-button" type="submit">Search Routes</Button>
+                }
             </form>
         </div>
     );
