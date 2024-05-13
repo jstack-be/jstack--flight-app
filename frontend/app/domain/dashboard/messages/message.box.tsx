@@ -44,14 +44,14 @@ export function MessageBox({onClose, isOpen}: MessageBoxProps) {
 
     }
 
-    return (
-        <div className="bg-gray-200 max-h-max p-6 md:w-1/4 md:relative absolute">
+    return  (
+        <div className="bg-gray-200 max-h-screen p-6 md:w-1/4 md:relative">
             <div className="flex justify-between md:hidden my-3">
                 <h2 className="text-2xl">Message History</h2>
                 <Button onClick={onClose}>X</Button>
             </div>
             <div className="overflow-auto w-full md:h-4/6 h-1/3 border border-gray-300 p-2">
-                {messages?.map((message: ChatCompletionMessageParam, index: number) =>
+                {messages.map((message: ChatCompletionMessageParam, index: number) =>
                     <div key={index}
                          className={`${message.role == "user" ? "bg-message text-primary" : "bg-primary text-black"} text-sm m-2 px-4 py-3 rounded`}>
                         <strong className="font-bold">{message.role.toUpperCase()}:</strong><br/>

@@ -8,45 +8,6 @@ import {ChevronsUpDown, Frown} from "lucide-react";
 import {Flight} from "@/app/domain/dashboard/flights/flight.types";
 import useFlights from "@/app/lib/useFlights";
 
-
-const Pagination = ({flights}: { flights: Flight[] }) => {
-    const [currentPage, setCurrentPage] = useState(1);
-    const flightsPerPage: number = 5;
-
-    // Calculate index of the first and last flight of the current page
-    const indexOfLastFlight = currentPage * flightsPerPage;
-    const indexOfFirstFlight = indexOfLastFlight - flightsPerPage;
-    const currentFlights = flights.slice(indexOfFirstFlight, indexOfLastFlight);
-
-    // Change page
-    const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
-
-    return (
-        <div className="space-y-4">
-            {currentFlights.map(flight => (
-                <FlightCard key={flight.id} {...flight} />
-            ))}
-            {/* Pagination controls */}
-            <div className="flex justify-end mt-4">
-                <button
-                    onClick={() => paginate(currentPage - 1)}
-                    disabled={currentPage === 1}
-                    className={`${currentPage === 1 ? 'hidden' : ''} mr-2 px-4 py-2 bg-gray-200 rounded-md`}
-                >
-                    Previous
-                </button>
-                <button
-                    onClick={() => paginate(currentPage + 1)}
-                    disabled={indexOfLastFlight >= flights.length}
-                    className={`${indexOfLastFlight >= flights.length ? 'hidden' : ''} ml-2 px-4 py-2 bg-gray-200 rounded-md`}
-                >
-                    Next
-                </button>
-            </div>
-        </div>
-    );
-};
-
 export function FlightCards() {
     const {flights, isLoading,isError} = useFlights();
 
@@ -56,26 +17,14 @@ export function FlightCards() {
             <div className={"flex-grow flex text-primary items-center justify-center text-3xl w-auto sm:text-justify"}>
                 <Frown size={72} className="m-2"/> Sorry, no flights found.
             </div>
-
-            // // TODO: remove this mock*
-            // <div>
-            //     <FlightCard key={"1"} id={"1"}
-            //                 cityTo={"Brussel"}
-            //                 cityFrom={"New York City"}
-            //                 has_airport_change={false}
-            //                 cityCodeTo={"NYC"}
-            //                 technical_stops={0}
-            //                 price={1000}
-            //                 availability={{seats: 100}}
-            //                 pnr_count={100}
-            //                 airlines={["BLA", "Delta"]}
-            //     />
-            // </div>
         );
-
     } else {
         return (
-            <Pagination flights={flights}/>
+            <div className="space-y-4 overflow-auto">
+                {flights.map(flight => (
+                    <FlightCard key={flight.id} {...flight} />
+                ))}
+            </div>
         );
     }
 }

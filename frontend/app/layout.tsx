@@ -15,16 +15,15 @@ export default function RootLayout({
                                    }: Readonly<{
     children: React.ReactNode;
 }>) {
-    return (
-        <html lang="en">
-
-        <body
-            className={`${inter.className} h-screen bg-gradient-to-br from-background to-background-gradient overflow-hidden`}>
-        <Providers>
-            {children}
-        </Providers>
-        </body>
-        </html>
-    );
+  return (
+    <html lang="en">
+      <body className={`${inter.className} 
+      bg-gradient-to-br from-background to-background-gradient min-h-screen flex-col`}>
+      <Providers>
+          {children}
+      </Providers>
+      </body>
+    </html>
+  );
 }
 
