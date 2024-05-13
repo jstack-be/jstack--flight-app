@@ -7,6 +7,7 @@ import logo from '../public/logo.png'
 import styles from "./domain/home/home.module.css";
 import ScrollToSection from "@/app/domain/home/section.scroll";
 import {useRef} from "react";
+import {ClientOnly} from "@/app/client.only";
 
 export default function Home() {
     const home = useRef<HTMLDivElement | null>(null);
@@ -21,7 +22,9 @@ export default function Home() {
                             PLANELY
                         </h1>
                     </div>
+                    <ClientOnly>
                     <MessageForm/>
+                    </ClientOnly>
                 </ScrollToSection>
             </div>
             <div ref={about} className="h-screen">
