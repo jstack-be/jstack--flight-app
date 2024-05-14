@@ -17,23 +17,22 @@ export default function Home() {
             <section className="h-screen" ref={home}>
                 <ScrollToSection goToSectionRef={about} showArrow={true}>
                     <div className="flex justify-center items-end h-1/2">
-                        <Image src={logo} alt={"The logo of the application"} className="max-h-[40vh] md:max-h-[30vh] w-auto mb-14"/>
-
-                        {/*<h1 className="items-center justify-center font-Jua text-primary text-6xl flex">*/}
-                        {/*    PLANELY*/}
-                        {/*</h1>*/}
+                        <Image src={logo} alt={"The logo of the application"}
+                               className="max-h-[40vh] md:max-h-[30vh] w-auto mb-14"/>
                     </div>
                     <ClientOnly>
                         <MessageForm/>
                     </ClientOnly>
                 </ScrollToSection>
             </section>
-            <section ref={about} className="h-screen flex flex-col">
+            <section ref={about} >
                 <ScrollToSection goToSectionRef={home} showArrow={false}>
-                    <div className="h-screen flex flex-col">
-                        <About/>
+                    <div className="flex flex-col h-screen justify-between">
+                       <About/>
                         <Footer/>
                     </div>
+
+
                 </ScrollToSection>
             </section>
         </main>

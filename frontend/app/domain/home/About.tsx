@@ -1,6 +1,6 @@
 export default function About() {
     return (
-        <>
+        <div>
             <div className="text-start px-6 pt-6 text-7xl text-primary font-Jua">
                 About Us
             </div>
@@ -9,7 +9,7 @@ export default function About() {
                 <AboutPlanely/>
             </div>
 
-        </>
+        </div>
     );
 }
 
