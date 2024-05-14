@@ -1,12 +1,14 @@
 export default function About() {
     return (
         <div>
-            <div className="text-start px-6 pt-6 text-7xl text-primary font-Jua">
-                About Us
-            </div>
-            <div className="grid grid-cols-2 place-items-stretch">
-                <AboutUs/>
-                <AboutPlanely/>
+
+            <div className="grid grid-cols-7 grid-rows-2 place-items-stretch">
+                <div className="col-start-2 col-span-3 row-start-1 row-end-1">
+                    <AboutUs/>
+                </div>
+                <div className="col-start-4 col-span-3 row-start-2 row-end-2">
+                    <AboutPlanely/>
+                </div>
             </div>
 
         </div>
@@ -16,15 +18,17 @@ export default function About() {
 
 export function AboutUs() {
     return (
-        <div className="bg-white rounded mr-3 ml-6">
+        <div>
+        <div className="text-start px-6 pt-6 text-7xl text-primary font-Jua">
+                About Planely
+            </div>
             <div className="p-2 text-xl">
-                <div className="text-secondary">
-                    {` What is \"Planely\" ?`}
-                </div>
-                <div>
-                    {`Its a flight booking assistant that allows you to find the best possible flights for all your
-                    travelling needs. Don't worry its really easy to use, you just have to describe your flight plans to us
-                    and we'll do our best to give you all the great options`}
+                <div className="text-background-dark">
+                    {` Consider Planely to be the friend that always finds the best flight. 
+                    Not only do we tend to find the best flights based on your date and location, 
+                    we also allow to specify exactly what you want. Maybe you want to travel to London, 
+                    but if Paris is a lot cheaper, that would have the preference? 
+                    Don’t worry, simply state your specific needs and we will take care of it!`}
                 </div>
             </div>
         </div>
@@ -34,44 +38,26 @@ export function AboutUs() {
 
 export function AboutPlanely() {
     return (
-        <>
-            <div className="bg-white rounded min-h-32 mr-6 ml-3">
-                <div className="p-2 text-xl"> {/*TODO vervangen door translateable string*/}
-                    <div className="text-secondary">
-                        {`How does it work ?`}
-                    </div>
-                    <div>
-                        {`Easy just simply provide as much detail as possible about your travel plans.`}
-                    </div>
-
-                    <div className="text-secondary whitespace-pre-line">{
-                        `1. where do you want to go? 
-                        2. where are you taking off ?
-                        3. when do you plan to leave ?
-                        4. when (if at all) do you plan to return ?
-                        5. How many others will fly along with you? (if blank its only you)
-                        `}
-                    </div>
-
-                    <div className="text-xs text-end">
-                        <div>
-                            {` if you are still struggling look at the example below.`}
-                        </div>
-                        <div className="whitespace-pre-line justify">
-                            {`Show me the routes from London to Paris on the 12th of December 2024 for 2 adults and 1 child. 
-                            We plan to return between the 20th and 25th of December 2024.`}
-                        </div>
-
-
-                    </div>
-
-
+        <div>
+            <div className="text-start px-6 pt-6 text-7xl text-primary font-Jua">
+                How to use Planely
+            </div>
+            <div className="p-2 text-xl"> {/*TODO vervangen door translateable string*/}
+                <div className="font-bold text-background-dark">
+                    Speak planely, travel planely!
                 </div>
 
+                <div className="text-background-dark ">
+                    1. State the obvious. <span className="font-bold">From</span> where to where do you want to go?<br/>
+                    2. What’s the<span className="font-bold"> depart</span> and <span
+                    className="font-bold">return </span>
+                    date (if any).<br/>
+                    3. State <span className="font-bold">whatever you find important</span>.
+                    How many people are you flying with?
+                    What luggage are you bringing with you?
+                    Are you flexible with the dates if this would mean that you can save money? Etc.
+                </div>
             </div>
-            <p className="text-secondary">
-
-            </p>
-        </>
+        </div>
     );
 }
