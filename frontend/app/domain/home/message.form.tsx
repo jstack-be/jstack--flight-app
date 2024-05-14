@@ -48,7 +48,7 @@ export default function MessageForm() {
                     <div className="absolute bottom-0 right-3 p-2 focus:border-ring text-secondary">
                         {isLoading ?
                             <Button disabled type="submit" className="">Loading...</Button> :
-                            <Button type="submit" className="bg-amber-500 text-primary">Send <ArrowRight/></Button> //todo move to global css
+                            <Button type="submit" className="bg-amber-500 text-primary hover:bg-amber-300">Send <ArrowRight/></Button> //todo move to global css
                         }
                     </div>
                 </div>
