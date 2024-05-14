@@ -1,5 +1,6 @@
 "use client";
 import React, {useEffect} from "react";
+
 import {Textarea} from "@/components/ui/textarea";
 import {Button} from "@/components/ui/button"
 import {Label} from "@/components/ui/label"
@@ -19,6 +20,7 @@ export default function MessageForm() {
         sendMessage(message);
     }
 
+
     useEffect(() => {
         if (isError) {
             removeAllMessages();
@@ -32,7 +34,6 @@ export default function MessageForm() {
         }
     }, [isSuccess, router]);
 
-
     return (
         <form onSubmit={handleSubmit}>
             <div className="flex justify-center m-2 text-secondary">
@@ -41,9 +42,13 @@ export default function MessageForm() {
 
             <div className="flex justify-center relative m-2">
                 <div className="relative w-8/12">
-                    <Textarea className="w-full min-h-32 bg-background-text block resize-none" id="message"
-                              name="message"
-                              placeholder={"Please provide as much detail as possible"} required/>
+                    <Textarea
+                        className="w-full min-h-40 bg-background-text block resize-none text-xl pb-10 overflow-hidden"//TODO Text-xl afchecken
+                        id="message"
+                        name="message"
+                        placeholder={"\"Show me the routes from London to Paris on the 12th of December 2024 for " +
+                            "2 adults and 1 child. We plan to return between the 20th and 25th of December 2024.\""}
+                        required/>
                     <div className="absolute bottom-0 right-3 p-2 focus:border-ring text-secondary">
                         {isLoading ?
                             <Button disabled type="submit" className="">Loading...</Button> :
@@ -51,16 +56,6 @@ export default function MessageForm() {
                         }
                     </div>
                 </div>
-            </div>
-            <div className="flex flex-col items-center">
-                <p className="font-bold text-md text-center w-8/12 text-secondary">Example:
-
-                </p>
-                <p className="text-md text-center w-8/12 text-secondary">
-                    &quot; Show me the routes from London to Paris on the 12th of December 2024 for 2 adults and 1
-                    child.
-                    We plan to return between the 20th and 25th of December 2024. &quot;
-                </p>
             </div>
             {isError &&
                 <div className="flex justify-center">
