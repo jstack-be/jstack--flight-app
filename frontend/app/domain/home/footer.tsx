@@ -2,18 +2,17 @@ import Image from "next/image";
 import logo from "@/public/logo.png";
 import Link from "next/link";
 import {Facebook, Mail, Twitter} from "lucide-react";
-import {Logo} from "@/app/domain/home/logo";
 
 export function Footer() {
     return (
         <footer className="h-full flex-none md:h-60 bg-background-gradient flex md:flex-row flex-col items-center md:justify-around text-primary">
             <section className="flex flex-row">
-                <Image src={logo} alt={"afbeelding van Planely logo"} className="h-2/3 w-1/3 md:h-full md:w-auto"/>
+                <Image src={logo} alt={"afbeelding van Planely logo"} className="h-20 w-20 md:h-full md:w-auto"/>
                 <div className="flex flex-col justify-center">
                     <p className=" text-3xl">
                         PLANELY
                     </p>
-                    <p className="text-sm">Fly Smarter, Plan Easier with Planely </p>
+                    <p className="text-sm">We will find your ideal flight </p>
                 </div>
             </section>
             <div className="flex flex-col m-4 w-1/2 md:w-1/5">
