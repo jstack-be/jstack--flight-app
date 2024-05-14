@@ -33,7 +33,7 @@ const config = {
                 background: {
                     DEFAULT: "#3BF7FE",
                     gradient: "#07ADCB",
-                    dark: "#003336",
+                    dark: "#003336"
                 },
                 foreground: "#0F989D",
                 message: "#08AECC",
@@ -43,8 +43,12 @@ const config = {
                     foreground: "#004B97",
                 },
                 secondary: {
-                    DEFAULT: "#04636A",
-                    dark: "#C1E7EA",
+                    DEFAULT: "#E65100",
+                    background: {
+                        DEFAULT: "#FE983B",
+                        gradient: "#EE8526",
+                        button:""
+                    },
                     foreground: "hsl(var(--secondary-foreground))",
                 },
                 destructive: {

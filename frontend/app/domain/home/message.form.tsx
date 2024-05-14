@@ -36,23 +36,23 @@ export default function MessageForm() {
 
     return (
         <form onSubmit={handleSubmit}>
-            <div className="flex justify-center m-2 text-secondary">
-                <Label htmlFor="message">Where do you which to travel to?</Label>
+            <div className="flex justify-center m-2 text-white mb-12">
+                <Label htmlFor="message">We will find your ideal flight!</Label>
             </div>
 
             <div className="flex justify-center relative m-2">
-                <div className="relative w-8/12">
+                <div className="relative w-full md:w-10/12 lg:w-8/12">
                     <Textarea
-                        className="w-full min-h-40 bg-background-text block resize-none text-xl pb-10 overflow-hidden"//TODO Text-xl afchecken
+                        className="w-full sm:min-h-40 bg-background-text block resize-none text-xl min-h-44 pb-10 overflow-hidden"//TODO Text-xl afchecken
                         id="message"
                         name="message"
                         placeholder={"\"Show me the routes from London to Paris on the 12th of December 2024 for " +
                             "2 adults and 1 child. We plan to return between the 20th and 25th of December 2024.\""}
                         required/>
-                    <div className="absolute bottom-0 right-3 p-2 focus:border-ring text-secondary">
+                    <div className="absolute bottom-0 right-3 p-2 focus:border-ring text-white">
                         {isLoading ?
-                            <Button disabled type="submit" className="">Loading...</Button> :
-                            <Button type="submit" className="">Search Routes</Button>
+                            <Button disabled type="submit" className="bg-gradient-to-br from-background-secondary to-background-secondary-gradient text-white">Loading...</Button> :
+                            <Button type="submit" className="bg-gradient-to-br from-secondary-background to-secondary-background-gradient text-white">Search Routes</Button>
                         }
                     </div>
                 </div>
