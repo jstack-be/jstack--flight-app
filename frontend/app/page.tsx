@@ -19,7 +19,7 @@ export default function Home() {
                 <ScrollToSection goToSectionRef={about} showArrow={true}>
                     <div className={"flex-col flex items-center justify-between"}>
                         <Image src={logo} alt={"afbeelding van vliegtuig logo"} className="h-72 w-auto "/>
-                        <h1 className="items-center justify-center text-primary text-6xl flex">
+                        <h1 className="items-center justify-center font-Jua text-primary text-6xl flex">
                             PLANELY
                         </h1>
                     </div>

@@ -12,6 +12,7 @@ const config = {
     theme: {
         fontFamily: {
             'sans': ['"Helvetica"','ui-sans-serif', 'system-ui'],
+            'Jua': ['var(--font-jua)'],
         },
         container: {
             center: true,

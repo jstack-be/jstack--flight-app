@@ -1,7 +1,7 @@
 export default function About() {
     return (
         <>
-            <div className="text-start px-6 pt-6 text-7xl text-primary">
+            <div className="text-start px-6 pt-6 text-7xl text-primary font-Jua">
                 About Us
             </div>
             <div className="grid grid-cols-2 place-items-stretch">

@@ -1,10 +1,13 @@
 import type {Metadata} from "next";
-import {Inter, Jua} from "next/font/google";
+import {Inter,Jua} from "next/font/google";
 import "./globals.css";
 import Providers from "@/app/providers";
 
-// const inter = Inter({subsets: ["latin"]});
-const jua = Jua({weight:"400", preload:false})
+
+
+const jua = Jua({weight:"400", preload:false, variable:'--font-jua'})
+const inter = Inter({subsets: ["latin"], variable:'--font-jua'});
+
 
 export const metadata: Metadata = {
     title: "Planely",
@@ -20,7 +23,7 @@ export default function RootLayout({
         <html lang="en">
 
         <body
-            className={`${jua.className} h-screen bg-gradient-to-br from-background to-background-gradient overflow-hidden`}>
+            className={`${inter.className} ${jua.variable} h-screen bg-gradient-to-br from-background to-background-gradient overflow-hidden`}>
         <Providers>
             {children}
         </Providers>
