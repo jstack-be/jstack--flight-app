@@ -1,13 +1,12 @@
-"use client";
-
-import Image from "next/image";
+"use client"
 import MessageForm from "@/app/domain/home/message.form";
-
-import logo from '../public/logo.png'
+import Image from "next/image";
+import logo from '../public/logo-big.svg'
+import {ClientOnly} from "@/app/client.only";
 import styles from "./domain/home/home.module.css";
 import ScrollToSection from "@/app/domain/home/section.scroll";
 import {useRef} from "react";
-import {ClientOnly} from "@/app/client.only";
+import {Footer} from "@/app/domain/home/footer";
 import About from "@/app/domain/home/About";
 
 export default function Home() {
@@ -15,24 +14,28 @@ export default function Home() {
     const about = useRef<HTMLDivElement | null>(null);
     return (
         <main className={styles.homeContainer}>
-            <div className="h-screen" ref={home}>
+            <section className="h-screen" ref={home}>
                 <ScrollToSection goToSectionRef={about} showArrow={true}>
-                    <div className={"flex-col flex items-center justify-between"}>
-                        <Image src={logo} alt={"afbeelding van vliegtuig logo"} className="h-72 w-auto "/>
-                        <h1 className="items-center justify-center font-Jua text-primary text-6xl flex">
-                            PLANELY
-                        </h1>
+                    <div className="flex justify-center items-end h-1/2">
+                        <Image src={logo} alt={"The logo of the application"} className="max-h-[40vh] md:max-h-[30vh] w-auto mb-14"/>
+
+                        {/*<h1 className="items-center justify-center font-Jua text-primary text-6xl flex">*/}
+                        {/*    PLANELY*/}
+                        {/*</h1>*/}
                     </div>
                     <ClientOnly>
-                            <MessageForm/>
+                        <MessageForm/>
                     </ClientOnly>
                 </ScrollToSection>
-            </div>
-            <div ref={about} className="h-screen">
+            </section>
+            <section ref={about} className="h-screen flex flex-col">
                 <ScrollToSection goToSectionRef={home} showArrow={false}>
-                    <About/>
+                    <div className="h-screen flex flex-col">
+                        <About/>
+                        <Footer/>
+                    </div>
                 </ScrollToSection>
-            </div>
+            </section>
         </main>
     );
 }

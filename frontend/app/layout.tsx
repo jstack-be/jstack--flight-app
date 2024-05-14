@@ -24,6 +24,7 @@ export default function RootLayout({
 
         <body
             className={`${inter.className} ${jua.variable} h-screen bg-gradient-to-br from-background to-background-gradient overflow-hidden`}>
+        {/*bg-gradient-to-br from-background to-background-gradient min-h-screen flex-col`}>*/}
         <Providers>
             {children}
         </Providers>
