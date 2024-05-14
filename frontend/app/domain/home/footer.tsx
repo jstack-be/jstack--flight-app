@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import {Facebook, Mail, Twitter} from "lucide-react";
+import {Facebook, Mail, Twitter} from "lucide-react"; //TODO: Replace with UpdtoDate Icons
 import logo from "@/public/logo-sm.svg";
 
 export function Footer() {
