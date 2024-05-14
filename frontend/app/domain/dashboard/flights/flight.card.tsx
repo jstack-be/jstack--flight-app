@@ -74,7 +74,7 @@ export function FlightCard(props: Flight) {
         <div className="bg-primary rounded-2xl w-full md:w-4/5 max-w-[800px]">
             <Collapsible open={isOpen} onOpenChange={setIsOpen}>
                 <p className="mx-4 mt-4">{formattedDate}</p>
-                <div className="flex flex-col md:flex-row md:justify-evenly items-center">
+                <div className="flex flex-col md:flex-row md:justify-evenly items-center md:mx-4">
                     <div className="flex justify-between items-center md:w-4/5 w-full">
                         <div className="bg-gray-600 w-10 h-10 m-2">
                         </div>
