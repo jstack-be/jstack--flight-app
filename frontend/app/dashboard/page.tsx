@@ -6,7 +6,7 @@ import {useEffect, useState} from "react";
 import {useWindowSize} from "@uidotdev/usehooks";
 
 
-import logo from "@/public/logo.png";
+import logo from "@/public/logo-sm.svg";
 import {FlightCards} from "@/app/domain/dashboard/flights/flight.card";
 import {ClientOnly} from "@/app/client.only";
 
@@ -34,11 +34,8 @@ export default function Page() {
                 <MessageBox isOpen={isOpen} onClose={closeModal}/>
                 <div className="flex-grow flex flex-col">
                     <div className="p-6 md:p-12 overflow-y-scroll">
-                        <div className={"flex justify-center"}>
-                            <Image src={logo} alt={"afbeelding van vliegtuig logo"} className={" h-28 w-auto "}/>
-                            <h1 className="items-center justify-center text-primary text-6xl hidden sm:flex">
-                                PLANELY
-                            </h1>
+                        <div className={"flex justify-center mb-6"}>
+                            <Image src={logo} alt={"afbeelding van vliegtuig logo"} className={" h-32 w-auto "}/>
                         </div>
                         <FlightCards/>
                     </div>

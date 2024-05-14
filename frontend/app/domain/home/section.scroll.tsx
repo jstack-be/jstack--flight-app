@@ -19,7 +19,7 @@ export default function ScrollToSection({children, goToSectionRef, showArrow}: S
             {children}
             {showArrow && (
                 <button
-                    className={styles.downarrow}
+                    className={`${styles.downarrow} m-4`}
                     onClick={() => scrollTo(goToSectionRef)}
                 >
                     <Image src={downarrow} alt={"pijl naar onder"}/>
