@@ -1,14 +1,13 @@
 export interface Flight {
     id: string;
+    flyFrom: string;
+    flyTo: string;
     cityFrom: string;
     cityTo: string;
-    cityCodeTo: string;
+    local_departure: string;
+    local_arrival: string;
+    duration: {departure: number; return: number; total: number},
     airlines: string[];
-    pnr_count: number;
-    has_airport_change: boolean | false;
-    technical_stops: number;
     price: number;
-    availability: {
-        seats: number;
-    };
+    booking_link: string;
 }

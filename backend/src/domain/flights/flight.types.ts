@@ -66,6 +66,7 @@ export interface Flight {
     utc_arrival: string;
     local_departure: string;
     utc_departure: string;
+    deep_link: string;
 }
 
 interface Route {
@@ -99,15 +100,14 @@ interface Route {
 
 export interface FlightsResponse {
     id: string;
-    cityFrom: string ;
-    cityTo: string ;
-    cityCodeTo: string ;
-    airlines: string[] ;
-    pnr_count: number ;
-    has_airport_change: boolean ;
-    technical_stops: number ;
-    price: number ;
-    availability: {
-        seats: number ;
-    }
+    flyFrom: string;
+    flyTo: string;
+    cityFrom: string;
+    cityTo: string;
+    local_departure: string;
+    local_arrival: string;
+    duration: {departure: number; return: number; total: number},
+    airlines: string[];
+    price: number;
+    booking_link: string;
 }

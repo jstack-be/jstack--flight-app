@@ -28,25 +28,22 @@ export function saveFlights(newFlights: Flight[]): void {
     var responseFlights: FlightsResponse[] = [];
 
     for (const newFlight of newFlights) {
-
-        const flightres: FlightsResponse = {
+        const flight: FlightsResponse = {
             id: newFlight.id,
+            flyFrom: newFlight.flyFrom,
+            flyTo: newFlight.flyTo,
             cityFrom: newFlight.cityFrom,
             cityTo: newFlight.cityTo,
-            cityCodeTo: newFlight.cityCodeTo,
+            local_departure: newFlight.local_departure,
+            local_arrival: newFlight.local_arrival,
+            duration: newFlight.duration,
             airlines: newFlight.airlines,
-            pnr_count: newFlight.pnr_count,
-            has_airport_change: newFlight.has_airport_change,
-            technical_stops: newFlight.technical_stops,
             price: newFlight.price,
-            availability: {
-                seats: newFlight.availability.seats,
-            }
+            booking_link: newFlight.deep_link,
         }
-
-        responseFlights.push(flightres)
-        flights = responseFlights; //todo format flights in the required format
+        responseFlights.push(flight)
     }
+    flights = responseFlights; //todo format flights in the required format
 }
 
 /**
