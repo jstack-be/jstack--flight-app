@@ -2,7 +2,6 @@
 import React, {useEffect} from "react";
 import {Textarea} from "@/components/ui/textarea";
 import {Button} from "@/components/ui/button"
-import {Label} from "@/components/ui/label"
 import {useRouter} from "next/navigation";
 import {Alert, AlertDescription, AlertTitle} from "@/components/ui/alert";
 import useFlights from "@/app/lib/useFlights";
@@ -37,8 +36,8 @@ export default function MessageForm() {
     return (
         <form onSubmit={handleSubmit}>
             <div className="flex justify-center relative m-2">
-                <div className="relative w-full md:w-4/5">
-                    <Textarea className="w-full h-32 md:h-60 bg-background-text resize-none rounded-lg" id="message"
+                <div className="relative w-full md:w-4/6">
+                    <Textarea className="w-full h-48 md:h-60 bg-background-text resize-none rounded-lg" id="message"
                               name="message"
                               placeholder={"Simply type what you are looking for in this text field, " +
                                   "provide as much detail as possible to get the best result. " +

@@ -1,20 +1,12 @@
 import Image from "next/image";
-import logo from "@/public/logo.png";
 import Link from "next/link";
 import {Facebook, Mail, Twitter} from "lucide-react";
+import logo from "@/public/logo-sm.svg";
 
 export function Footer() {
     return (
-        <footer className="h-full flex-none md:h-60 bg-background-gradient flex md:flex-row flex-col items-center md:justify-around text-primary">
-            <section className="flex flex-row">
-                <Image src={logo} alt={"afbeelding van Planely logo"} className="h-20 w-20 md:h-full md:w-auto"/>
-                <div className="flex flex-col justify-center">
-                    <p className=" text-3xl">
-                        PLANELY
-                    </p>
-                    <p className="text-sm">We will find your ideal flight </p>
-                </div>
-            </section>
+        <footer className="h-full flex-none md:h-52 bg-background-gradient flex md:flex-row flex-col items-center md:justify-around text-primary">
+            <Image src={logo} alt={"The logo of the application"} className="h-1/2 w-auto"/>
             <div className="flex flex-col m-4 w-1/2 md:w-1/5">
                 <p className="text-lg mb-1">Documents</p>
                 {/*todo add connections to the pages*/}

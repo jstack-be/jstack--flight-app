@@ -1,7 +1,7 @@
 "use client"
 import MessageForm from "@/app/domain/home/message.form";
 import Image from "next/image";
-import logo from '../public/logo.png'
+import logo from '../public/logo-big.svg'
 import {ClientOnly} from "@/app/client.only";
 import styles from "./domain/home/home.module.css";
 import ScrollToSection from "@/app/domain/home/section.scroll";
@@ -15,12 +15,8 @@ export default function Home() {
         <main className={styles.homeContainer}>
             <section className="h-screen" ref={home}>
                 <ScrollToSection goToSectionRef={about} showArrow={true}>
-                    <div className={"flex-col text-primary flex items-center justify-between"}>
-                        <Image src={logo} alt={"afbeelding van vliegtuig logo"} className="h-72 w-auto "/>
-                        <h1 className="items-center justify-center text-primary text-6xl flex">
-                            PLANELY
-                        </h1>
-                        <p className="h-[58px] text-2xl mb-6 mt-3">We will find your ideal flight</p>
+                    <div className="flex justify-center items-end h-1/2">
+                        <Image src={logo} alt={"The logo of the application"} className="max-h-[40vh] md:max-h-[30vh] w-auto mb-14"/>
                     </div>
                     <ClientOnly>
                         <MessageForm/>
