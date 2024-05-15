@@ -45,6 +45,7 @@ export function FlightCard(props: Flight) {
                             formattedDepartureDuration={departureRoutes.formattedDepartureDuration}
                             formattedArrivalTime={departureRoutes.formattedArrivalTime}
                             flyTo={departureRoutes.flyTo}
+                            flightSteps={departureRoutes.flightSteps}
                         />}
                         {returnRoutes && (
                             <FlightCardContend
@@ -54,6 +55,7 @@ export function FlightCard(props: Flight) {
                                 formattedDepartureDuration={returnRoutes.formattedDepartureDuration}
                                 formattedArrivalTime={returnRoutes.formattedArrivalTime}
                                 flyTo={returnRoutes.flyTo}
+                                flightSteps={returnRoutes.flightSteps}
                             />
                         )}
                     </div>
@@ -101,7 +103,7 @@ export function FlightCardContend(flightData: ProcessedFlightData) {
                         <hr className="w-5/6 border-2"/>
                         <Plane className="w-1/6"/>
                     </div>
-                    <p>Direct</p>
+                    <p>{flightData.flightSteps}</p>
                 </div>
                 <div className="m-2">
                     <p>{flightData.formattedArrivalTime}</p>

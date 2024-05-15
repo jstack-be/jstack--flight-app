@@ -19,6 +19,8 @@ const formatTime = (dateTime: Date) => dateTime.toLocaleTimeString('en-US', {
     hour12: false
 });
 
+const formatStops = (stops: number) => stops === 0 ? 'Direct' : stops === 1 ? '1 stop' : `${stops} stops`;
+
 export default function useRoutesData(routes: Route[], flightType: 'departure' | 'return', flightDuration: number): ProcessedFlightData | null {
     const [filteredRoutes, setFilteredRoutes] = useState<Route[]>([])
 
@@ -44,6 +46,7 @@ export default function useRoutesData(routes: Route[], flightType: 'departure' |
         formattedArrivalTime,
         flyFrom: filteredRoutes[0].flyFrom,
         flyTo: filteredRoutes[filteredRoutes.length - 1].flyTo,
-        formattedDepartureDuration: formatDuration(flightDuration)
+        formattedDepartureDuration: formatDuration(flightDuration),
+        flightSteps: formatStops(filteredRoutes.length - 1)
     };
 }

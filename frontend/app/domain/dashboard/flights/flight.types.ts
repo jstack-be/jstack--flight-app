@@ -26,4 +26,5 @@ export interface ProcessedFlightData {
     formattedDepartureDuration: string;
     formattedArrivalTime: string;
     flyTo: string;
+    flightSteps: string;
 }
