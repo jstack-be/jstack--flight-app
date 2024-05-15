@@ -1,9 +1,12 @@
 import type {Metadata} from "next";
-import {Inter} from "next/font/google";
+import {Inter, Jua} from "next/font/google";
 import "./globals.css";
 import Providers from "@/app/providers";
 
-const inter = Inter({subsets: ["latin"]});
+
+const jua = Jua({weight: "400", preload: false, variable: '--font-jua'})
+const inter = Inter({subsets: ["latin"], variable: '--font-jua'});
+
 
 export const metadata: Metadata = {
     title: "Planely",
@@ -15,15 +18,16 @@ export default function RootLayout({
                                    }: Readonly<{
     children: React.ReactNode;
 }>) {
-  return (
-    <html lang="en">
-      <body className={`${inter.className} 
-      bg-gradient-to-br from-background to-background-gradient min-h-screen flex-col`}>
-      <Providers>
-          {children}
-      </Providers>
-      </body>
-    </html>
-  );
+    return (
+        <html lang="en">
+
+        <body
+            className={`${inter.className} ${jua.variable} h-screen bg-gradient-to-br from-background to-background-gradient overflow-hidden`}>
+        <Providers>
+            {children}
+        </Providers>
+        </body>
+        </html>
+    );
 }
 

@@ -12,13 +12,14 @@ import {ClientOnly} from "@/app/client.only";
 
 export default function Page() {
     const {width} = useWindowSize();
+    const {height} = useWindowSize();
     const [isOpen, setIsOpen] = useState(true)
 
     useEffect(() => {
-        if (width !== null) {
-            setIsOpen(width >= 768);
+        if (width !== null && height !== null) {
+            setIsOpen(height <= width && width > 1024);
         }
-    }, [width]);
+    }, [width, height]);
 
     const openModal = () => {
         setIsOpen(true);
@@ -29,21 +30,18 @@ export default function Page() {
     };
 
     return (
-        <main className="flex h-screen w-full fixed">
+        <main className="h-screen w-full fixed lg:flex">
             <ClientOnly>
                 <MessageBox isOpen={isOpen} onClose={closeModal}/>
                 <div className="flex-grow flex flex-col">
-                    <div className="p-6 md:p-12 overflow-y-scroll">
+                    <div className="p-6 md:p-12 overflow-y-auto">
                         <div className={"flex justify-center mb-6"}>
                             <Image src={logo} alt={"afbeelding van vliegtuig logo"} className={" h-32 w-auto "}/>
                         </div>
                         <FlightCards/>
                     </div>
-
-                    <Button className="top-10 left-10 md:hidden" onClick={openModal}>
-                        Show messages
-                    </Button>
                 </div>
+                {!isOpen && <Button className=" m-8" onClick={openModal}>Show message history </Button>}
             </ClientOnly>
         </main>
     );

@@ -10,6 +10,10 @@ const config = {
     ],
     prefix: "",
     theme: {
+        fontFamily: {
+            'sans': ['"Helvetica"','ui-sans-serif', 'system-ui'],
+            'Jua': ['var(--font-jua)'],
+        },
         container: {
             center: true,
             padding: "2rem",
@@ -30,18 +34,25 @@ const config = {
                     DEFAULT: "#3BF7FE",
                     gradient: "#07ADCB",
                     dark: "#003336",
+                    message: "#08AECC",
                 },
                 foreground: "#0F989D",
-                message: "#08AECC",
                 button: "#BDFBFF" ,
                 primary: {
                     DEFAULT: "#ffffff",
                     foreground: "#004B97",
                 },
                 secondary: {
-                    DEFAULT: "#04636A",
-                    dark: "#C1E7EA",
+                    text: "#E65100",
+                    background: {
+                        DEFAULT: "#FE983B",
+                        gradient: "#EE8526",
+                    },
                     foreground: "hsl(var(--secondary-foreground))",
+                },
+                textarea: {
+                    placeholder: "#AFAFAF",
+
                 },
                 destructive: {
                     DEFAULT: "hsl(var(--destructive))",
