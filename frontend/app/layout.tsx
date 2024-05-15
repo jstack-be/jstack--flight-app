@@ -1,12 +1,11 @@
 import type {Metadata} from "next";
-import {Inter,Jua} from "next/font/google";
+import {Inter, Jua} from "next/font/google";
 import "./globals.css";
 import Providers from "@/app/providers";
 
 
-
-const jua = Jua({weight:"400", preload:false, variable:'--font-jua'})
-const inter = Inter({subsets: ["latin"], variable:'--font-jua'});
+const jua = Jua({weight: "400", preload: false, variable: '--font-jua'})
+const inter = Inter({subsets: ["latin"], variable: '--font-jua'});
 
 
 export const metadata: Metadata = {
@@ -24,7 +23,6 @@ export default function RootLayout({
 
         <body
             className={`${inter.className} ${jua.variable} h-screen bg-gradient-to-br from-background to-background-gradient overflow-hidden`}>
-        {/*bg-gradient-to-br from-background to-background-gradient min-h-screen flex-col`}>*/}
         <Providers>
             {children}
         </Providers>

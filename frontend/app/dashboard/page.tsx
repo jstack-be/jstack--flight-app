@@ -34,7 +34,6 @@ export default function Page() {
             <ClientOnly>
                 <MessageBox isOpen={isOpen} onClose={closeModal}/>
                 <div className="flex-grow flex flex-col">
-                    {/*<div className="p-6 md:p-12 overflow-y-scroll">*/}
                     <div className="p-6 md:p-12 overflow-y-auto">
                         <div className={"flex justify-center mb-6"}>
                             <Image src={logo} alt={"afbeelding van vliegtuig logo"} className={" h-32 w-auto "}/>
