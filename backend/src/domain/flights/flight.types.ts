@@ -98,7 +98,7 @@ interface Route {
     utc_departure: string;
 }
 
-export interface FlightsResponse {
+interface RouteResponse {
     id: string;
     flyFrom: string;
     flyTo: string;
@@ -106,8 +106,15 @@ export interface FlightsResponse {
     cityTo: string;
     local_departure: string;
     local_arrival: string;
+    airline: string;
+    return: number;
+}
+
+export interface FlightsResponse {
+    id: string;
     duration: {departure: number; return: number; total: number},
     airlines: string[];
     price: number;
     booking_link: string;
+    route: RouteResponse[];
 }

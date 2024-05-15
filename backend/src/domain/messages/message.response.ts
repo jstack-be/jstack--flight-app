@@ -30,16 +30,11 @@ export function saveFlights(newFlights: Flight[]): void {
     for (const newFlight of newFlights) {
         const flight: FlightsResponse = {
             id: newFlight.id,
-            flyFrom: newFlight.flyFrom,
-            flyTo: newFlight.flyTo,
-            cityFrom: newFlight.cityFrom,
-            cityTo: newFlight.cityTo,
-            local_departure: newFlight.local_departure,
-            local_arrival: newFlight.local_arrival,
             duration: newFlight.duration,
             airlines: newFlight.airlines,
             price: newFlight.price,
             booking_link: newFlight.deep_link,
+            route: newFlight.route,
         }
         responseFlights.push(flight)
     }

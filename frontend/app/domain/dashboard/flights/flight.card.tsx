@@ -1,101 +1,62 @@
 "use client"
 
-import React from "react";
+import {useState} from "react";
 import {Collapsible, CollapsibleContent, CollapsibleTrigger} from "@/components/ui/collapsible";
 import {Button} from "@/components/ui/button";
 import {ChevronsUpDown, Frown, Plane} from "lucide-react";
-import {Flight} from "@/app/domain/dashboard/flights/flight.types";
+import {Flight, ProcessedFlightData} from "@/app/domain/dashboard/flights/flight.types";
 import useFlights from "@/app/lib/useFlights";
+import useRoutesData from "@/app/lib/useRoutesData";
 
 export function FlightCards() {
     const {flights, isLoading, isError} = useFlights();
 
     if (isLoading) return <div>Loading...</div>
-    if (flights === null || flights === undefined || flights.length == 0 || isError) {
+    if (!flights?.length || isError) {
         return (
             <div className={"flex-grow flex text-primary items-center justify-center text-3xl w-auto sm:text-justify"}>
                 <Frown size={72} className="m-2"/> Sorry, no flights found.
             </div>
         );
-    } else {
-        return (
-            <div className="space-y-4 overflow-auto flex flex-col justify-center items-center">
-                {flights.map(flight => (
-                    <FlightCard key={flight.id} {...flight} />
-                ))}
-            </div>
-        );
     }
+    return (
+        <div className="space-y-4 overflow-auto flex flex-col justify-center items-center">
+            {flights.map(flight => (
+                <FlightCard key={flight.id} {...flight} />
+            ))}
+        </div>
+    );
 }
 
 export function FlightCard(props: Flight) {
-    const [isOpen, setIsOpen] = React.useState(false)
-    // Create a Date object from the string
-    const departureDateTime = new Date(props.local_departure);
-    const arrivalDateTime = new Date(props.local_arrival);
-
-    // Format the date as "Mon 17 June"
-    const dateOptions: Intl.DateTimeFormatOptions = {weekday: 'short', day: 'numeric', month: 'short'};
-    const formattedDate = departureDateTime.toLocaleDateString('en-US', dateOptions);
-
-    // Format the time as "hh:mm"
-    const timeOptions: Intl.DateTimeFormatOptions = {
-        hour: '2-digit',
-        minute: '2-digit',
-        hour12: false
-    };
-    const formattedDepartureTime = departureDateTime.toLocaleTimeString('en-US', timeOptions);
-    const formattedArrivalTime = arrivalDateTime.toLocaleTimeString('en-US', timeOptions);
-
-    // The total seconds
-    const flightDurationInSeconds = props.duration.departure;
-
-    // Convert seconds to hours and minutes
-    const hours = Math.floor(flightDurationInSeconds / 3600);
-    const minutes = Math.floor((flightDurationInSeconds % 3600) / 60);
-
-    // Create a string to hold the formatted duration
-    let formattedDepartureDuration = '';
-
-    // Only add hours to the string if they are greater than 0
-    if (hours > 0) {
-        formattedDepartureDuration += `${hours}h `;
-    }
-
-    // Only add minutes to the string if they are greater than 0
-    if (minutes > 0) {
-        formattedDepartureDuration += `${minutes}min`;
-    }
-
-    // Remove trailing space if there are no minutes
-    formattedDepartureDuration = formattedDepartureDuration.trim();
+    const [isOpen, setIsOpen] = useState(false)
+    const departureRoutes = useRoutesData(props.route, 'departure', props.duration.departure);
+    const returnRoutes = useRoutesData(props.route, 'return', props.duration.return);
 
     return (
         <div className="bg-primary rounded-2xl w-full md:w-4/5 max-w-[800px]">
             <Collapsible open={isOpen} onOpenChange={setIsOpen}>
-                <p className="mx-4 mt-4">{formattedDate}</p>
                 <div className="flex flex-col md:flex-row md:justify-evenly items-center md:mx-4">
-                    <div className="flex justify-between items-center md:w-4/5 w-full">
-                        <div className="bg-gray-600 w-10 h-10 m-2">
-                        </div>
-                        <div className="m-2">
-                            <p>{formattedDepartureTime}</p>
-                            <p>{props.flyFrom}</p>
-                        </div>
-                        <div className="w-2/5 flex flex-col justify-center items-center">
-                            <p>{formattedDepartureDuration}</p>
-                            <div className="flex items-center justify-center w-full">
-                                <hr className="w-5/6 border-2"/>
-                                <Plane className="w-1/6"/>
-                            </div>
-                            <p>Direct</p>
-                        </div>
-                        <div className="m-2">
-                            <p>{formattedArrivalTime}</p>
-                            <p>{props.flyTo}</p>
-                        </div>
+                    <div className="w-full">
+                        {departureRoutes && <FlightCardContend
+                            formattedDate={departureRoutes.formattedDate}
+                            formattedDepartureTime={departureRoutes.formattedDepartureTime}
+                            flyFrom={departureRoutes.flyFrom}
+                            formattedDepartureDuration={departureRoutes.formattedDepartureDuration}
+                            formattedArrivalTime={departureRoutes.formattedArrivalTime}
+                            flyTo={departureRoutes.flyTo}
+                        />}
+                        {returnRoutes && (
+                            <FlightCardContend
+                                formattedDate={returnRoutes.formattedDate}
+                                formattedDepartureTime={returnRoutes.formattedDepartureTime}
+                                flyFrom={returnRoutes.flyFrom}
+                                formattedDepartureDuration={returnRoutes.formattedDepartureDuration}
+                                formattedArrivalTime={returnRoutes.formattedArrivalTime}
+                                flyTo={returnRoutes.flyTo}
+                            />
+                        )}
                     </div>
-
                     <div className="m-4 ms-6"> {/*todo change colors to global*/}
                         <div className="flex md:justify-end my-3 space-x-2 w-full">
                             <p className="text-gray-400">price </p>
@@ -107,7 +68,7 @@ export function FlightCard(props: Flight) {
                         </a>
                     </div>
                 </div>
-                <CollapsibleTrigger asChild>
+                <CollapsibleTrigger>
                     <Button variant="ghost" size="default" className="w-9 p-0">
                         <ChevronsUpDown className="h-4 w-4"/>
                         <span className="sr-only">Toggle</span>
@@ -122,4 +83,31 @@ export function FlightCard(props: Flight) {
                 </CollapsibleContent>
             </Collapsible>
         </div>);
+}
+
+export function FlightCardContend(flightData: ProcessedFlightData) {
+    return (
+        <div>
+            <p className="mx-4 mt-4">{flightData.formattedDate}</p>
+            <div className="flex justify-between items-center w-full">
+                <div className="bg-gray-600 w-10 h-10 m-2"></div>
+                <div className="m-2">
+                    <p>{flightData.formattedDepartureTime}</p>
+                    <p>{flightData.flyFrom}</p>
+                </div>
+                <div className="w-2/5 flex flex-col justify-center items-center">
+                    <p>{flightData.formattedDepartureDuration}</p>
+                    <div className="flex w-full items-center">
+                        <hr className="w-5/6 border-2"/>
+                        <Plane className="w-1/6"/>
+                    </div>
+                    <p>Direct</p>
+                </div>
+                <div className="m-2">
+                    <p>{flightData.formattedArrivalTime}</p>
+                    <p>{flightData.flyTo}</p>
+                </div>
+            </div>
+        </div>
+    );
 }
