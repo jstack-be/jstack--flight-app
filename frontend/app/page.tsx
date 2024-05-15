@@ -18,7 +18,7 @@ export default function Home() {
                 <ScrollToSection goToSectionRef={about} showArrow={true}>
                     <div className="flex justify-center items-end h-1/2">
                         <Image src={logo} alt={"The logo of the application"}
-                               className="max-h-[40vh] md:max-h-[30vh] w-auto mb-14"/>
+                               className="max-h-[40vh] md:max-h-[45vh] w-auto mb-14"/>
                     </div>
                     <ClientOnly>
                         <MessageForm/>
@@ -26,8 +26,8 @@ export default function Home() {
                 </ScrollToSection>
             </section>
             <section ref={about} >
-                <ScrollToSection goToSectionRef={home} showArrow={false}>
-                    <div className="flex flex-col h-screen justify-between">
+                <ScrollToSection goToSectionRef={home} showArrow={true} isArrowUp={true}>
+                    <div className="flex flex-col justify-between">
                        <About/>
                         <Footer/>
                     </div>

@@ -33,23 +33,26 @@ const config = {
                 background: {
                     DEFAULT: "#3BF7FE",
                     gradient: "#07ADCB",
-                    dark: "#003336"
+                    dark: "#003336",
+                    message: "#08AECC",
                 },
                 foreground: "#0F989D",
-                message: "#08AECC",
                 button: "#BDFBFF" ,
                 primary: {
                     DEFAULT: "#ffffff",
                     foreground: "#004B97",
                 },
                 secondary: {
-                    DEFAULT: "#E65100",
+                    text: "#E65100",
                     background: {
                         DEFAULT: "#FE983B",
                         gradient: "#EE8526",
-                        button:""
                     },
                     foreground: "hsl(var(--secondary-foreground))",
+                },
+                textarea: {
+                    placeholder: "#AFAFAF",
+
                 },
                 destructive: {
                     DEFAULT: "hsl(var(--destructive))",

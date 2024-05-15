@@ -1,11 +1,11 @@
 "use client"
 import React, {useEffect, useRef} from "react";
-import {Label} from "@/components/ui/label";
 import {Textarea} from "@/components/ui/textarea";
 import {Button} from "@/components/ui/button";
 import {useRouter} from 'next/navigation'
 import useFlights from "@/app/lib/useFlights";
 import {ChatCompletionMessageParam} from "@/app/domain/dashboard/messages/message.types";
+import { ArrowLeft } from 'lucide-react';
 
 interface MessageBoxProps {
     onClose: () => void,
@@ -33,7 +33,9 @@ export function MessageBox({onClose, isOpen}: MessageBoxProps) {
         router.push('/')
     };
 
-    if (!isOpen) return null;
+    if (!isOpen) return ( <div className="z-0 absolute lg:fixed lg:m-3">
+        <Button className="bg-button rounded-full" onClick={restartConversation}> <ArrowLeft/></Button>
+    </div> );
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -44,33 +46,39 @@ export function MessageBox({onClose, isOpen}: MessageBoxProps) {
 
     }
 
-    return  (
-        <div className="bg-gray-200 max-h-screen p-6 md:w-1/4 md:relative">
-            <div className="flex justify-between md:hidden my-3">
+    return (<>
+        <div className="bg-gray-200 h-dvh p-6 sm: md:w-4/12 lg:w-3/12 md:relative overflow-y-auto">
+            <div className="flex justify-between lg:hidden mb-1">
                 <h2 className="text-2xl">Message History</h2>
                 <Button onClick={onClose}>X</Button>
             </div>
-            <div className="overflow-auto w-full md:h-4/6 h-1/3 border border-gray-300 p-2">
+            <div className="overflow-y-auto h-[60dvh] md:h-4/6  border border-gray-300 p-2">
                 {messages.map((message: ChatCompletionMessageParam, index: number) =>
                     <div key={index}
-                         className={`${message.role == "user" ? "bg-message text-primary" : "bg-primary text-black"} text-sm m-2 px-4 py-3 rounded`}>
+                         className={`${message.role == "user" ? "bg-background-message text-primary mr-12" : "bg-primary text-black ml-12"} text-sm m-2 px-4 py-3 rounded`}>
                         <strong className="font-bold">{message.role.toUpperCase()}:</strong><br/>
                         <span className="block sm:inline">{message.content}</span>
                     </div>)}
                 <div ref={messagesEndRef}/>
             </div>
-            <div className="mb-4 flex flex-col items-center">
-                <Button className="bg-button" onClick={restartConversation}>Restart conversation</Button>
-            </div>
+
+
             <form className="flex flex-col items-center" onSubmit={handleSubmit}>
-                <Label className="m-2" htmlFor="message">Ask a filter question</Label>
-                <Textarea className="m-2 bg-background-text" id="message" name="message"
+                <Textarea className="m-2 h-[17dvh] bg-white placeholder:text-textarea-placeholder resize-none" id="message" name="message"
                           placeholder={"Ask some more questions to filter your result"} required/>
                 {isLoading ?
-                    <Button disabled className="m-2 bg-button" type="submit">Loading ...</Button> :
-                    <Button className="m-2 bg-button" type="submit">Search Routes</Button>
+                    <Button disabled className=" bg-button" type="submit">Loading ...</Button> :
+                    <Button className="bg-button" type="submit">Search Routes</Button>
                 }
             </form>
         </div>
-    );
+
+        {isOpen && (
+        <div className="relative">
+            <div className="z-0 absolute lg:fixed lg:m-3">
+                <Button className="bg-button rounded-full" onClick={restartConversation}> <ArrowLeft/></Button>
+            </div>
+        </div>)}
+
+    </>);
 }
