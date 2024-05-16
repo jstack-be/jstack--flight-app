@@ -28,7 +28,6 @@ const removeDupLogoUrls = (arr: string[]): string[] => {
             unique.push(element);
         }
     });
-    console.log(unique);
     return unique;
 };
 
