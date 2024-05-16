@@ -1,14 +1,30 @@
-export interface Flight {
+export interface Route {
     id: string;
+    flyFrom: string;
+    flyTo: string;
     cityFrom: string;
     cityTo: string;
-    cityCodeTo: string;
-    airlines: string[];
-    pnr_count: number;
-    has_airport_change: boolean | false;
-    technical_stops: number;
+    local_departure: string;
+    local_arrival: string;
+    airlineLogoUrl: string;
+    isReturnFlight: number;
+}
+
+export interface Flight {
+    id: string;
+    duration: {departure: number; return: number; total: number},
     price: number;
-    availability: {
-        seats: number;
-    };
+    booking_link: string;
+    route: Route[];
+}
+
+export interface ProcessedFlightData {
+    formattedDate: string;
+    formattedDepartureTime: string;
+    flyFrom: string;
+    formattedDepartureDuration: string;
+    formattedArrivalTime: string;
+    flyTo: string;
+    flightSteps: string;
+    flightLogos: string[];
 }

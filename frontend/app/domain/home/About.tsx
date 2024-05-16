@@ -1,7 +1,6 @@
 export default function About() {
     return (
         <div className="pt-12 min-h-[85vh]">
-
             <div className="grid grid-cols-7 grid-rows-3 gap-4">
                 <div className="grid grid-cols-4 col-start-2 col-span-4 row-start-1 row-end-1 border-r border-dotted">
                     <div className="col-start-1 col-span-3">

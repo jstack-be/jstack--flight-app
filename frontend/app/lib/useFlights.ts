@@ -11,7 +11,6 @@ export default function useFlights() {
     const mutation = useMutation({
         mutationFn: queryFlights,
         onSuccess: (data) => {
-            // Invalidate and refetch
             setFlights(data.flights);
             saveMessages([...messages, {role: 'assistant', content: data.message}])
         },

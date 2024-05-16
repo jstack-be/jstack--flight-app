@@ -1,4 +1,6 @@
 import {Flight, FlightsResponse} from "../flights/flight.types";
+import createMD5Hash from "../../utils/hash.string";
+import {environment} from "../../enviroment";
 
 type MessageResponse = {
     message: string | null;
@@ -21,32 +23,43 @@ export function saveMessage(newMessage: string): void {
 }
 
 /**
+ * Converts the airline IATA code to a logo URL
+ * @param {string} airline_iata - The IATA code of the airline
+ * @returns {string} The URL of the airline logo
+ */
+function convertToLogoUrl(airline_iata: string): string {
+    const logoUrl = environment.logoSearchUrl;
+    const searchParams = `${airline_iata}_50_50_s`
+    const md5apikey = createMD5Hash(`${searchParams}_${environment.airhexApiKey}`);
+    return `${logoUrl}${searchParams}.png?proportions=keep?md5apikey=${md5apikey}`;
+}
+
+/**
  * Saves a list of flights into the temporary storage
  * @param newFlights - The flights to be saved
  */
 export function saveFlights(newFlights: Flight[]): void {
-    var responseFlights: FlightsResponse[] = [];
+    flights = newFlights.map(newFlight => {
+        const updatedRoutes = newFlight.route.map(route => ({
+            id: route.id,
+            flyFrom: route.flyFrom,
+            flyTo: route.flyTo,
+            cityFrom: route.cityFrom,
+            cityTo: route.cityTo,
+            local_departure: route.local_departure,
+            local_arrival: route.local_arrival,
+            airlineLogoUrl: convertToLogoUrl(route.airline),
+            isReturnFlight: route.return
+        }));
 
-    for (const newFlight of newFlights) {
-
-        const flightres: FlightsResponse = {
+        return {
             id: newFlight.id,
-            cityFrom: newFlight.cityFrom,
-            cityTo: newFlight.cityTo,
-            cityCodeTo: newFlight.cityCodeTo,
-            airlines: newFlight.airlines,
-            pnr_count: newFlight.pnr_count,
-            has_airport_change: newFlight.has_airport_change,
-            technical_stops: newFlight.technical_stops,
+            duration: newFlight.duration,
             price: newFlight.price,
-            availability: {
-                seats: newFlight.availability.seats,
-            }
-        }
-
-        responseFlights.push(flightres)
-        flights = responseFlights; //todo format flights in the required format
-    }
+            booking_link: newFlight.deep_link,
+            route: updatedRoutes,
+        };
+    });
 }
 
 /**

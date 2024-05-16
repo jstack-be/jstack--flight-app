@@ -1,17 +1,14 @@
 import {RefObject} from "react";
 import styles from "./home.module.css";
-import Image from "next/image";
-import downArrow from "@/public/downarrow.svg";
-import upArrow from "@/public/downarrow.svg";
+import {ChevronDown, ChevronUp} from "lucide-react";
 
 interface ScrollToSectionProps {
     children: React.ReactNode;
     goToSectionRef: React.RefObject<HTMLDivElement>;
-    showArrow: boolean;
-    isArrowUp?: boolean;
+    arrow: "up"| "down"| "none";
 }
 
-export default function ScrollToSection({children, goToSectionRef, showArrow, isArrowUp}: ScrollToSectionProps) {
+export default function ScrollToSection({children, goToSectionRef, arrow}: ScrollToSectionProps) {
     function scrollTo(section: RefObject<HTMLDivElement>) {
         section?.current?.scrollIntoView({behavior: "auto"});
     }
@@ -20,13 +17,13 @@ export default function ScrollToSection({children, goToSectionRef, showArrow, is
         <div className={styles.snapSection}>
             {children}
 
-            {showArrow && (
+            {arrow !== "none" && (
                 <button
-                    className={`${isArrowUp ? styles.upArrow : styles.downarrow} m-4`}
+                    className={`${arrow === "up" ? styles.upArrow : styles.downarrow} m-4 text-primary`}
                     onClick={() => scrollTo(goToSectionRef)}
                 >
 
-                    <Image src={isArrowUp ? upArrow : downArrow} alt={"pijl naar onder"}/>
+                    {arrow === "up" ? <ChevronUp className="w-30"/> : <ChevronDown className="w-30"/>}
                 </button>
             )}
         </div>

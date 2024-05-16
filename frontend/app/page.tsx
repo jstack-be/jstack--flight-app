@@ -15,7 +15,7 @@ export default function Home() {
     return (
         <main className={styles.homeContainer}>
             <section className="h-screen" ref={home}>
-                <ScrollToSection goToSectionRef={about} showArrow={true}>
+                <ScrollToSection goToSectionRef={about} arrow={"down"}>
                     <div className="flex justify-center items-end h-1/2">
                         <Image src={logo} alt={"The logo of the application"}
                                className="max-h-[40vh] md:max-h-[45vh] w-auto mb-14"/>
@@ -26,7 +26,7 @@ export default function Home() {
                 </ScrollToSection>
             </section>
             <section ref={about} >
-                <ScrollToSection goToSectionRef={home} showArrow={true} isArrowUp={true}>
+                <ScrollToSection goToSectionRef={home} arrow={"up"}>
                     <div className="flex flex-col justify-between">
                        <About/>
                         <Footer/>
