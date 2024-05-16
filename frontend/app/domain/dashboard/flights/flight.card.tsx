@@ -1,6 +1,5 @@
 "use client"
 
-import {useState} from "react";
 import {Button} from "@/components/ui/button";
 import {Frown, Plane} from "lucide-react";
 import {Flight, ProcessedFlightData} from "@/app/domain/dashboard/flights/flight.types";
@@ -19,7 +18,7 @@ export function FlightCards() {
         );
     }
     return (
-        <div className="space-y-4 overflow-auto flex flex-col justify-center items-center">
+        <div className="space-y-4 md:w-4/5 flex flex-col items-center">
             {flights.map(flight => (
                 <FlightCard key={flight.id} {...flight} />
             ))}
@@ -28,23 +27,25 @@ export function FlightCards() {
 }
 
 export function FlightCard(props: Flight) {
-    const [isOpen, setIsOpen] = useState(false)
     const departureRoutes = useRoutesData(props.route, 'departure', props.duration.departure);
     const returnRoutes = useRoutesData(props.route, 'return', props.duration.return);
 
     return (
-        <div className="bg-primary rounded-2xl w-full md:w-4/5 max-w-[800px]">
+        <div className="bg-primary rounded-2xl w-full max-w-[800px]">
             <div className="flex flex-col md:flex-row md:justify-evenly items-center my-4 md:mx-4">
                 <div className="w-full">
-                    {departureRoutes && <FlightCardContend
-                        formattedDate={departureRoutes.formattedDate}
-                        formattedDepartureTime={departureRoutes.formattedDepartureTime}
-                        flyFrom={departureRoutes.flyFrom}
-                        formattedDepartureDuration={departureRoutes.formattedDepartureDuration}
-                        formattedArrivalTime={departureRoutes.formattedArrivalTime}
-                        flyTo={departureRoutes.flyTo}
-                        flightSteps={departureRoutes.flightSteps}
-                    />}
+                    {departureRoutes && (
+                        <FlightCardContend
+                            formattedDate={departureRoutes.formattedDate}
+                            formattedDepartureTime={departureRoutes.formattedDepartureTime}
+                            flyFrom={departureRoutes.flyFrom}
+                            formattedDepartureDuration={departureRoutes.formattedDepartureDuration}
+                            formattedArrivalTime={departureRoutes.formattedArrivalTime}
+                            flyTo={departureRoutes.flyTo}
+                            flightSteps={departureRoutes.flightSteps}
+                            flightLogos={departureRoutes.flightLogos}
+                        />
+                    )}
                     {returnRoutes && (
                         <FlightCardContend
                             formattedDate={returnRoutes.formattedDate}
@@ -54,6 +55,7 @@ export function FlightCard(props: Flight) {
                             formattedArrivalTime={returnRoutes.formattedArrivalTime}
                             flyTo={returnRoutes.flyTo}
                             flightSteps={returnRoutes.flightSteps}
+                            flightLogos={returnRoutes.flightLogos}
                         />
                     )}
                 </div>
@@ -76,7 +78,9 @@ export function FlightCardContend(flightData: ProcessedFlightData) {
         <div>
             <p className="mx-4">{flightData.formattedDate}</p>
             <div className="flex justify-between items-center w-full md:w-11/12 md:mx-4 mb-2">
-                <div className="bg-gray-600 w-10 h-10 m-2"></div>
+                <div className="m-2">
+                    <img src={flightData.flightLogos[0]} alt={"Logo from the flying airline"}/>
+                </div>
                 <div className="m-2">
                     <p>{flightData.formattedDepartureTime}</p>
                     <p>{flightData.flyFrom}</p>

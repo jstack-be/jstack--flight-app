@@ -13,7 +13,6 @@ export interface Route {
 export interface Flight {
     id: string;
     duration: {departure: number; return: number; total: number},
-    airlines: string[];
     price: number;
     booking_link: string;
     route: Route[];
@@ -27,4 +26,5 @@ export interface ProcessedFlightData {
     formattedArrivalTime: string;
     flyTo: string;
     flightSteps: string;
+    flightLogos: string[];
 }

@@ -47,6 +47,7 @@ export default function useRoutesData(routes: Route[], flightType: 'departure' |
         flyFrom: filteredRoutes[0].flyFrom,
         flyTo: filteredRoutes[filteredRoutes.length - 1].flyTo,
         formattedDepartureDuration: formatDuration(flightDuration),
-        flightSteps: formatStops(filteredRoutes.length - 1)
+        flightSteps: formatStops(filteredRoutes.length - 1),
+        flightLogos: filteredRoutes.map(route => route.airline)
     };
 }

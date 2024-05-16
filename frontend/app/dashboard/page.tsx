@@ -11,8 +11,7 @@ import {FlightCards} from "@/app/domain/dashboard/flights/flight.card";
 import {ClientOnly} from "@/app/client.only";
 
 export default function Page() {
-    const {width} = useWindowSize();
-    const {height} = useWindowSize();
+    const {width, height} = useWindowSize();
     const [isOpen, setIsOpen] = useState(true)
 
     useEffect(() => {
@@ -30,18 +29,14 @@ export default function Page() {
     };
 
     return (
-        <main className="h-screen w-full fixed lg:flex">
+        <main className="h-screen w-full fixed lg:flex z-10">
             <ClientOnly>
                 <MessageBox isOpen={isOpen} onClose={closeModal}/>
-                <div className="flex-grow flex flex-col">
-                    <div className="p-6 md:p-12 overflow-y-auto">
-                        <div className={"flex justify-center mb-6"}>
-                            <Image src={logo} alt={"afbeelding van vliegtuig logo"} className={" h-32 w-auto "}/>
-                        </div>
-                        <FlightCards/>
-                    </div>
+                <div className="flex flex-col w-full h-full overflow-y-auto items-center p-6">
+                    <Image src={logo} alt={"afbeelding van vliegtuig logo"} className={"h-32 w-auto mb-6"}/>
+                    <FlightCards/>
                 </div>
-                {!isOpen && <Button className=" m-8" onClick={openModal}>Show message history </Button>}
+                {!isOpen && <Button className="absolute bottom-0 w-full z-50 rounded-b-none" onClick={openModal}>Show message history </Button>}
             </ClientOnly>
         </main>
     );

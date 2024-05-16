@@ -5,7 +5,7 @@ import {Button} from "@/components/ui/button";
 import {useRouter} from 'next/navigation'
 import useFlights from "@/app/lib/useFlights";
 import {ChatCompletionMessageParam} from "@/app/domain/dashboard/messages/message.types";
-import { ArrowLeft } from 'lucide-react';
+import {ArrowLeft} from 'lucide-react';
 
 interface MessageBoxProps {
     onClose: () => void,
@@ -33,9 +33,10 @@ export function MessageBox({onClose, isOpen}: MessageBoxProps) {
         router.push('/')
     };
 
-    if (!isOpen) return ( <div className="z-0 absolute lg:fixed lg:m-3">
+    //todo move outside the component
+    if (!isOpen) return (<div className="z-0 absolute lg:fixed lg:m-3">
         <Button className="bg-button rounded-full" onClick={restartConversation}> <ArrowLeft/></Button>
-    </div> );
+    </div>);
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -47,12 +48,12 @@ export function MessageBox({onClose, isOpen}: MessageBoxProps) {
     }
 
     return (<>
-        <div className="bg-gray-200 h-dvh p-6 sm: md:w-4/12 lg:w-3/12 md:relative overflow-y-auto">
+        <div className="bg-gray-200 h-dvh p-6 lg:w-4/12 md:relative overflow-y-auto">
             <div className="flex justify-between lg:hidden mb-1">
                 <h2 className="text-2xl">Message History</h2>
                 <Button onClick={onClose}>X</Button>
             </div>
-            <div className="overflow-y-auto h-[60dvh] md:h-4/6  border border-gray-300 p-2">
+            <div className="overflow-y-auto h-[60dvh] md:h-4/6 border border-gray-300 p-2">
                 {messages.map((message: ChatCompletionMessageParam, index: number) =>
                     <div key={index}
                          className={`${message.role == "user" ? "bg-background-message text-primary mr-12" : "bg-primary text-black ml-12"} text-sm m-2 px-4 py-3 rounded`}>
@@ -64,7 +65,8 @@ export function MessageBox({onClose, isOpen}: MessageBoxProps) {
 
 
             <form className="flex flex-col items-center" onSubmit={handleSubmit}>
-                <Textarea className="m-2 h-[17dvh] bg-white placeholder:text-textarea-placeholder resize-none" id="message" name="message"
+                <Textarea className="m-2 h-[17dvh] bg-white placeholder:text-textarea-placeholder resize-none"
+                          id="message" name="message"
                           placeholder={"Ask some more questions to filter your result"} required/>
                 {isLoading ?
                     <Button disabled className=" bg-button" type="submit">Loading ...</Button> :
@@ -72,13 +74,13 @@ export function MessageBox({onClose, isOpen}: MessageBoxProps) {
                 }
             </form>
         </div>
-
+        {/*//todo move outside the component 2*/}
         {isOpen && (
-        <div className="relative">
-            <div className="z-0 absolute lg:fixed lg:m-3">
-                <Button className="bg-button rounded-full" onClick={restartConversation}> <ArrowLeft/></Button>
-            </div>
-        </div>)}
+            <div className="relative">
+                <div className="z-0 absolute lg:fixed lg:m-3">
+                    <Button className="bg-button rounded-full" onClick={restartConversation}> <ArrowLeft/></Button>
+                </div>
+            </div>)}
 
     </>);
 }
