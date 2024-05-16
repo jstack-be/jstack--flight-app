@@ -12,9 +12,9 @@ export function FlightCards() {
     if (isLoading) return <div>Loading...</div>
     if (!flights?.length || isError) {
         return (
-            <div className={"flex-grow flex text-primary items-center justify-center text-3xl w-auto sm:text-justify"}>
+            <p className={"flex text-primary items-center text-3xl text-justify"}>
                 <Frown size={72} className="m-2"/> Sorry, no flights found.
-            </div>
+            </p>
         );
     }
     return (
@@ -32,7 +32,7 @@ export function FlightCard(props: Flight) {
 
     return (
         <div className="bg-primary rounded-2xl w-full max-w-[800px]">
-            <div className="flex flex-col md:flex-row md:justify-evenly items-center my-4 md:mx-4">
+            <div className="flex flex-col md:flex-row md:justify-evenly justify-center items-center my-4 md:mx-4">
                 <div className="w-full">
                     {departureRoutes && (
                         <FlightCardContend
@@ -46,6 +46,7 @@ export function FlightCard(props: Flight) {
                             flightLogos={departureRoutes.flightLogos}
                         />
                     )}
+                    {returnRoutes && <hr className="border-dotted border-t-4 m-4 mx-6 "/>}
                     {returnRoutes && (
                         <FlightCardContend
                             formattedDate={returnRoutes.formattedDate}
@@ -78,9 +79,12 @@ export function FlightCardContend(flightData: ProcessedFlightData) {
         <div>
             <p className="mx-4">{flightData.formattedDate}</p>
             <div className="flex justify-between items-center w-full md:w-11/12 md:mx-4 mb-2">
-                <div className="m-2">
+                <div className="m-2 flex justify-center items-center flex-col md:flex-row w-1/6">
                     {/*todo change to next/image*/}
-                    <img src={flightData.flightLogos[0]} alt={"Logo from the flying airline"}/>
+                    {flightData.flightLogos.map((logo, index) => (
+                        <img className="m-2 w-10 h-10" key={index} src={logo} alt={"Logo from the flying airline"}/>
+                    ))}
+
                 </div>
                 <div className="m-2">
                     <p>{flightData.formattedDepartureTime}</p>

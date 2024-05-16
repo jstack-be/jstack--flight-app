@@ -21,6 +21,17 @@ const formatTime = (dateTime: Date) => dateTime.toLocaleTimeString('en-US', {
 
 const formatStops = (stops: number) => stops === 0 ? 'Direct' : stops === 1 ? '1 stop' : `${stops} stops`;
 
+const removeDupLogoUrls = (arr: string[]): string[] => {
+    let unique: string[] = [];
+    arr.forEach(element => {
+        if (!unique.includes(element)) {
+            unique.push(element);
+        }
+    });
+    console.log(unique);
+    return unique;
+};
+
 export default function useRoutesData(routes: Route[], flightType: 'departure' | 'return', flightDuration: number): ProcessedFlightData | null {
     const [filteredRoutes, setFilteredRoutes] = useState<Route[]>([])
 
@@ -48,6 +59,6 @@ export default function useRoutesData(routes: Route[], flightType: 'departure' |
         flyTo: filteredRoutes[filteredRoutes.length - 1].flyTo,
         formattedDepartureDuration: formatDuration(flightDuration),
         flightSteps: formatStops(filteredRoutes.length - 1),
-        flightLogos: filteredRoutes.map(route => route.airlineLogoUrl)
+        flightLogos: removeDupLogoUrls(filteredRoutes.map(route => route.airlineLogoUrl))
     };
 }
