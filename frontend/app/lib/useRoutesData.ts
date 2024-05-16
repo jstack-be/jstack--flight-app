@@ -26,9 +26,9 @@ export default function useRoutesData(routes: Route[], flightType: 'departure' |
 
     useEffect(() => {
         if (flightType === 'departure') {
-            setFilteredRoutes(routes.filter(route => route.return === 0));
+            setFilteredRoutes(routes.filter(route => route.isReturnFlight === 0));
         } else if (flightType === 'return') {
-            setFilteredRoutes(routes.filter(route => route.return === 1));
+            setFilteredRoutes(routes.filter(route => route.isReturnFlight === 1));
         }
     }, [routes, flightType]);
     if (!filteredRoutes[0]) return null;
@@ -48,6 +48,6 @@ export default function useRoutesData(routes: Route[], flightType: 'departure' |
         flyTo: filteredRoutes[filteredRoutes.length - 1].flyTo,
         formattedDepartureDuration: formatDuration(flightDuration),
         flightSteps: formatStops(filteredRoutes.length - 1),
-        flightLogos: filteredRoutes.map(route => route.airline)
+        flightLogos: filteredRoutes.map(route => route.airlineLogoUrl)
     };
 }

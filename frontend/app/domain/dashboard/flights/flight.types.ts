@@ -6,8 +6,8 @@ export interface Route {
     cityTo: string;
     local_departure: string;
     local_arrival: string;
-    airline: string;
-    return: number;
+    airlineLogoUrl: string;
+    isReturnFlight: number;
 }
 
 export interface Flight {

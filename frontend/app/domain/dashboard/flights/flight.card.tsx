@@ -79,6 +79,7 @@ export function FlightCardContend(flightData: ProcessedFlightData) {
             <p className="mx-4">{flightData.formattedDate}</p>
             <div className="flex justify-between items-center w-full md:w-11/12 md:mx-4 mb-2">
                 <div className="m-2">
+                    {/*todo change to next/image*/}
                     <img src={flightData.flightLogos[0]} alt={"Logo from the flying airline"}/>
                 </div>
                 <div className="m-2">

@@ -106,14 +106,13 @@ interface RouteResponse {
     cityTo: string;
     local_departure: string;
     local_arrival: string;
-    airline: string;
-    return: number;
+    airlineLogoUrl: string;
+    isReturnFlight: number;
 }
 
 export interface FlightsResponse {
     id: string;
     duration: {departure: number; return: number; total: number},
-    airlines: string[];
     price: number;
     booking_link: string;
     route: RouteResponse[];
