@@ -75,7 +75,7 @@ export function FlightCardContend(flightData: ProcessedFlightData) {
     return (
         <div>
             <p className="mx-4">{flightData.formattedDate}</p>
-            <div className="flex justify-between items-center w-full md:w-11/12  mx-4">
+            <div className="flex justify-between items-center w-full md:w-11/12 md:mx-4 mb-2">
                 <div className="bg-gray-600 w-10 h-10 m-2"></div>
                 <div className="m-2">
                     <p>{flightData.formattedDepartureTime}</p>
