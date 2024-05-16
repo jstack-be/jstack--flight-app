@@ -1,8 +1,6 @@
 import {RefObject} from "react";
 import styles from "./home.module.css";
-import Image from "next/image";
-import downArrow from "@/public/downarrow.svg";
-import upArrow from "@/public/downarrow.svg";
+import {ChevronDown, ChevronUp} from "lucide-react";
 
 interface ScrollToSectionProps {
     children: React.ReactNode;
@@ -22,11 +20,11 @@ export default function ScrollToSection({children, goToSectionRef, showArrow, is
 
             {showArrow && (
                 <button
-                    className={`${isArrowUp ? styles.upArrow : styles.downarrow} m-4`}
+                    className={`${isArrowUp ? styles.upArrow : styles.downarrow} m-4 text-primary`}
                     onClick={() => scrollTo(goToSectionRef)}
                 >
 
-                    <Image src={isArrowUp ? upArrow : downArrow} alt={"pijl naar onder"}/>
+                    {isArrowUp ? <ChevronUp className="w-30"/> : <ChevronDown className="w-30"/>}
                 </button>
             )}
         </div>
