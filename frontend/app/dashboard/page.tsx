@@ -40,7 +40,9 @@ export default function Page() {
             <ClientOnly>
                 <div className="flex absolute lg:relative w-full xl:1/5 lg:w-2/5 lg:space-x-4">
                     <MessageBox isOpen={isOpen} onClose={closeModal}/>
-                    {!isOpen && <Button className={`bg-button rounded-full m-4`} onClick={returnHome}> <ArrowLeft/></Button>}
+                    <Button
+                        className={`bg-button rounded-full m-4 ${(isOpen && width !== null && width < 1024) ? 'hidden' : ''}`}
+                        onClick={returnHome}> <ArrowLeft/></Button>
                 </div>
                 <div className="flex flex-col w-full xl:w-4/5 h-full overflow-y-auto items-center p-6">
                     <Image src={logo} alt={"afbeelding van vliegtuig logo"} className={"h-32 w-auto mb-6"}/>
