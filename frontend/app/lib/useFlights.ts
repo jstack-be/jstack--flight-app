@@ -24,6 +24,7 @@ export default function useFlights() {
         let messageHistory: ChatCompletionMessageParam[]
         if (restart) {
             messageHistory = [{role: 'user', content}];
+            setFlights([]);
         } else {
             messageHistory = [...messages, {role: 'user', content}];
         }
