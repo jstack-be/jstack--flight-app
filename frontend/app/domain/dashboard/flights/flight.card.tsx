@@ -12,13 +12,13 @@ export function FlightCards() {
     if (isLoading) return <div>Loading...</div>
     if (!flights?.length || isError) {
         return (
-            <p className={"flex text-primary items-center text-3xl text-justify"}>
+            <p className={"flex text-primary items-center text-3xl"}>
                 <Frown size={72} className="m-2"/> Sorry, no flights found.
             </p>
         );
     }
     return (
-        <div className="space-y-4 md:w-4/5 flex flex-col items-center">
+        <div className="space-y-4 m-4 w-full sm:w-4/5  flex flex-col items-center">
             {flights.map(flight => (
                 <FlightCard key={flight.id} {...flight} />
             ))}
@@ -31,7 +31,7 @@ export function FlightCard(props: Flight) {
     const returnRoutes = useRoutesData(props.route, 'return', props.duration.return);
 
     return (
-        <div className="bg-primary rounded-2xl w-full max-w-[800px]">
+        <div className="bg-primary rounded-2xl w-full max-w-[850px]">
             <div className="flex flex-col md:flex-row md:justify-evenly justify-center items-center my-4 md:mx-4">
                 <div className="w-full">
                     {departureRoutes && (
@@ -79,10 +79,10 @@ export function FlightCardContend(flightData: ProcessedFlightData) {
         <div>
             <p className="mx-4">{flightData.formattedDate}</p>
             <div className="flex justify-between items-center w-full md:w-11/12 md:mx-4 mb-2">
-                <div className="m-2 flex justify-center items-center flex-col md:flex-row w-1/6">
+                <div className="m-2 flex justify-center items-center flex-col xl:flex-row w-1/6">
                     {/*todo change to next/image*/}
                     {flightData.flightLogos.map((logo, index) => (
-                        <img className="m-2 w-10 h-10" key={index} src={logo} alt={"Logo from the flying airline"}/>
+                        <img className="m-2 w-7 h-7" key={index} src={logo} alt={"Logo from the flying airline"}/>
                     ))}
 
                 </div>

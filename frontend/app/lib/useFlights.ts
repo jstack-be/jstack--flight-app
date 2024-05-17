@@ -19,27 +19,27 @@ export default function useFlights() {
         },
     })
 
-    function sendMessage(content: string) {
+    function sendMessage(content: string, restart = false) {
         if (!content.trim() || messages === undefined) return;
-        const messageHistory: ChatCompletionMessageParam[] = [...messages, {role: 'user', content}];
+        let messageHistory: ChatCompletionMessageParam[]
+        if (restart) {
+            messageHistory = [{role: 'user', content}];
+            setFlights([]);
+        } else {
+            messageHistory = [...messages, {role: 'user', content}];
+        }
         saveMessages(messageHistory)
         try {
             mutation.mutate(messageHistory);
-        } catch (error) {
-            // console.error('Error:', error);
+        } catch (e) {
+            // console.log(e)
         }
-    }
-
-    function removeAllMessages() {
-        saveMessages([]);
-        setFlights([])
     }
 
     return {
         messages,
         flights,
         sendMessage,
-        removeAllMessages,
         isLoading: mutation.isPending,
         isError: mutation.isError,
         isSuccess: mutation.isSuccess,

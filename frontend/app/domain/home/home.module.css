@@ -17,11 +17,11 @@
 .snapSection {
     height: 100vh;
     width: 100%;
-    /*scroll-snap-align: center;*/
+    scroll-snap-align: center;
     position: relative;
 }
 
-.downarrow {
+.downArrow {
     position: absolute;
     bottom: 20px;
     left: 0;
@@ -45,9 +45,6 @@
 /* Responsive design for smaller screens */
 @media (max-width: 600px) {
     .snapSection {
-        height: 100vh;
-        width: 100%;
         scroll-snap-align: none;
-        position: relative;
     }
 }

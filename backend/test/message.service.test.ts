@@ -21,7 +21,8 @@ describe('generateFlightSearchParameters', () => {
         const expectedParameters = {
             fly_from: 'NYC',
             date_from: currentDate,
-            date_to: currentDate
+            date_to: currentDate,
+            limit: 20
         };
 
         nockedOpenAiAPI(expectedParameters);

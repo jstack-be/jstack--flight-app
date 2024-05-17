@@ -2,8 +2,6 @@ export interface Route {
     id: string;
     flyFrom: string;
     flyTo: string;
-    cityFrom: string;
-    cityTo: string;
     local_departure: string;
     local_arrival: string;
     airlineLogoUrl: string;

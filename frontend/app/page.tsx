@@ -1,40 +1,45 @@
 "use client"
-import MessageForm from "@/app/domain/home/message.form";
-import Image from "next/image";
-import logo from '../public/logo-big.svg'
+import MainContend from "@/app/domain/home/main.contend";
 import {ClientOnly} from "@/app/client.only";
 import styles from "./domain/home/home.module.css";
 import ScrollToSection from "@/app/domain/home/section.scroll";
 import {useRef} from "react";
 import {Footer} from "@/app/domain/home/footer";
-import About from "@/app/domain/home/About";
+import {AboutPlanely, Examples, HowToUse} from "@/app/domain/home/About";
 
 export default function Home() {
     const home = useRef<HTMLDivElement | null>(null);
     const about = useRef<HTMLDivElement | null>(null);
+    const usage = useRef<HTMLDivElement | null>(null);
+    const example = useRef<HTMLDivElement | null>(null);
+
     return (
         <main className={styles.homeContainer}>
             <section className="h-screen" ref={home}>
-                <ScrollToSection goToSectionRef={about} arrow={"down"}>
-                    <div className="flex justify-center items-end h-1/2">
-                        <Image src={logo} alt={"The logo of the application"}
-                               className="max-h-[40vh] md:max-h-[45vh] w-auto mb-14"/>
-                    </div>
+                <ScrollToSection goToSectionDownRef={about}>
                     <ClientOnly>
-                        <MessageForm/>
+                        <MainContend/>
                     </ClientOnly>
                 </ScrollToSection>
             </section>
-            <section ref={about} >
-                <ScrollToSection goToSectionRef={home} arrow={"up"}>
-                    <div className="flex flex-col justify-between">
-                       <About/>
-                        <Footer/>
-                    </div>
-
-
+            <section ref={about}>
+                <ScrollToSection goToSectionUpRef={home} goToSectionDownRef={usage}>
+                    <AboutPlanely/>
                 </ScrollToSection>
             </section>
+            <div ref={usage}>
+                <ScrollToSection goToSectionUpRef={about} goToSectionDownRef={example}>
+                    <HowToUse/>
+                </ScrollToSection>
+            </div>
+            <div ref={example}>
+                <ScrollToSection goToSectionUpRef={usage}>
+                    <div className="flex flex-col justify-between h-full">
+                        <Examples/>
+                        <Footer/>
+                    </div>
+                </ScrollToSection>
+            </div>
         </main>
     );
 }
