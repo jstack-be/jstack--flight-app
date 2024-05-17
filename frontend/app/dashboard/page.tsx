@@ -19,7 +19,7 @@ export default function Page() {
 
     useEffect(() => {
         if (width !== null && height !== null) {
-            setIsOpen(height <= width && width > 1024);
+            setIsOpen(height <= width && width >= 1024);
         }
     }, [width, height]);
 
@@ -38,11 +38,11 @@ export default function Page() {
     return (
         <main className="h-screen w-full fixed lg:flex">
             <ClientOnly>
-                <div className="flex absolute lg:relative w-full md:w-1/5 lg:space-x-4">
+                <div className="flex absolute lg:relative w-full xl:1/5 lg:w-2/5 lg:space-x-4">
                     <MessageBox isOpen={isOpen} onClose={closeModal}/>
                     {!isOpen && <Button className={`bg-button rounded-full m-4`} onClick={returnHome}> <ArrowLeft/></Button>}
                 </div>
-                <div className="flex flex-col w-full md:w-4/5 h-full overflow-y-auto items-center p-6">
+                <div className="flex flex-col w-full xl:w-4/5 h-full overflow-y-auto items-center p-6">
                     <Image src={logo} alt={"afbeelding van vliegtuig logo"} className={"h-32 w-auto mb-6"}/>
                     <FlightCards/>
                 </div>
