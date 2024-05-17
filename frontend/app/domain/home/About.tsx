@@ -19,7 +19,7 @@ function AboutContendPage({titel, children, className}: AboutContendPageProps) {
                 </div>
             </div>
             <Image src={logo} alt={"The logo of the application"}
-                   className="max-h-[40vh] md:max-h-[60vh] w-auto mb-14 hidden md:block"/>
+                   className="max-h-[40vh] md:max-h-[60vh] w-auto mb-14 hidden lg:block"/>
         </div>
     );
 }
@@ -70,7 +70,7 @@ export function HowToUse() {
 
 export function Examples() {
     return (
-        <AboutContendPage titel={"Examples"}>
+        <AboutContendPage titel={"Examples"} className={"mt-10"}>
             <p className="text-background-dark pb-3 font-bold text-xl">
                 Here are some examples of what you could ask:
             </p>
