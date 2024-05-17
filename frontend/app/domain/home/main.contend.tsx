@@ -1,5 +1,5 @@
 "use client";
-import React, {useEffect} from "react";
+import React from "react";
 
 import {Textarea} from "@/components/ui/textarea";
 import {Button} from "@/components/ui/button"
@@ -11,23 +11,15 @@ import logo from "@/public/logo-big.svg";
 
 export default function MainContend() {
     const router = useRouter()
-    const {removeAllMessages, sendMessage, isSuccess, isLoading} = useFlights()
+    const {sendMessage, isLoading} = useFlights()
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const formData = new FormData(event.currentTarget);
         const message = formData.get("message") as string;
-
-        sendMessage(message);
+        sendMessage(message, true);
+        router.push('/dashboard')
     }
-
-    useEffect(() => {
-        if (isSuccess) {
-            removeAllMessages()
-            router.push('/dashboard')
-        }
-    }, [isSuccess, removeAllMessages, router]);
-
 
     function continueConversation() {
         router.push('/dashboard')
