@@ -16,7 +16,7 @@ interface MessageBoxProps {
  * @param isOpen - boolean to check if the message box is open
  */
 export function MessageBox({onClose, isOpen}: MessageBoxProps) {
-    const {messages, sendMessage, removeAllMessages, isLoading} = useFlights();
+    const {messages, sendMessage, isLoading} = useFlights();
     const messagesEndRef = useRef<HTMLDivElement | null>(null);
 
     useEffect(() => {
