@@ -11,7 +11,7 @@ import logo from "@/public/logo-big.svg";
 
 export default function MainContend() {
     const router = useRouter()
-    const {sendMessage, isLoading} = useFlights()
+    const {sendMessage, isLoading, messages} = useFlights()
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -43,15 +43,20 @@ export default function MainContend() {
                 <div className="absolute bottom-0 right-3 p-2 focus:border-ring text-secondary">
                     {isLoading ?
                         <Button disabled type="submit">Loading...</Button> :
-                        <Button type="submit" className="bg-secondary-background text-primary hover:bg-amber-300"> {/*todo move to global css*/}
+                        <Button type="submit"
+                                className="bg-secondary-background text-primary hover:bg-amber-300"> {/*todo move to global css*/}
                             Send <ArrowRight/>
                         </Button>
                     }
                 </div>
             </form>
-            <p className="text-lg m-2 text-primary">- or -</p>
-            <Button className="bg-amber-100 text-amber-600" onClick={continueConversation}>Continue with your previous
-                search session</Button> {/*todo move to global css*/}
+            {!!messages.length && <>
+                <p className="text-lg m-2 text-primary">- or -</p>
+                <Button className="bg-amber-100 text-amber-600"
+                        onClick={continueConversation}>{/*todo move to global css*/}
+                    Continue with your previous search session
+                </Button>
+            </>}
         </div>
     );
 }
