@@ -1,7 +1,5 @@
 "use client"
-import MessageForm from "@/app/domain/home/message.form";
-import Image from "next/image";
-import logo from '../public/logo-big.svg'
+import MainContend from "@/app/domain/home/main.contend";
 import {ClientOnly} from "@/app/client.only";
 import styles from "./domain/home/home.module.css";
 import ScrollToSection from "@/app/domain/home/section.scroll";
@@ -16,12 +14,8 @@ export default function Home() {
         <main className={styles.homeContainer}>
             <section className="h-screen" ref={home}>
                 <ScrollToSection goToSectionRef={about} arrow={"down"}>
-                    <div className="flex justify-center items-end h-1/2">
-                        <Image src={logo} alt={"The logo of the application"}
-                               className="max-h-[40vh] md:max-h-[45vh] w-auto mb-14"/>
-                    </div>
                     <ClientOnly>
-                        <MessageForm/>
+                        <MainContend/>
                     </ClientOnly>
                 </ScrollToSection>
             </section>
