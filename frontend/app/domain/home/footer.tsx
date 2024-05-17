@@ -5,7 +5,7 @@ import logo from "@/public/logo-sm.svg";
 
 export function Footer() {
     return (
-        <footer className="flex-none md:h-52 bg-background-gradient flex md:flex-row flex-col items-center md:justify-around text-primary">
+        <footer className="flex-none md:h-48 bg-background-gradient flex md:flex-row flex-col items-center md:justify-around text-primary">
             <Image src={logo} alt={"The logo of the application"} className="h-1/2 w-auto"/>
             <div className="flex flex-col m-4 w-1/2 md:w-1/5">
                 <p className="text-lg mb-1">Documents</p>

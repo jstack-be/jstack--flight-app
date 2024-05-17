@@ -3,12 +3,12 @@ import styles from "./home.module.css";
 import {ChevronDown, ChevronUp} from "lucide-react";
 
 interface ScrollToSectionProps {
-    children: React.ReactNode;
-    goToSectionRef: React.RefObject<HTMLDivElement>;
-    arrow: "up"| "down"| "none";
+    children: React.ReactNode,
+    goToSectionUpRef?: React.RefObject<HTMLDivElement>,
+    goToSectionDownRef?: React.RefObject<HTMLDivElement>,
 }
 
-export default function ScrollToSection({children, goToSectionRef, arrow}: ScrollToSectionProps) {
+export default function ScrollToSection({ children, goToSectionUpRef, goToSectionDownRef }: ScrollToSectionProps) {
     function scrollTo(section: RefObject<HTMLDivElement>) {
         section?.current?.scrollIntoView({behavior: "auto"});
     }
@@ -17,13 +17,21 @@ export default function ScrollToSection({children, goToSectionRef, arrow}: Scrol
         <div className={styles.snapSection}>
             {children}
 
-            {arrow !== "none" && (
+            {goToSectionUpRef && (
                 <button
-                    className={`${arrow === "up" ? styles.upArrow : styles.downarrow} m-4 text-primary`}
-                    onClick={() => scrollTo(goToSectionRef)}
+                    className={`${styles.upArrow} m-4 text-primary`}
+                    onClick={() => scrollTo(goToSectionUpRef)}
                 >
+                    <ChevronUp className="w-30"/>
+                </button>
+            )}
 
-                    {arrow === "up" ? <ChevronUp className="w-30"/> : <ChevronDown className="w-30"/>}
+            {goToSectionDownRef && (
+                <button
+                    className={`${styles.downArrow} m-4 text-primary`}
+                    onClick={() => scrollTo(goToSectionDownRef)}
+                >
+                    <ChevronDown className="w-30"/>
                 </button>
             )}
         </div>
