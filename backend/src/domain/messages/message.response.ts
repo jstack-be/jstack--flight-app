@@ -44,8 +44,6 @@ export function saveFlights(newFlights: Flight[]): void {
             id: route.id,
             flyFrom: route.flyFrom,
             flyTo: route.flyTo,
-            cityFrom: route.cityFrom,
-            cityTo: route.cityTo,
             local_departure: route.local_departure,
             local_arrival: route.local_arrival,
             airlineLogoUrl: convertToLogoUrl(route.airline),
