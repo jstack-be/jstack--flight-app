@@ -12,7 +12,7 @@ export function FlightCards() {
     if (isLoading) return <div>Loading...</div>
     if (!flights?.length || isError) {
         return (
-            <p className={"flex text-primary items-center text-3xl text-justify"}>
+            <p className={"flex text-primary items-center text-3xl"}>
                 <Frown size={72} className="m-2"/> Sorry, no flights found.
             </p>
         );

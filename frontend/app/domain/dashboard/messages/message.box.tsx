@@ -2,10 +2,8 @@
 import React, {useEffect, useRef} from "react";
 import {Textarea} from "@/components/ui/textarea";
 import {Button} from "@/components/ui/button";
-import {useRouter} from 'next/navigation'
 import useFlights from "@/app/lib/useFlights";
 import {ChatCompletionMessageParam} from "@/app/domain/dashboard/messages/message.types";
-import {ArrowLeft} from 'lucide-react';
 
 interface MessageBoxProps {
     onClose: () => void,
@@ -20,23 +18,12 @@ interface MessageBoxProps {
 export function MessageBox({onClose, isOpen}: MessageBoxProps) {
     const {messages, sendMessage, removeAllMessages, isLoading} = useFlights();
     const messagesEndRef = useRef<HTMLDivElement | null>(null);
-    const router = useRouter()
 
     useEffect(() => {
         if (messagesEndRef.current) {
             messagesEndRef.current.scrollIntoView({behavior: 'smooth'});
         }
     }, [messages]);
-
-    const restartConversation = async () => {
-        removeAllMessages()
-        router.push('/')
-    };
-
-    //todo move outside the component
-    if (!isOpen) return (<div className="z-0 absolute lg:fixed lg:m-3">
-        <Button className="bg-button rounded-full" onClick={restartConversation}> <ArrowLeft/></Button>
-    </div>);
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -47,8 +34,10 @@ export function MessageBox({onClose, isOpen}: MessageBoxProps) {
 
     }
 
+    if (!isOpen) return;
+
     return (<>
-        <div className="bg-gray-200 h-dvh p-6 lg:w-4/12 md:relative overflow-y-auto">
+        <div className="bg-gray-200 h-dvh p-6 w-full overflow-y-auto">
             <div className="flex justify-between lg:hidden mb-1">
                 <h2 className="text-2xl">Message History</h2>
                 <Button onClick={onClose}>X</Button>
@@ -63,7 +52,6 @@ export function MessageBox({onClose, isOpen}: MessageBoxProps) {
                 <div ref={messagesEndRef}/>
             </div>
 
-
             <form className="flex flex-col items-center" onSubmit={handleSubmit}>
                 <Textarea className="m-2 h-[17dvh] bg-white placeholder:text-textarea-placeholder resize-none"
                           id="message" name="message"
@@ -74,13 +62,5 @@ export function MessageBox({onClose, isOpen}: MessageBoxProps) {
                 }
             </form>
         </div>
-        {/*//todo move outside the component 2*/}
-        {isOpen && (
-            <div className="relative">
-                <div className="z-0 absolute lg:fixed lg:m-3">
-                    <Button className="bg-button rounded-full" onClick={restartConversation}> <ArrowLeft/></Button>
-                </div>
-            </div>)}
-
     </>);
 }
