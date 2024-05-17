@@ -30,6 +30,16 @@ export function FlightCard(props: Flight) {
     const departureRoutes = useRoutesData(props.route, 'departure', props.duration.departure);
     const returnRoutes = useRoutesData(props.route, 'return', props.duration.return);
 
+    const formatCurrency = (currencyCode: string, amount: number) => new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: currencyCode
+    }).format(amount);
+
+    // Extract the currency code and the corresponding amount from the conversion object
+    const prizes = Object.entries(props.price_conversion);
+    const [currencyCode, amount] = prizes[prizes.length - 1];
+    const priceInCurrency = formatCurrency(currencyCode, amount);
+
     return (
         <div className="bg-primary rounded-2xl w-full max-w-[850px]">
             <div className="flex flex-col md:flex-row md:justify-evenly justify-center items-center my-4 md:mx-4">
@@ -63,7 +73,7 @@ export function FlightCard(props: Flight) {
                 <div className="m-4 ms-6"> {/*todo change colors to global*/}
                     <div className="flex md:justify-end my-3 space-x-2 w-full">
                         <p className="text-gray-400">price </p>
-                        <p className="flex text-blue-700 text-lg font-bold">€{props.price}</p>
+                        <p className="flex text-blue-700 text-lg font-bold">{priceInCurrency}</p>
                     </div>
                     <a href={props.booking_link} target="_blank" rel="noopener noreferrer">
                         <Button
