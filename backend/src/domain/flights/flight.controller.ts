@@ -29,6 +29,7 @@ export async function queryFlights(req: Request, res: Response): Promise<void> {
         if (flights.length === 0) {
             saveMessage("No fights found");
         } else {
+            //TODO hier moet de conditional logica komen
             saveFlights(flights);
         }
 

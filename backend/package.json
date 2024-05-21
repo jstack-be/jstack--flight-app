@@ -5,7 +5,7 @@
   "main": "dist/app.js",
   "scripts": {
     "start": "tsc && nodem dist/server.ts",
-    "dev": "npx nodemon src/server.ts",
+    "dev" : "npx nodemon src/server.ts",
     "test": "jest"
   },
   "keywords": [],

@@ -128,6 +128,23 @@ function processResponse(completion: any) {
     }
 }
 
+function processSortingResponse(completion: any) {
+    const responseMessage = completion?.choices?.[0]?.message;
+    const args = responseMessage?.tool_calls?.[0]?.function?.arguments;
+    if (!!args) {
+        let jsonObject = JSON.parse(args);
+        jsonObject.limit = 20;
+        console.log(jsonObject);
+
+        saveMessage(jsonObject.message);
+        delete jsonObject.message;
+
+        return jsonObject;
+    } else {
+        throw new ResponseError(responseMessage.content);
+    }
+}
+
 const openai = new OpenAI({
     organization: environment.openAiOrgKey,
     apiKey: environment.openAiApiKey
@@ -153,6 +170,41 @@ export async function generateFlightSearchParameters(messages: ChatCompletionMes
     const completion = await openai.chat.completions.create({
         messages: messages,
         tools: [getFilterFunction()],
+        tool_choice: 'auto',
+        model: "gpt-3.5-turbo",
+    });
+
+    return processResponse(completion);
+}
+
+
+/**
+ * Function to apply conditional sorting
+ * @param {ChatCompletionMessageParam[]} messages - The messages to send to the OpenAI API
+ * @returns {Promise<FlightSearchParameters>} The flight search parameters
+ */
+async function applyConditionalSorting(messages: ChatCompletionMessageParam[]) {
+
+    const systemMessage: ChatCompletionMessageParam = {
+        role: 'system',
+        content: 'You are a helpful travel planner assistant ' +
+            ' Your will receive input data about flights and an initial message' +
+            ' You should only sort the data and return it '+
+            ' You only sort it how the message dictates, ' +
+            ' You should not change the data in any other way. ' +
+            ' You should not add any additional information. ' +
+            ' You should not remove any information from the specific flights themselves ' +
+            ' example: a prompt could be "give me flights from tokyo to london by duration, ' +
+            ' but if a flight is significantly cheaper i want to see those aswell" ' +
+            ' the input data you receive should already sorted on duration if not do so now' +
+            ' Then you should check if there are flights that are 20% cheaper than the current 5 flights with lowest duration' +
+            ' If there are more than 3 flights cheaper only place the top 3 cheapest flights at the top of the list '
+    };
+
+    messages.unshift(systemMessage);
+
+    const completion = await openai.chat.completions.create({
+        messages: messages,
         tool_choice: 'auto',
         model: "gpt-3.5-turbo",
     });
