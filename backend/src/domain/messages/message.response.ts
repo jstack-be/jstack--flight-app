@@ -53,7 +53,7 @@ export function saveFlights(newFlights: Flight[]): void {
         return {
             id: newFlight.id,
             duration: newFlight.duration,
-            price: newFlight.price,
+            price_conversion: newFlight.conversion,
             booking_link: newFlight.deep_link,
             route: updatedRoutes,
         };
