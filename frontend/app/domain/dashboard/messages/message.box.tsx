@@ -2,7 +2,7 @@
 import React, {useEffect, useRef} from "react";
 import {Textarea} from "@/components/ui/textarea";
 import {Button} from "@/components/ui/button";
-import useFlights from "@/app/lib/useFlights";
+import useFlights from "@/app/lib/client/useFlights";
 import {ChatCompletionMessageParam} from "@/app/domain/dashboard/messages/message.types";
 
 interface MessageBoxProps {
@@ -30,8 +30,7 @@ export function MessageBox({onClose, isOpen}: MessageBoxProps) {
         const formData = new FormData(event.currentTarget);
         const message = formData.get("message") as string;
         event.currentTarget.reset(); // Clear the form
-        sendMessage(message);
-
+        await sendMessage(message);
     }
 
     if (!isOpen) return;
@@ -43,10 +42,9 @@ export function MessageBox({onClose, isOpen}: MessageBoxProps) {
                 <Button onClick={onClose}>X</Button>
             </div>
             <div className="overflow-y-auto h-[60dvh] md:h-4/6 border border-gray-300 p-2">
-                {messages.map((message: ChatCompletionMessageParam, index: number) =>
+                {messages.filter(message => message.role !== 'system').map((message: ChatCompletionMessageParam, index: number) =>
                     <div key={index}
                          className={`${message.role == "user" ? "bg-background-message text-primary mr-12" : "bg-primary text-black ml-12"} text-sm m-2 px-4 py-3 rounded`}>
-                        <strong className="font-bold">{message.role.toUpperCase()}:</strong><br/>
                         <span className="block sm:inline">{message.content}</span>
                     </div>)}
                 <div ref={messagesEndRef}/>
