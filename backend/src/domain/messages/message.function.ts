@@ -1,5 +1,4 @@
 import {ChatCompletionTool} from "openai/resources";
-import {formatDate} from "../../utils/date.utils";
 
 /**
  * Function definition for the OpenAI chat completion tool.
@@ -123,35 +122,35 @@ export const getFilterFunction = (): ChatCompletionTool => {
                     },
                     dtime_from: {
                         type: 'string',
-                        description: 'result filter, minimal departure time (use only time in whole hours, not minutes; 11:00 means 11AM, 23:00 means 11PM)',
+                        description: 'result filter, minimal departure time (use only time in whole hours, not minutes; 11:00 means 11AM, 23:00 means 11PM) return value in the format hh:mm',
                     },
                     dtime_to: {
                         type: 'string',
-                        description: 'result filter, maximal departure time (use only time in whole hours, not minutes; 11:00 means 11AM, 23:00 means 11PM)',
+                        description: 'result filter, maximal departure time (use only time in whole hours, not minutes; 11:00 means 11AM, 23:00 means 11PM) return value in the format hh:mm',
                     },
                     atime_from: {
                         type: 'string',
-                        description: 'result filter, minimal arrival time (use only time in whole hours, not minutes; 11:00 means 11AM, 23:00 means 11PM)',
+                        description: 'result filter, minimal arrival time (use only time in whole hours, not minutes; 11:00 means 11AM, 23:00 means 11PM) return value in the format hh:mm',
                     },
                     atime_to: {
                         type: 'string',
-                        description: 'result filter, maximal arrival time (use only time in whole hours, not minutes; 11:00 means 11AM, 23:00 means 11PM)',
+                        description: 'result filter, maximal arrival time (use only time in whole hours, not minutes; 11:00 means 11AM, 23:00 means 11PM) return value in the format hh:mm',
                     },
                     ret_dtime_from: {
                         type: 'string',
-                        description: 'result filter, minimal return departure time (use only time in whole hours, not minutes; 11:00 means 11AM, 23:00 means 11PM)',
+                        description: 'result filter, minimal return departure time (use only time in whole hours, not minutes; 11:00 means 11AM, 23:00 means 11PM) return value in the format hh:mm',
                     },
                     ret_dtime_to: {
                         type: 'string',
-                        description: 'result filter, maximal return departure time (use only time in whole hours, not minutes; 11:00 means 11AM, 23:00 means 11PM)',
+                        description: 'result filter, maximal return departure time (use only time in whole hours, not minutes; 11:00 means 11AM, 23:00 means 11PM) return value in the format hh:mm',
                     },
                     ret_atime_from: {
                         type: 'string',
-                        description: 'result filter, minimal return arrival time (use only time in whole hours, not minutes; 11:00 means 11AM, 23:00 means 11PM)',
+                        description: 'result filter, minimal return arrival time (use only time in whole hours, not minutes; 11:00 means 11AM, 23:00 means 11PM) return value in the format hh:mm',
                     },
                     ret_atime_to: {
                         type: 'string',
-                        description: 'result filter, maximal return arrival time (use only time in whole hours, not minutes; 11:00 means 11AM, 23:00 means 11PM)',
+                        description: 'result filter, maximal return arrival time (use only time in whole hours, not minutes; 11:00 means 11AM, 23:00 means 11PM) return value in the format hh:mm',
                     },
                     //todo airlines filter
                     vehicle_type: {

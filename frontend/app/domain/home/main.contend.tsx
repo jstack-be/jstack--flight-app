@@ -50,7 +50,7 @@ export default function MainContend() {
                     }
                 </div>
             </form>
-            {!!messages.length && <>
+            {!!messages.length && !isLoading && <>
                 <p className="text-lg m-2 text-primary">- or -</p>
                 <Button className="bg-amber-100 text-amber-600"
                         onClick={continueConversation}>{/*todo move to global css*/}

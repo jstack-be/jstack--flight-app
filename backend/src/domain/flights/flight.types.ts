@@ -111,7 +111,7 @@ interface RouteResponse {
 export interface FlightsResponse {
     id: string;
     duration: {departure: number; return: number; total: number},
-    price: number;
+    price_conversion: {[key: string]: number},
     booking_link: string;
     route: RouteResponse[];
 }

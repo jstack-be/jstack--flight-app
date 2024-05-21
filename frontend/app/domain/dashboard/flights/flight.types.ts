@@ -11,8 +11,8 @@ export interface Route {
 export interface Flight {
     id: string;
     duration: {departure: number; return: number; total: number},
-    price: number;
     booking_link: string;
+    price_conversion: {[key: string]: number},
     route: Route[];
 }
 
