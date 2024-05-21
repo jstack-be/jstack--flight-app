@@ -8,7 +8,7 @@ import useRoutesData from "@/app/lib/useRoutesData";
 
 export function FlightCards() {
     const {flights, isLoading, isError} = useFlights();
-
+    //todo add refresh functionality
     if (isLoading) return <div>Loading...</div>
     if (!flights?.length || isError) {
         return (

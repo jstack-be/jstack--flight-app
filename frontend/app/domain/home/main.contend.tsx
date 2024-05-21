@@ -11,7 +11,7 @@ import logo from "@/public/logo-big.svg";
 
 export default function MainContend() {
     const router = useRouter()
-    const {sendMessage, isLoading, messages} = useFlights()
+    const {sendMessage,refreshData, isLoading, messages} = useFlights()
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -22,6 +22,7 @@ export default function MainContend() {
     }
 
     function continueConversation() {
+        refreshData()
         router.push('/dashboard')
     }
 
