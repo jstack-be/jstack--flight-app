@@ -1,5 +1,5 @@
 import {Request, Response} from "express";
-import {generateFlightSearchParameters, applyConditionalSorting} from "../messages/message.service";
+import {generateFlightSearchParameters} from "../messages/message.service";
 import {getTravelData} from "./flight.service";
 import {clearContent, getContent, saveFlights, saveMessage} from "../messages/message.response";
 import {ChatCompletionMessageParam} from "openai/resources";
@@ -30,17 +30,23 @@ export async function queryFlights(req: Request, res: Response): Promise<void> {
             saveMessage("No fights found");
         } else {
 
-            //TODO hier moet de conditional logica komen
-            messages.push({role: "user", content: JSON.stringify(flights)});
-            const sortedflights = await applyConditionalSorting(messages);
-
-
-            // saveFlights(flights);
-            saveFlights(sortedflights);
+            saveFlights(flights);
         }
 
         const response = getContent();
 
+        //TODO - apply conditional sorting
+        // de opgehaalde flights moeten terug gestuurd worden naar openAI
+        // deze zal de flights sorteren op userInput en returnen
+
+        // response.flights is een array van objects
+        response.flights.forEach(flight => { console.log(flight) })
+
+
+        messages.push({role: 'system', content: JSON.stringify(response.flights)})
+        console.log(messages)
+        // const sortedResponse= applyConditionalSorting(messages)
+        // console.log("sorted response data " + sortedResponse + "end of sorted response data")
 
         res.status(200).send(response);
         clearContent();

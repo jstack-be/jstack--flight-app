@@ -4,7 +4,7 @@ import {parseDate} from "../../utils/date.utils";
 import {environment} from "../../enviroment";
 import {saveMessage} from "./message.response";
 import {getFilterFunction} from "./message.function";
-import {ConditionalflightParameters, FlightSearchParameters} from "./message.types";
+import { FlightSearchParameters} from "./message.types";
 import {ChatCompletionMessageParam} from "openai/resources";
 import OpenAI from "openai";
 import {appliedFilterFunction} from "./message.conditionalFlight.function";
@@ -139,7 +139,7 @@ const openai = new OpenAI({
  * @param {ChatCompletionMessageParam[]} messages - The messages to send to the OpenAI API
  * @returns {Promise<FlightSearchParameters>} The flight search parameters
  */
-export async function generateFlightSearchParameters(messages: ChatCompletionMessageParam[]): Promise<FlightSearchParameters> {
+export async function generateFlightSearchParameters(messages: ChatCompletionMessageParam[]) {
     const systemMessage: ChatCompletionMessageParam = {
         role: 'system',
         content: 'You are a helpful travel planner assistant ' +
@@ -167,7 +167,7 @@ export async function generateFlightSearchParameters(messages: ChatCompletionMes
  * @param {ChatCompletionMessageParam[]} messages - The messages to send to the OpenAI API
  * @returns {Promise<FlightSearchParameters>} The flight search parameters
  */
-export async function applyConditionalSorting(messages: ChatCompletionMessageParam[]): Promise<ConditionalflightParameters> {
+export async function applyConditionalSorting(messages: ChatCompletionMessageParam[]): Promise<FlightSearchParameters>    {
 
     const systemMessage: ChatCompletionMessageParam = {
         role: 'system',
