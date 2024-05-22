@@ -1,5 +1,5 @@
 import {Request, Response} from "express";
-import {generateFlightSearchParameters} from "../messages/message.service";
+import {generateFlightSearchParameters, applyConditionalSorting} from "../messages/message.service";
 import {getTravelData} from "./flight.service";
 import {clearContent, getContent, saveFlights, saveMessage} from "../messages/message.response";
 import {ChatCompletionMessageParam} from "openai/resources";
@@ -29,11 +29,19 @@ export async function queryFlights(req: Request, res: Response): Promise<void> {
         if (flights.length === 0) {
             saveMessage("No fights found");
         } else {
+
             //TODO hier moet de conditional logica komen
-            saveFlights(flights);
+            messages.push({role: "user", content: JSON.stringify(flights)});
+            const sortedflights = await applyConditionalSorting(messages);
+
+
+            // saveFlights(flights);
+            saveFlights(sortedflights);
         }
 
         const response = getContent();
+
+
         res.status(200).send(response);
         clearContent();
 

@@ -4,9 +4,10 @@ import {parseDate} from "../../utils/date.utils";
 import {environment} from "../../enviroment";
 import {saveMessage} from "./message.response";
 import {getFilterFunction} from "./message.function";
-import {FlightSearchParameters} from "./message.types";
+import {ConditionalflightParameters, FlightSearchParameters} from "./message.types";
 import {ChatCompletionMessageParam} from "openai/resources";
 import OpenAI from "openai";
+import {appliedFilterFunction} from "./message.conditionalFlight.function";
 
 /**
  * Function to validate dates
@@ -62,7 +63,7 @@ function validateBaggage(jsonObject: any) {
     }
 
     if (children && children > 0) {
-        if ((childrenHandbags.length !== children && childrenHandbags.length !== 0) || (childrenHoldbags.length !== children && childrenHoldbags.length !== 0) ) {
+        if ((childrenHandbags.length !== children && childrenHandbags.length !== 0) || (childrenHoldbags.length !== children && childrenHoldbags.length !== 0)) {
             throw new ResponseError("The number of children's baggage does not match the number of children. Please change your request and try again.");
         }
     }
@@ -128,23 +129,6 @@ function processResponse(completion: any) {
     }
 }
 
-function processSortingResponse(completion: any) {
-    const responseMessage = completion?.choices?.[0]?.message;
-    const args = responseMessage?.tool_calls?.[0]?.function?.arguments;
-    if (!!args) {
-        let jsonObject = JSON.parse(args);
-        jsonObject.limit = 20;
-        console.log(jsonObject);
-
-        saveMessage(jsonObject.message);
-        delete jsonObject.message;
-
-        return jsonObject;
-    } else {
-        throw new ResponseError(responseMessage.content);
-    }
-}
-
 const openai = new OpenAI({
     organization: environment.openAiOrgKey,
     apiKey: environment.openAiApiKey
@@ -183,13 +167,13 @@ export async function generateFlightSearchParameters(messages: ChatCompletionMes
  * @param {ChatCompletionMessageParam[]} messages - The messages to send to the OpenAI API
  * @returns {Promise<FlightSearchParameters>} The flight search parameters
  */
-async function applyConditionalSorting(messages: ChatCompletionMessageParam[]) {
+export async function applyConditionalSorting(messages: ChatCompletionMessageParam[]): Promise<ConditionalflightParameters> {
 
     const systemMessage: ChatCompletionMessageParam = {
         role: 'system',
         content: 'You are a helpful travel planner assistant ' +
             ' Your will receive input data about flights and an initial message' +
-            ' You should only sort the data and return it '+
+            ' You should only sort the data and return it ' +
             ' You only sort it how the message dictates, ' +
             ' You should not change the data in any other way. ' +
             ' You should not add any additional information. ' +
@@ -205,9 +189,35 @@ async function applyConditionalSorting(messages: ChatCompletionMessageParam[]) {
 
     const completion = await openai.chat.completions.create({
         messages: messages,
+        tools: [appliedFilterFunction()],
         tool_choice: 'auto',
         model: "gpt-3.5-turbo",
     });
 
-    return processResponse(completion);
+
+    return processConditionalResponse(completion);
+}
+
+/**
+ * Function to process the response from the OpenAI API
+ * @param {any} completion - The response from the OpenAI API
+ * @returns {any} The processed response
+ * @throws {ReferenceError} If the response does not contain the function json object
+ */
+function processConditionalResponse(completion: any) {
+    const responseMessage = completion?.choices?.[0]?.message;
+    const args = responseMessage?.tool_calls?.[0]?.function?.arguments;
+    if (!!args) {
+        let jsonObject = JSON.parse(args);
+        jsonObject.limit = 20;
+        console.log(jsonObject);
+
+        saveMessage(jsonObject.message);
+        delete jsonObject.message;
+
+        return jsonObject;
+    } else {
+        throw new ResponseError(responseMessage.content);
+
+    }
 }
