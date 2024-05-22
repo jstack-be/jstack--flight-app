@@ -31,7 +31,8 @@
     height: 40px;
     z-index: 2;
 }
-.upArrow{
+
+.upArrow {
     position: absolute;
     top: 20px;
     left: 0;
@@ -46,5 +47,12 @@
 @media (max-width: 600px) {
     .snapSection {
         scroll-snap-align: none;
+        height: 70vh;
     }
+
+    .upArrow, .downArrow {
+        visibility: hidden;
+    }
+
+
 }
