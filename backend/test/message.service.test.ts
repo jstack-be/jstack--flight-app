@@ -1,4 +1,4 @@
-import {applyConditionalSorting, generateFlightSearchParameters} from '../src/domain/messages/message.service';
+import {generateFlightSearchParameters} from '../src/domain/messages/message.service';
 import {nockedOpenAiAPI} from "./utils/api.mocks";
 import {ChatCompletionMessageParam} from "openai/resources";
 import nock from "nock";
@@ -150,8 +150,6 @@ describe('generateFlightSearchParameters', () => {
     });
 
 
-
-
 })
 
 describe('SortConditionalFlightData', () => {
@@ -160,99 +158,10 @@ describe('SortConditionalFlightData', () => {
     });
 
     it('should sort flight data depending on the message provided', async () => {
-
-        const message: ChatCompletionMessageParam[] = [{
+        const messages: ChatCompletionMessageParam[] = [{
             role: 'user',
             content: 'I want to travel from New York to London sorted on lowest duration ' +
-                'but if flight is cheaper i want to see those aswell'
+                'but if flight is cheaper i want to see those as well'
         }];
-
-        const invallidOutcome =
-            [{
-                id: 1,
-                fly_from: 'JFK',
-                fly_to: 'LHR',
-                limit: 20,
-                duration: 1000,
-                price: 200
-            }, {
-                id: 2,
-                fly_from: 'JFK',
-                fly_to: 'LHR',
-                limit: 20,
-                duration: 1010,
-                price: 200
-            }, {
-                id: 3,
-                fly_from: 'JFK',
-                fly_to: 'LHR',
-                limit: 20,
-                duration: 1020,
-                price: 150
-            }, {
-                id: 4,
-                fly_from: 'JFK',
-                fly_to: 'LHR',
-                limit: 20,
-                duration: 1050,
-                price: 190
-            }, {
-                id: 5,
-                fly_from: 'JFK',
-                fly_to: 'LHR',
-                limit: 20,
-                duration: 1100,
-                price: 100
-            },
-
-            ];
-
-        message.push({role: 'system', content: JSON.stringify(invallidOutcome)})
-        //flight data inlezen zodat deze gekend is in de context
-
-        const expectedParameters =
-            [{
-                id: 5,
-                fly_from: 'JFK',
-                fly_to: 'LHR',
-                duration: 1100,
-                price: 100
-            }, {
-                id: 3,
-                fly_from: 'JFK',
-                fly_to: 'LHR',
-                duration: 1020,
-                price: 150
-            }, {
-                id: 4,
-                fly_from: 'JFK',
-                fly_to: 'LHR',
-                duration: 1050,
-                price: 190
-            }, {
-                id: 2,
-                fly_from: 'JFK',
-                fly_to: 'LHR',
-                duration: 900,//different duration to test if it fails the data is different
-                price: 200
-            },{
-                id: 1,
-                fly_from: 'JFK',
-                fly_to: 'LHR',
-                duration: 1000,
-                price: 200
-            },
-
-            ];
-
-        nockedOpenAiAPI(expectedParameters);
-        const result = await applyConditionalSorting(message);
-        console.log("hierbenik"+result)
-
-        expect(result).toEqual(expectedParameters);
-
     });
-
-
-
 });

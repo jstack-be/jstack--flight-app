@@ -2,48 +2,69 @@ import {ChatCompletionTool} from "openai/resources";
 
 /**
  * Function definition for the OpenAI chat completion tool.
- * This function generates flight search parameters based on the user's conversation.
+ * This function generates flight data based on the user's conversation.
  */
-export const appliedFilterFunction = (): ChatCompletionTool => {
+export const getFilterAndSortFunction = (): ChatCompletionTool => {
     return {
         type: 'function',
         function: {
-            name: 'sortFlightsConditionally',
-            description: 'This function sorts inputted flights based on the user\'s conversation.',
+            name: 'filterAndSortFlights',
+            description: 'Generates an object containing an array of flights with detailed information filtered and sorted based on the user request.',
             parameters: {
                 type: 'object',
                 properties: {
-                    message: {
-                        type: 'string',
-                        description: 'Returns a message that tells the user what flight data information is found in the response using the same language as the user.',
-                    },
                     flights: {
-                        id:{
-                            type: 'number',
-                            description: 'result id',
+                        type: 'array',
+                        description: 'An array of ordered and filtered flight data objects.',
+                        items: {
+                            type: 'object',
+                            properties: {
+                                id: {type: 'string', description: 'Unique identifier for the flight.'},
+                                duration: {
+                                    type: 'object',
+                                    properties: {
+                                        departure: {
+                                            type: 'number',
+                                            description: 'Duration of the departure flight in seconds.'
+                                        },
+                                        return: {
+                                            type: 'number',
+                                            description: 'Duration of the return flight in seconds.'
+                                        },
+                                        total: {
+                                            type: 'number',
+                                            description: 'Total duration of the round trip in seconds.'
+                                        },
+                                    },
+                                },
+                                price_conversion: {
+                                    type: 'object',
+                                    additionalProperties: true,
+                                    description: 'Currency conversion rates for the flight price.',
+                                },
+                                // booking_link: {type: 'string', description: 'Link to book the flight.'},
+                                route: {
+                                    type: 'object',
+                                    description: 'Route information for the flight.',
+                                    properties: {
+                                        id: {type: 'string', description: 'Unique identifier for the flight.'},
+                                        flyFrom: {type: 'string', description: 'Departure airport code.'},
+                                        flyTo: {type: 'string', description: 'Arrival airport code.'},
+                                        local_departure: {type: 'string', description: 'Local departure time.'},
+                                        local_arrival: {type: 'string', description: 'Local arrival time.'},
+                                        airlineLogoUrl: {type: 'string', description: 'URL to the airline logo.'},
+                                        isReturnFlight: {
+                                            type: 'number',
+                                            description: 'Indicates if the flight is a return flight (1) or not (0).'
+                                        }
+                                    },
+                                }
+                            },
                         },
-                        fly_from: {
-                            type: 'string',
-                            description: 'Always returns the IATA code from the departure metropolitan area. it accepts multiple values separated by a comma.',
-                        },
-                        fly_to: {
-                            type: 'string',
-                            description: 'Always returns the IATA code from the destination metropolitan area. it accepts multiple values separated by a comma.',
-                        },
-                        duration: {
-                            type: 'number',
-                            description: 'result duration minutes ',
-                        },
-                        price: {
-                            type: 'integer',
-                            description: 'result filter, minimal price',
-                        }
-                    }
-
-                }
+                    },
+                },
+                required: ['flights'],
             },
         },
-
-
-    }
-}
+    };
+};

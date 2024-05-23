@@ -29,11 +29,7 @@ export default function useFlights() {
             messageHistory = [...messages, {role: 'user', content}];
         }
         saveMessages(messageHistory)
-        try {
-            mutation.mutate(messageHistory);
-        } catch (e) {
-            // console.log(e)
-        }
+        mutation.mutate(messageHistory);
     }
 
     return {

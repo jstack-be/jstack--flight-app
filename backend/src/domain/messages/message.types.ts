@@ -15,16 +15,3 @@ export interface FlightSearchParameters {
     sort?: string;
     limit?: number;
 }
-
-export interface ConditionalflightParameters {
-    flights: [
-        {
-            id: number,
-            fly_from: string,
-            fly_to: string,
-            duration: number,
-            price: number,
-
-        }
-    ]
-}

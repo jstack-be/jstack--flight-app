@@ -9,7 +9,7 @@ export const getFilterFunction = (): ChatCompletionTool => {
         type: 'function',
         function: {
             name: 'generateFlightSearchParameters',
-            description: "Get the data for the Flight API",
+            description: "generated flight search parameters based on the user's conversation. This does not include conditional filtering.",
             parameters: {
                 type: 'object',
                 properties: {

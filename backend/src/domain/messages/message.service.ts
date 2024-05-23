@@ -4,10 +4,11 @@ import {parseDate} from "../../utils/date.utils";
 import {environment} from "../../enviroment";
 import {saveMessage} from "./message.response";
 import {getFilterFunction} from "./message.function";
-import { FlightSearchParameters} from "./message.types";
+import {FlightSearchParameters} from "./message.types";
 import {ChatCompletionMessageParam} from "openai/resources";
 import OpenAI from "openai";
-import {appliedFilterFunction} from "./message.conditionalFlight.function";
+import {getFilterAndSortFunction} from "./message.conditionalFlight.function";
+import {FlightsResponse} from "../flights/flight.types";
 
 /**
  * Function to validate dates
@@ -113,12 +114,13 @@ function processResponse(completion: any) {
     const args = responseMessage?.tool_calls?.[0]?.function?.arguments;
     if (!!args) {
         let jsonObject = JSON.parse(args);
-        jsonObject.limit = 20;
+        jsonObject.limit = 10; //todo change to 20
         console.log(jsonObject);
 
         validateIataCodes(jsonObject.fly_from, jsonObject.fly_to);
         validateDates(jsonObject);
         validateBaggage(jsonObject);
+        //todo add manual check to see if it is a valid sorting condition
 
         saveMessage(jsonObject.message);
         delete jsonObject.message;
@@ -165,35 +167,32 @@ export async function generateFlightSearchParameters(messages: ChatCompletionMes
 /**
  * Function to apply conditional sorting
  * @param {ChatCompletionMessageParam[]} messages - The messages to send to the OpenAI API
+ * @param {FlightsResponse[]} flights - The flights to sort
  * @returns {Promise<FlightSearchParameters>} The flight search parameters
  */
-export async function applyConditionalSorting(messages: ChatCompletionMessageParam[]): Promise<FlightSearchParameters>    {
-
+export async function applyConditionalSorting(messages: ChatCompletionMessageParam[], flights: FlightsResponse[]) {
     const systemMessage: ChatCompletionMessageParam = {
         role: 'system',
-        content: 'You are a helpful travel planner assistant ' +
-            ' Your will receive input data about flights and an initial message' +
-            ' You should only sort the data and return it ' +
-            ' You only sort it how the message dictates, ' +
-            ' You should not change the data in any other way. ' +
-            ' You should not add any additional information. ' +
-            ' You should not remove any information from the specific flights themselves ' +
-            ' example: a prompt could be "give me flights from tokyo to london by duration, ' +
-            ' but if a flight is significantly cheaper i want to see those aswell" ' +
-            ' the input data you receive should already sorted on duration if not do so now' +
-            ' Then you should check if there are flights that are 20% cheaper than the current 5 flights with lowest duration' +
-            ' If there are more than 3 flights cheaper only place the top 3 cheapest flights at the top of the list '
+        content: 'You are an assistant that changes a list of flights based on the user request. ' +
+            'You are not allowed to change the data from the individual flights. ' +
+            'You are only allowed to remove or reorder the flights from the given list. '
     };
 
     messages.unshift(systemMessage);
 
+    // Remove booking_link from each flight
+    flights = flights.map(flight => { //todo save the links to add them back later
+        delete flight.booking_link;
+        return flight;
+    });
+    messages.push({role: "user", content: `sort or filter these flights:\n ${JSON.stringify(flights)}`})
+
     const completion = await openai.chat.completions.create({
         messages: messages,
-        tools: [appliedFilterFunction()],
-        tool_choice: 'auto',
-        model: "gpt-3.5-turbo",
+        tools: [getFilterAndSortFunction()],
+        tool_choice: {"type": "function", "function": {"name": "filterAndSortFlights"}},
+        model: "gpt-3.5-turbo-0125",
     });
-
 
     return processConditionalResponse(completion);
 }
@@ -202,22 +201,10 @@ export async function applyConditionalSorting(messages: ChatCompletionMessagePar
  * Function to process the response from the OpenAI API
  * @param {any} completion - The response from the OpenAI API
  * @returns {any} The processed response
- * @throws {ReferenceError} If the response does not contain the function json object
  */
 function processConditionalResponse(completion: any) {
-    const responseMessage = completion?.choices?.[0]?.message;
-    const args = responseMessage?.tool_calls?.[0]?.function?.arguments;
+    const args: string = completion?.choices?.[0]?.message?.tool_calls?.[0]?.function?.arguments;
     if (!!args) {
-        let jsonObject = JSON.parse(args);
-        jsonObject.limit = 20;
-        console.log(jsonObject);
-
-        saveMessage(jsonObject.message);
-        delete jsonObject.message;
-
-        return jsonObject;
-    } else {
-        throw new ResponseError(responseMessage.content);
-
+        return JSON.parse(args).flights;
     }
 }
