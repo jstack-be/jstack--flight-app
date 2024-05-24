@@ -3,12 +3,12 @@
 import {Button} from "@/components/ui/button";
 import {Frown, Plane} from "lucide-react";
 import {Flight, ProcessedFlightData} from "@/app/domain/dashboard/flights/flight.types";
-import useFlights from "@/app/lib/useFlights";
-import useRoutesData from "@/app/lib/useRoutesData";
+import useFlights from "@/app/lib/client/useFlights";
+import useRoutesData from "@/app/lib/client/useRoutesData";
 
 export function FlightCards() {
     const {flights, isLoading, isError} = useFlights();
-
+    //todo add refresh functionality
     if (isLoading) return <div>Loading...</div>
     if (!flights?.length || isError) {
         return (

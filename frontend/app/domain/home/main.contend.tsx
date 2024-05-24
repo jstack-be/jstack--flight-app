@@ -4,24 +4,25 @@ import React from "react";
 import {Textarea} from "@/components/ui/textarea";
 import {Button} from "@/components/ui/button"
 import {useRouter} from "next/navigation";
-import useFlights from "@/app/lib/useFlights";
+import useFlights from "@/app/lib/client/useFlights";
 import {ArrowRight} from "lucide-react";
 import Image from "next/image";
 import logo from "@/public/logo-big.svg";
 
 export default function MainContend() {
     const router = useRouter()
-    const {sendMessage, isLoading, messages} = useFlights()
+    const {sendMessage,refreshData, isLoading, messages} = useFlights()
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const formData = new FormData(event.currentTarget);
         const message = formData.get("message") as string;
-        sendMessage(message, true);
+       await sendMessage(message, true);
         router.push('/dashboard')
     }
 
     function continueConversation() {
+        refreshData()
         router.push('/dashboard')
     }
 

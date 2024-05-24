@@ -1,4 +1,4 @@
 export interface ChatCompletionMessageParam {
-    role: 'user' | 'assistant',
+    role: 'user' | 'assistant' | 'system',
     content: string
 }
