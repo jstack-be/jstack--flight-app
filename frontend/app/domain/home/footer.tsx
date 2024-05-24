@@ -10,7 +10,7 @@ export function Footer() {
             <div className="flex flex-col m-4 w-1/2 md:w-1/5">
                 <p className="text-lg mb-1">Documents</p>
                 {/*todo add connections to the pages*/}
-                <Link href="/" className="underline">Privacy policy </Link>
+                <Link href="/privacy-policy" className="underline">Privacy policy </Link>
                 <Link href="/" className="underline">Terms & Conditions</Link>
                 <Link href="/" className="underline">Terms of Use</Link>
             </div>
