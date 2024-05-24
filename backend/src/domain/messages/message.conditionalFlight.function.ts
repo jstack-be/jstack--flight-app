@@ -9,13 +9,13 @@ export const getFilterAndSortFunction = (): ChatCompletionTool => {
         type: 'function',
         function: {
             name: 'filterAndSortFlights',
-            description: 'Generates an object containing an array of flights with detailed information filtered and sorted based on the user request.',
+            description: 'a function that generates an object containing an array of flights filtered and sorted based on the user request.',
             parameters: {
                 type: 'object',
                 properties: {
                     flights: {
                         type: 'array',
-                        description: 'An array of ordered and filtered flight data objects.',
+                        description: 'An array of flight data objects ordered and filtered based on a user\'s request.',
                         items: {
                             type: 'object',
                             properties: {

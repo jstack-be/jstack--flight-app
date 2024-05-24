@@ -114,7 +114,7 @@ function processResponse(completion: any) {
     const args = responseMessage?.tool_calls?.[0]?.function?.arguments;
     if (!!args) {
         let jsonObject = JSON.parse(args);
-        jsonObject.limit = 10; //todo change to 20
+        jsonObject.limit = 5; //todo change to 20
         console.log(jsonObject);
 
         validateIataCodes(jsonObject.fly_from, jsonObject.fly_to);
@@ -173,8 +173,9 @@ export async function generateFlightSearchParameters(messages: ChatCompletionMes
 export async function applyConditionalSorting(messages: ChatCompletionMessageParam[], flights: FlightsResponse[]) {
     const systemMessage: ChatCompletionMessageParam = {
         role: 'system',
-        content: 'You are an assistant that changes a list of flights based on the user request. ' +
-            'You are not allowed to change the data from the individual flights. ' +
+        content: 'You are an assistant that changes a list of travel routes based on the users conditional request. ' +
+            // 'You are not allowed to change the data from the individual flights. ' +
+            'Explain why you could not sort or filter the array. ' +
             'You are only allowed to remove or reorder the flights from the given list. '
     };
 
@@ -190,7 +191,8 @@ export async function applyConditionalSorting(messages: ChatCompletionMessagePar
     const completion = await openai.chat.completions.create({
         messages: messages,
         tools: [getFilterAndSortFunction()],
-        tool_choice: {"type": "function", "function": {"name": "filterAndSortFlights"}},
+        tool_choice: "auto",
+        // tool_choice: {"type": "function", "function": {"name": "filterAndSortFlights"}},
         model: "gpt-3.5-turbo-0125",
     });
 
