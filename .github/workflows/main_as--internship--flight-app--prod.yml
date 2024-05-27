@@ -26,6 +26,7 @@ jobs:
           cd backend
           npm install
           npm run build
+          cp -r node_modules dist
 
       - name: Zip artifact for deployment
         run: |
