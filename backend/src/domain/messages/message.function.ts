@@ -159,7 +159,7 @@ export const getFilterFunction = (): ChatCompletionTool => {
                     },
                     sort: {
                         type: 'string',
-                        description: 'sorts the results by quality, price, date or duration. Price is the default value.',
+                        description: 'sorts the results Only by the values "quality", "price", "date" or "duration". Price is the default value.',
                     },
                     // limit: {
                     //     type: 'integer',
