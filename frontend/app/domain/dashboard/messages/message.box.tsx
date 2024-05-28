@@ -1,5 +1,6 @@
 "use client"
 import React, {useEffect, useRef} from "react";
+import Image from "next/image";
 import {Textarea} from "@/components/ui/textarea";
 import {Button} from "@/components/ui/button";
 import useFlights from "@/app/lib/client/useFlights";
@@ -55,7 +56,7 @@ export function MessageBox({onClose, isOpen}: MessageBoxProps) {
                           id="message" name="message"
                           placeholder={"Ask some more questions to filter your result"} required/>
                 {isLoading ?
-                    <Button disabled className=" bg-button" type="submit">Loading ...</Button> :
+                    <Image src={"/spinning-plane.gif"} alt={"plane spinner"} className={""} width={60} height={60} unoptimized/> :
                     <Button className="bg-button" type="submit">Search Routes</Button>
                 }
             </form>
