@@ -5,7 +5,7 @@ import {Frown, Plane} from "lucide-react";
 import {Flight, ProcessedFlightData} from "@/app/domain/dashboard/flights/flight.types";
 import useRoutesData from "@/app/lib/client/useRoutesData";
 import Image from "next/image";
-import React from "react";
+import React, {useEffect, useState} from "react";
 
 interface FlightCardsProps {
     flights: Flight[],
@@ -19,11 +19,20 @@ interface FlightCardsProps {
  * @param isLoading - boolean to check if the flights are loading
  * @param isError - boolean to check if there is an error
  */
-export function FlightCards({ flights, isLoading,isError }: FlightCardsProps) {
+export function FlightCards({flights, isLoading, isError}: FlightCardsProps) {
+    const [hasData, setHasData] = useState(false)
+    useEffect(() => {
+        if (!isLoading) {
+            if (!flights?.length || isError) {
+                setHasData(false)
+            } else setHasData(true)
+        }
+    }, [flights, isError, isLoading]);
     //todo add refresh functionality
+
     return (
         <div className={`relative w-full sm:w-4/5 flex flex-col items-center ${isLoading && "overflow-hidden"}`}>
-            {(!flights?.length || isError) ?
+            {(!hasData) ?
                 <div className={`${isLoading && "h-screen"}`}><p className={"flex text-primary items-center text-3xl"}>
                     <Frown size={72} className="m-2"/> Sorry, no flights found.
                 </p></div>
