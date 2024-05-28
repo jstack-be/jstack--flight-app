@@ -48,8 +48,8 @@ export function MessageBox({onClose, isOpen}: MessageBoxProps) {
                          className={`${message.role == "user" ? "bg-background-message text-primary self-start w-4/5" : "bg-primary text-black self-end w-4/5"} text-sm m-2 px-4 py-3 rounded`}>
                         {message.content}
                     </div>)}
-                 <Image src="/loading-message.gif"
-                      alt="loading image" className="bg-primary rounded self-end m-2" width={80} height={80}/>
+                {isLoading && <Image src="/loading-message.gif"
+                        alt="loading image" className="bg-primary rounded self-end m-2" width={80} height={80}/>}
                 <div ref={messagesEndRef}/>
             </div>
 
@@ -57,10 +57,7 @@ export function MessageBox({onClose, isOpen}: MessageBoxProps) {
                 <Textarea className="m-2 h-[17dvh] bg-white placeholder:text-textarea-placeholder resize-none"
                           id="message" name="message"
                           placeholder={"Ask some more questions to filter your result"} required/>
-                {/*{isLoading ?*/}
-                {/*    <Image src={"/spinning-plane.gif"} alt={"plane spinner"} className={""} width={60} height={60} unoptimized/> :*/}
-                    <Button className="bg-button" disabled={isLoading} type="submit">Search Routes</Button>
-                {/*}*/}
+                <Button className="bg-button" disabled={isLoading} type="submit">Search Routes</Button>
             </form>
         </div>
     </>);
