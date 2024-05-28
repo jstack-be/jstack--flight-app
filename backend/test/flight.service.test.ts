@@ -1,4 +1,4 @@
-import {getTravelData} from '../src/domain/flights/flight.service';
+import {getFlights} from '../src/domain/flights/flight.service';
 import {FlightSearchParameters} from "../src/domain/messages/message.types";
 import {nockedFlightAPI} from "./utils/api.mocks";
 import {addDays, formatDate} from "../src/utils/date.utils";
@@ -36,7 +36,7 @@ describe('getTravelData', () => {
 
         nockedFlightAPI(requestParameters, mockResponse);
 
-        const result = await getTravelData(requestParameters);
+        const result = await getFlights(requestParameters);
 
         expect(result).toEqual(mockResponse.data);
     });

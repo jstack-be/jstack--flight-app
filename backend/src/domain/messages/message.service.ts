@@ -1,12 +1,10 @@
 import InvalidDateError from "../../errors/InvalidDateError";
 import ResponseError from "../../errors/ResponseError";
 import {parseDate} from "../../utils/date.utils";
-import {environment} from "../../enviroment";
-import {saveMessage} from "./message.response";
 import {getFilterFunction} from "./message.function";
 import {ChatCompletionMessageParam} from "openai/resources";
-import OpenAI from "openai";
-import {FlightsResponse} from "../flights/flight.types";
+import {FlightSearchParameters} from "./message.types";
+import openai from "../../openai";
 
 /**
  * Function to validate dates
@@ -107,32 +105,25 @@ function validateIataCodes(fly_from: string, fly_to: string) {
  * @returns {any} The processed response
  * @throws {ReferenceError} If the response does not contain the function json object
  */
-function processResponse(completion: any) {
+function processResponse(completion: any): { message: string, searchParameters: FlightSearchParameters } {
     const responseMessage = completion?.choices?.[0]?.message;
     const args = responseMessage?.tool_calls?.[0]?.function?.arguments;
     if (!!args) {
         let jsonObject = JSON.parse(args);
-        jsonObject.limit = 5; //todo change to 20
         console.log(jsonObject);
 
         validateIataCodes(jsonObject.fly_from, jsonObject.fly_to);
         validateDates(jsonObject);
         validateBaggage(jsonObject);
-        //todo add manual check to see if it is a valid sorting condition
 
-        saveMessage(jsonObject.message);
+        const message = jsonObject.message;
         delete jsonObject.message;
 
-        return jsonObject;
+        return {message, searchParameters: jsonObject};
     } else {
         throw new ResponseError(responseMessage.content);
     }
 }
-
-const openai = new OpenAI({
-    organization: environment.openAiOrgKey,
-    apiKey: environment.openAiApiKey
-});
 
 /**
  * Function to generate flight search parameters
@@ -159,102 +150,4 @@ export async function generateFlightSearchParameters(messages: ChatCompletionMes
     });
 
     return processResponse(completion);
-}
-
-
-/**
- * Function to apply conditional sorting
- * @param {ChatCompletionMessageParam[]} messages - The messages to send to the OpenAI API
- * @param {FlightsResponse[]} flights - The flights to sort
- * @returns {Promise<FlightSearchParameters>} The flight search parameters
- */
-export async function applyConditionalSorting(messages: ChatCompletionMessageParam[], flights: FlightsResponse[]) {
-    const systemMessage: ChatCompletionMessageParam = {
-        role: 'system',
-        content:
-            'You only return a list of flight id\'s ordered and filtered based on the user\'s request. ' +
-            'You can not change the fight objects and need to include all items that are requested' +
-            'You return the id\'s in a json object' +
-            'The route objects in the provided data are the different stops the user will need to make. ' +
-            'the isReturnFlight property from the route indicates if it is a return(1) flight or a departure(0) flight. ' +
-            'Example: When a user asks for the cheapest flight from New York to London for the the current week, then return that ONE flight id from the cheapest flight. ' +
-            'Here is an data example: These are flights from ANR to NRT [\n' +
-            '  {\n' +
-            '    "id": "179f192e4d9f0000214f7d1e_0|192e1f5b4da000004470b527_0|1f5b209f4da000006bed2a3c_0|1f5b209f4da000006bed2a3c_1",\n' +
-            '    "price_conversion": {\n' +
-            '      "EUR": 643\n' +
-            '    },\n' +
-            '  },\n' +
-            '  {\n' +
-            '    "id": "179f192e4d9f0000214f7d1e_0|192e170f4da00000dd2c6924_0|170f209f4da00000deb56a76_0|170f209f4da00000deb56a76_1",\n' +
-            '    "price_conversion": {\n' +
-            '      "EUR": 777\n' +
-            '    },\n' +
-            '  }\n' +
-            ']' +
-            'if I want to have the most expensive flight from the list, then I would return this:' +
-            '{flight_ids:[ "179f192e4d9f0000214f7d1e_0|192e170f4da00000dd2c6924_0|170f209f4da00000deb56a76_0|170f209f4da00000deb56a76_1"]} because it is the most expensive flight from the list. ' +
-            'Example 2: When a user asks for to order the flights based on duration from high to low from New York to London for the the current week, then return a the ENTIRE list ordered as specified' +
-            'Data example 2: These are flights from ANR to NRT [\n' +
-            '  {\n' +
-            '    "id": "179f192e4d9f0000214f7d1e_0|192e170f4da00000dd2c6922_4|170f209f4da00000deb56a35_0|170f209f4da00000deb56a33_1",\n' +
-            '    "duration": {\n' +
-            '      "departure": 201600,\n' +
-            '      "return": 0,\n' +
-            '      "total": 201600\n' +
-            '    },\n' +
-            '  {\n' +
-            '    "id": "179f192e4d9f0000214f7d1e_0|192e170f4da00000dd2c6924_0|170f209f4da00000deb56a76_0|170f209f4da00000deb56a76_1",\n' +
-            '    "duration": {\n' +
-            '      "departure": 171600,\n' +
-            '      "return": 0,\n' +
-            '      "total": 171600\n' +
-            '    },\n' +
-            '  {\n' +
-            '    "id": "179f192e4d9f0000214f7d1e_0|192e1f5b4da000004470b527_0|1f5b209f4da000006bed2a3c_0|1f5b209f4da000006bed2a3c_1",\n' +
-            '    "duration": {\n' +
-            '      "departure": 185100,\n' +
-            '      "return": 0,\n' +
-            '      "total": 185100\n' +
-            '    },\n' +
-            '  },\n' +
-            '  }\n' +
-            ']' +
-            'if I want to have the list of flights ordered in descending order on duration, then I would return this:' +
-            '{flight_ids:[ "179f192e4d9f0000214f7d1e_0|192e170f4da00000dd2c6922_4|170f209f4da00000deb56a35_0|170f209f4da00000deb56a33_1",' +
-            '"179f192e4d9f0000214f7d1e_0|192e1f5b4da000004470b527_0|1f5b209f4da000006bed2a3c_0|1f5b209f4da000006bed2a3c_1",' +
-            '"179f192e4d9f0000214f7d1e_0|192e170f4da00000dd2c6924_0|170f209f4da00000deb56a76_0|170f209f4da00000deb56a76_1"]}. '
-    };
-
-    messages.unshift(systemMessage);
-
-    // Remove booking_link from each flight
-    flights = flights.map(flight => { //todo save the links to add them back later
-        delete flight.booking_link;
-        return flight;
-    });
-    messages.push({
-        role: "user",
-        content: `give me a list of flight id's ordered and filtered based on my previous request:\n ${JSON.stringify(flights)}`
-    })
-
-    const completion = await openai.chat.completions.create({
-        messages: messages,
-        model: "gpt-3.5-turbo-0125",
-        response_format: { "type": "json_object" },
-    });
-
-    return processConditionalResponse(completion);
-}
-
-/**
- * Function to process the response from the OpenAI API
- * @param {any} completion - The response from the OpenAI API
- * @returns {any} The processed response
- */
-function processConditionalResponse(completion: any) {
-    const args: string = completion?.choices?.[0]?.message?.tool_calls?.[0]?.function?.arguments;
-    if (!!args) {
-        return JSON.parse(args).flights;
-    }
 }

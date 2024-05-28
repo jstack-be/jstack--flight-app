@@ -1,5 +1,5 @@
 import {app} from "./app";
-import {environment} from "./enviroment";
+import environment from "./enviroment";
 import rateLimit from "express-rate-limit";
 
 const port: number = environment.serverPort;
