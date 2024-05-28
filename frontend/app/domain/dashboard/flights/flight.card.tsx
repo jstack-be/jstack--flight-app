@@ -5,6 +5,8 @@ import {Frown, Plane} from "lucide-react";
 import {Flight, ProcessedFlightData} from "@/app/domain/dashboard/flights/flight.types";
 import useFlights from "@/app/lib/client/useFlights";
 import useRoutesData from "@/app/lib/client/useRoutesData";
+import Image from "next/image";
+import React from "react";
 
 export function FlightCards() {
     const {flights, isLoading, isError} = useFlights();
@@ -18,10 +20,16 @@ export function FlightCards() {
         );
     }
     return (
-        <div className="space-y-4 m-4 w-full sm:w-4/5  flex flex-col items-center">
-            {flights.map(flight => (
-                <FlightCard key={flight.id} {...flight} />
-            ))}
+        <div className={`relative w-full sm:w-4/5 flex flex-col items-center ${isLoading && "overflow-hidden"}`}>
+            <div className={`space-y-4 m-4 w-full ${isLoading && "opacity-50"}`}>
+                {flights.map(flight => (
+                    <FlightCard key={flight.id} {...flight} />
+                ))}
+            </div>
+            {isLoading && <div className="absolute inset-0 flex justify-center items-center">
+                <Image src={"/spinning-plane-white.gif"} alt={"plane spinner"} className={""} width={200}
+                       height={200}/>
+            </div>}
         </div>
     );
 }
