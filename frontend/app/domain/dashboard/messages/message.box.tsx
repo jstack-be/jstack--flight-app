@@ -3,21 +3,25 @@ import React, {useEffect, useRef} from "react";
 import Image from "next/image";
 import {Textarea} from "@/components/ui/textarea";
 import {Button} from "@/components/ui/button";
-import useFlights from "@/app/lib/client/useFlights";
 import {ChatCompletionMessageParam} from "@/app/domain/dashboard/messages/message.types";
 
 interface MessageBoxProps {
     onClose: () => void,
-    isOpen: boolean
+    isOpen: boolean,
+    messages: ChatCompletionMessageParam[],
+    isLoading: boolean,
+    sendMessage: (content: string, restart?: boolean) => Promise<void>
 }
 
 /**
  * MessageBox component to display the messages and send new messages
  * @param onClose - function to close the message box
  * @param isOpen - boolean to check if the message box is open
+ * @param messages - array of messages to display
+ * @param isLoading - boolean to check a message response is loading
+ * @param sendMessage - function to send a new message
  */
-export function MessageBox({onClose, isOpen}: MessageBoxProps) {
-    const {messages, sendMessage, isLoading} = useFlights();
+export function MessageBox({ onClose, isOpen, messages, isLoading, sendMessage }: MessageBoxProps) {
     const messagesEndRef = useRef<HTMLDivElement | null>(null);
 
     useEffect(() => {

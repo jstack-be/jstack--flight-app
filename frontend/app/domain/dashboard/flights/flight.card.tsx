@@ -3,13 +3,23 @@
 import {Button} from "@/components/ui/button";
 import {Frown, Plane} from "lucide-react";
 import {Flight, ProcessedFlightData} from "@/app/domain/dashboard/flights/flight.types";
-import useFlights from "@/app/lib/client/useFlights";
 import useRoutesData from "@/app/lib/client/useRoutesData";
 import Image from "next/image";
 import React from "react";
 
-export function FlightCards() {
-    const {flights,isLoading,  isError} = useFlights();
+interface FlightCardsProps {
+    flights: Flight[],
+    isLoading: boolean
+    isError: boolean
+}
+
+/**
+ * FlightCards component to display the flights
+ * @param flights - array of flights to display
+ * @param isLoading - boolean to check if the flights are loading
+ * @param isError - boolean to check if there is an error
+ */
+export function FlightCards({ flights, isLoading,isError }: FlightCardsProps) {
     //todo add refresh functionality
     return (
         <div className={`relative w-full sm:w-4/5 flex flex-col items-center ${isLoading && "overflow-hidden"}`}>
