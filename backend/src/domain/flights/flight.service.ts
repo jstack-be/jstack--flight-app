@@ -27,12 +27,11 @@ export async function getFlights(requestParameters: FlightSearchParameters): Pro
     return formatFlights(response.data.data);
 }
 
-
 /**
- * Function to apply conditional sorting
+ * Function to validate the response from the Tequila API with OpenAI
  * @param {ChatCompletionMessageParam[]} messages - The messages to send to the OpenAI API
- * @param {FlightsResponse[]} flights - The flights to sort
- * @returns {Promise<FlightSearchParameters>} The flight search parameters
+ * @param {FlightsResponse[]} flights - The flights to validate
+ * @returns {Promise<FlightsResponse[]>} A list of flights that match the user's request
  */
 export async function validateFlights(messages: ChatCompletionMessageParam[], flights: FlightsResponse[]): Promise<FlightsResponse[]> {
     if (!flights?.length) return flights;
@@ -111,7 +110,7 @@ export async function validateFlights(messages: ChatCompletionMessageParam[], fl
 
     const completion = await openai.chat.completions.create({
         messages: messages,
-        model: "gpt-4o",
+        model: "gpt-3.5-turbo-0125",
         response_format: {"type": "json_object"},
     });
 
@@ -122,6 +121,12 @@ export async function validateFlights(messages: ChatCompletionMessageParam[], fl
     return flights;
 }
 
+/**
+ * Function to order and filter flights by their IDs
+ * @param {string[]} flightIds - The IDs of the flights to order and filter
+ * @param {FlightsResponse[]} flights - The flights to be ordered and filtered
+ * @returns {FlightsResponse[]} The ordered and filtered flights
+ */
 function orderAndFilterFlightsByIds(flightIds: string[], flights: FlightsResponse[]): FlightsResponse[] {
     let orderedFlights = [];
     for (let id of flightIds) {

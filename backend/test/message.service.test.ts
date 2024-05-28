@@ -18,14 +18,25 @@ describe('generateFlightSearchParameters', () => {
             role: 'user',
             content: `I want to travel from New York on ${currentDate}`
         }];
-        const expectedParameters = {
+        const openAIresponse = {
+            message: "Showing flights from New York to anywhere",
             fly_from: 'NYC',
             date_from: currentDate,
             date_to: currentDate,
-            limit: 20
         };
 
-        nockedOpenAiAPI(expectedParameters);
+        const expectedParameters = {
+            message: "Showing flights from New York to anywhere",
+            searchParameters: {
+                fly_from: 'NYC',
+                date_from:
+                currentDate,
+                date_to:
+                currentDate,
+            }
+        };
+
+        nockedOpenAiAPI(openAIresponse);
 
         const result = await generateFlightSearchParameters(messages);
 

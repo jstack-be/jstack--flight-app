@@ -5,7 +5,7 @@ import {ChatCompletionMessageParam} from "openai/resources";
 import {app} from "../src/app";
 import nock from "nock";
 import createMD5Hash from "../src/utils/hash.string";
-import {environment} from "../src/enviroment";
+import environment from "../src/enviroment";
 
 const currentDate = new Date();
 
@@ -49,7 +49,7 @@ describe('POST /api/flights', () => {
 
         expect(res.status).toBe(400);
     });
-
+    //todo fix test
     it('should return 200 and flight data if messages are valid', async () => {
         const messages = `I want to travel from London to Antwerp on ${formatDate(currentDate)}`;
 

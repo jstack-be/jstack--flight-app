@@ -8,6 +8,7 @@ describe('getTravelData', () => {
     afterEach(() => {
         nock.cleanAll();
     });
+    //todo fix test
     it('should return flight data when valid parameters are provided', async () => {
         const currentDate = new Date();
         const requestParameters: FlightSearchParameters = {
@@ -40,4 +41,5 @@ describe('getTravelData', () => {
 
         expect(result).toEqual(mockResponse.data);
     });
+    //todo write tests for validateFlights
 });
