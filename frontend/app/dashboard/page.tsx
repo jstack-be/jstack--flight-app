@@ -8,7 +8,6 @@ import {useWindowSize} from "@uidotdev/usehooks";
 
 import logo from "@/public/logo-sm.svg";
 import {FlightCards} from "@/app/domain/dashboard/flights/flight.card";
-import {ClientOnly} from "@/app/client.only";
 import {useRouter} from "next/navigation";
 import {ArrowLeft} from "lucide-react";
 import useFlights from "@/app/lib/client/useFlights";
@@ -27,7 +26,6 @@ export default function Page() {
 
     return (
         <main className="h-screen w-full fixed lg:flex">
-            <ClientOnly>
                 <div className="flex absolute lg:relative w-full xl:1/5 lg:w-2/5 lg:space-x-4">
                     <MessageBox isOpen={isOpen} onClose={() => setIsOpen(false)}
                                 messages={messages}
@@ -47,7 +45,6 @@ export default function Page() {
                         Show message history
                     </Button>
                 }
-            </ClientOnly>
         </main>
     );
 }
