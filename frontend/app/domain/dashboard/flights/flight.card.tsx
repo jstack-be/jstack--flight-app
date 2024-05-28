@@ -9,27 +9,27 @@ import Image from "next/image";
 import React from "react";
 
 export function FlightCards() {
-    const {flights, isLoading, isError} = useFlights();
+    const {flights,isLoading,  isError} = useFlights();
     //todo add refresh functionality
-    if (isLoading) return <div>Loading...</div>
-    if (!flights?.length || isError) {
-        return (
-            <p className={"flex text-primary items-center text-3xl"}>
-                <Frown size={72} className="m-2"/> Sorry, no flights found.
-            </p>
-        );
-    }
     return (
         <div className={`relative w-full sm:w-4/5 flex flex-col items-center ${isLoading && "overflow-hidden"}`}>
-            <div className={`space-y-4 m-4 w-full ${isLoading && "opacity-50"}`}>
-                {flights.map(flight => (
-                    <FlightCard key={flight.id} {...flight} />
-                ))}
-            </div>
-            {isLoading && <div className="absolute inset-0 flex justify-center items-center">
-                <Image src={"/spinning-plane-white.gif"} alt={"plane spinner"} className={""} width={200}
-                       height={200}/>
-            </div>}
+            {(!flights?.length || isError) ?
+                <div className={`${isLoading && "h-screen"}`}><p className={"flex text-primary items-center text-3xl"}>
+                    <Frown size={72} className="m-2"/> Sorry, no flights found.
+                </p></div>
+                :
+                <div className={`space-y-4 m-4 w-full ${isLoading && "opacity-50"}`}>
+                    {flights.map(flight => (
+                        <FlightCard key={flight.id} {...flight} />
+                    ))}
+                </div>
+            }
+            {isLoading &&
+                <div className="absolute inset-0 flex justify-center items-center">
+                    <Image src={"/spinning-plane-white.gif"} alt={"plane spinner"} width={200}
+                           height={200}/>
+                </div>
+            }
         </div>
     );
 }
