@@ -1,9 +1,10 @@
 "use client"
 import {useMutation} from "@tanstack/react-query";
-import {getUserLocation, queryFlights} from "@/app/lib/server/actions";
+import {queryFlights} from "@/app/lib/server/actions";
 import {Flight} from "@/app/domain/dashboard/flights/flight.types";
 import {ChatCompletionMessageParam} from "@/app/domain/dashboard/messages/message.types";
 import {useLocalStorage, useSessionStorage} from "@uidotdev/usehooks";
+import {getUserLocation} from "@/app/lib/client/location";
 
 export default function useFlights() {
     const [messages, saveMessages] = useLocalStorage<ChatCompletionMessageParam[]>("messages", []);

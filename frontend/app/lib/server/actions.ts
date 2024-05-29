@@ -1,6 +1,6 @@
 "use server";
 
-import {getBackendURL, getLocationURL} from "./environment";
+import {getBackendURL} from "./environment";
 import {ChatCompletionMessageParam} from "@/app/domain/dashboard/messages/message.types";
 
 export async function queryFlights(messageHistory: ChatCompletionMessageParam[]) {
@@ -25,14 +25,4 @@ export async function queryFlights(messageHistory: ChatCompletionMessageParam[])
             return {status: 200, error: 'An unknown error occurred'};
         }
     }
-}
-
-//todo check if it gives the current location or the location from the frontend server
-// change to client side
-export async function getUserLocation() {
-    const res = await fetch(`${await getLocationURL()}&fields=city,country_name,languages,currency`);
-    if (!res.ok) {
-        throw new Error('Could not connect to the server');
-    }
-    return await res.json();
 }
