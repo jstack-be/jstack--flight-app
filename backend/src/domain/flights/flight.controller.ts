@@ -20,7 +20,7 @@ export async function queryFlights(req: Request, res: Response): Promise<void> {
     try {
         const messages: ChatCompletionMessageParam[] = req.body;
         if (!messages || messages.length === 0 || messages[0].content.length === 0) {
-            res.status(200).send("No message provided");
+            res.status(400).send("No message provided");
             return;
         }
 
@@ -42,9 +42,9 @@ export async function queryFlights(req: Request, res: Response): Promise<void> {
 
     } catch (error) {
         if (error instanceof ResponseError || error instanceof InvalidDateError) {
-            res.status(200).send(error.message);
+            res.status(400).send(error.message);
         } else {
-            res.status(200).send("An error occurred while processing the request. " +
+            res.status(500).send("An error occurred while processing the request. " +
                 "Please change your request and try again.");
         }
     }

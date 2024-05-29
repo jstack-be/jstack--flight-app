@@ -21,7 +21,6 @@ export default function useFlights() {
             }
         },
         onError: (error) => {
-            console.log("I'm here" + error.message);
 
             saveMessages([...messages, {role: 'assistant', content: error.message}])
         },
