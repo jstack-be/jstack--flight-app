@@ -15,15 +15,15 @@ export const getFilterFunction = (): ChatCompletionTool => {
                 properties: {
                     message: {
                         type: 'string',
-                        description: 'Returns a message that tells the user what flight data information is found in the response using the same language as the user.',
+                        description: 'Returns a human-like message that tells the user what flight data information is found in the response using the same language as the user.',
                     },
                     fly_from: {
                         type: 'string',
-                        description: 'Always returns the IATA code from the departure metropolitan area. it accepts multiple values separated by a comma.',
+                        description: 'Always returns the IATA code from the departure area. it accepts multiple values separated by a comma.',
                     },
                     fly_to: {
                         type: 'string',
-                        description: 'Always returns the IATA code from the destination metropolitan area. it accepts multiple values separated by a comma.',
+                        description: 'Always returns the IATA code from the destination area. it accepts multiple values separated by a comma.',
                     },
                     date_from: {
                         type: 'string',
@@ -153,6 +153,18 @@ export const getFilterFunction = (): ChatCompletionTool => {
                         description: 'result filter, maximal return arrival time (use only time in whole hours, not minutes; 11:00 means 11AM, 23:00 means 11PM) return value in the format hh:mm',
                     },
                     //todo airlines filter
+                    stopover_from:{
+                      type:'string',
+                        description:'result filter, min length of stopover, 48:00 means 2 days (48 hours)'
+                    },
+                    max_stopovers: {
+                        type: 'integer',
+                        description: 'max number of stopovers per the entire itinerary (outbound + return).  Use \'max_stopovers=0\' for direct flights only.',
+                    },
+                    max_sector_stopovers: {
+                        type: 'integer',
+                        description: 'max number of stopovers per itinerary\'s sector.',
+                    },
                     vehicle_type: {
                         type: 'string',
                         description: 'this parameter allows you to specify the vehicle type. The options are aircraft, bus, train. Default all options are selected',
@@ -166,7 +178,7 @@ export const getFilterFunction = (): ChatCompletionTool => {
                     //     description: 'returns the number of results that the user wants to be shown. If not provided by the user use default value 20. The max value is 1000',
                     // }
                 },
-                ['required']: ['message', 'date_from', 'date_to','locale','curr'],
+                ['required']: ['message', 'date_from', 'date_to', 'locale', 'curr'],
             },
         },
     };
