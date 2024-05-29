@@ -26,7 +26,7 @@ export default function Page() {
 
     return (
         <main className="h-screen w-full fixed lg:flex">
-                <div className="flex absolute lg:relative w-full xl:1/5 lg:w-2/5 lg:space-x-4">
+                <div className="flex absolute lg:relative w-full xl:1/5 lg:w-2/5 lg:space-x-4 z-20">
                     <MessageBox isOpen={isOpen} onClose={() => setIsOpen(false)}
                                 messages={messages}
                                 isLoading={isLoading}
@@ -35,7 +35,7 @@ export default function Page() {
                         className={`bg-button rounded-full m-4 ${(isOpen && width !== null && width < 1024) ? 'hidden' : ''}`}
                         onClick={() => router.push('/')}> <ArrowLeft/></Button>
                 </div>
-                <div className="flex flex-col w-full xl:w-4/5 h-full overflow-y-auto items-center p-6">
+                <div className="flex flex-col w-full xl:w-4/5 h-full overflow-y-auto items-center p-6 z-10">
                     <Image src={logo} alt={"afbeelding van vliegtuig logo"} className={"h-32 w-auto mb-6"}/>
                     <FlightCards flights={flights} isLoading={isLoading} isError={isError}/>
                 </div>
