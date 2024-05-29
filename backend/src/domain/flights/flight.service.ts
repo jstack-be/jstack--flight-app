@@ -1,7 +1,8 @@
-import {Flight} from "./flight.types";
+import {Flight, FlightsResponse} from "./flight.types";
 import axios from "axios";
-import {environment} from "../../enviroment";
+import environment from "../../enviroment";
 import {FlightSearchParameters} from "../messages/message.types";
+import {formatFlights} from "./flight.formater";
 
 /**
  * Fetches travel data from the flight search API.
@@ -10,7 +11,9 @@ import {FlightSearchParameters} from "../messages/message.types";
  * @returns {Promise<Flight[]>} The flights that match the search parameters.
  * @throws {AxiosError} If the request to the flight search API fails.
  */
-export async function getTravelData(requestParameters: FlightSearchParameters): Promise<Flight[]> {
+export async function getFlights(requestParameters: FlightSearchParameters): Promise<FlightsResponse[]> {
+    requestParameters.limit = 20;
+
     const config = {
         headers: {
             apiKey: environment.tequilaKiwiApiKey,
@@ -19,5 +22,5 @@ export async function getTravelData(requestParameters: FlightSearchParameters): 
     }
 
     const response = await axios.get(environment.flightSearchUrl, config)
-    return response.data.data
+    return formatFlights(response.data.data);
 }

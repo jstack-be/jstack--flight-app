@@ -1,7 +1,6 @@
 import {Request, Response} from "express";
 import {generateFlightSearchParameters} from "../messages/message.service";
-import {getTravelData} from "./flight.service";
-import {clearContent, getContent, saveFlights, saveMessage} from "../messages/messageResponse";
+import {getFlights} from "./flight.service";
 import {ChatCompletionMessageParam} from "openai/resources";
 import InvalidDateError from "../../errors/InvalidDateError";
 import ResponseError from "../../errors/ResponseError";
@@ -24,22 +23,10 @@ export async function queryFlights(req: Request, res: Response): Promise<void> {
             return;
         }
 
-        const jsonObject = await generateFlightSearchParameters(messages);
-        const flights = await getTravelData(jsonObject);
+        const {message, searchParameters} = await generateFlightSearchParameters(messages);
+        let flights = await getFlights(searchParameters);
 
-
-        if (flights.length === 0) {
-            saveMessage("No fights found");
-        } else {
-            saveFlights(flights);
-        }
-
-        const response = getContent();
-
-
-        res.status(200).send(response);
-        clearContent();
-
+        res.status(200).send({message, flights});
     } catch (error) {
         if (error instanceof ResponseError || error instanceof InvalidDateError) {
             res.status(400).send(error.message);
