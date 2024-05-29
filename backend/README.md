@@ -9,7 +9,7 @@ made by interim Tristan Huygen
 - [Installation](#installation)
 - [Usage](#usage)
 - [Testing](#testing)
-- [Example](#Example)
+- [Example](#example)
 
 ## Introduction
 
@@ -17,7 +17,7 @@ The Travel-planner API is part of the internship project made
 by [Tristan Huygen](https://www.linkedin.com/in/tristan-huygen-57786b2b0/)
 and [Axell Tielemans](https://www.linkedin.com/in/axell-tielemans/). In this project they make use of
 the [openAi API](https://platform.openai.com/docs) to
-transform user input into a json object to filter in
+transform user input into a json object to search in
 the [Tequila travel API from Kiwi](https://tequila.kiwi.com/portal/companies/hikeheaven).
 
 ![domain model](img.png)
@@ -67,13 +67,13 @@ Run tests
 npm run test
 ````
 
-## Examples
+## Example
 
 Get the flight data
 ```shell
 curl -X POST http://localhost:3000/api/flights \
   -H 'Content-Type: application/json' \
-  -d '{
-    "messages": ["I want to travel with my wife and two children from London to Antwerp on 18/05/2024 and I am planning to return on 16/06/2024"]
-}'
+  -d '[{
+    "role":"user", contend:"I want to travel with my wife and two children from London to Antwerp on 18/05/2024 and I am planning to return on 16/06/2024"
+}]'
 ```

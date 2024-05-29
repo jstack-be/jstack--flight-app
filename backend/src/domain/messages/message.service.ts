@@ -1,12 +1,10 @@
 import InvalidDateError from "../../errors/InvalidDateError";
 import ResponseError from "../../errors/ResponseError";
 import {parseDate} from "../../utils/date.utils";
-import {environment} from "../../enviroment";
-import {saveMessage} from "./messageResponse";
 import {getFilterFunction} from "./message.function";
-import {FlightSearchParameters} from "./message.types";
 import {ChatCompletionMessageParam} from "openai/resources";
-import OpenAI from "openai";
+import {FlightSearchParameters} from "./message.types";
+import openai from "../../openai";
 
 /**
  * Function to validate dates
@@ -62,7 +60,7 @@ function validateBaggage(jsonObject: any) {
     }
 
     if (children && children > 0) {
-        if ((childrenHandbags.length !== children && childrenHandbags.length !== 0) || (childrenHoldbags.length !== children && childrenHoldbags.length !== 0) ) {
+        if ((childrenHandbags.length !== children && childrenHandbags.length !== 0) || (childrenHoldbags.length !== children && childrenHoldbags.length !== 0)) {
             throw new ResponseError("The number of children's baggage does not match the number of children. Please change your request and try again.");
         }
     }
@@ -107,38 +105,32 @@ function validateIataCodes(fly_from: string, fly_to: string) {
  * @returns {any} The processed response
  * @throws {ReferenceError} If the response does not contain the function json object
  */
-function processResponse(completion: any) {
+function processResponse(completion: any): { message: string, searchParameters: FlightSearchParameters } {
     const responseMessage = completion?.choices?.[0]?.message;
     const args = responseMessage?.tool_calls?.[0]?.function?.arguments;
     if (!!args) {
         let jsonObject = JSON.parse(args);
-        jsonObject.limit = 20;
         console.log(jsonObject);
 
         validateIataCodes(jsonObject.fly_from, jsonObject.fly_to);
         validateDates(jsonObject);
         validateBaggage(jsonObject);
 
-        saveMessage(jsonObject.message);
+        const message = jsonObject.message;
         delete jsonObject.message;
 
-        return jsonObject;
+        return {message, searchParameters: jsonObject};
     } else {
         throw new ResponseError(responseMessage.content);
     }
 }
-
-const openai = new OpenAI({
-    organization: environment.openAiOrgKey,
-    apiKey: environment.openAiApiKey
-});
 
 /**
  * Function to generate flight search parameters
  * @param {ChatCompletionMessageParam[]} messages - The messages to send to the OpenAI API
  * @returns {Promise<FlightSearchParameters>} The flight search parameters
  */
-export async function generateFlightSearchParameters(messages: ChatCompletionMessageParam[]): Promise<FlightSearchParameters> {
+export async function generateFlightSearchParameters(messages: ChatCompletionMessageParam[]) {
     const systemMessage: ChatCompletionMessageParam = {
         role: 'system',
         content: 'You are a helpful travel planner assistant ' +

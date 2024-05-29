@@ -9,7 +9,7 @@ export const getFilterFunction = (): ChatCompletionTool => {
         type: 'function',
         function: {
             name: 'generateFlightSearchParameters',
-            description: "Get the data for the Flight API",
+            description: "generated flight search parameters based on the user's conversation. This does not include conditional filtering.",
             parameters: {
                 type: 'object',
                 properties: {
@@ -159,7 +159,7 @@ export const getFilterFunction = (): ChatCompletionTool => {
                     },
                     sort: {
                         type: 'string',
-                        description: 'sorts the results by quality, price, date or duration. Price is the default value.',
+                        description: 'sorts the results Only by the values "quality", "price", "date" or "duration". Price is the default value.',
                     },
                     // limit: {
                     //     type: 'integer',
