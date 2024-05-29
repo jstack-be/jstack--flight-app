@@ -12,10 +12,17 @@ export default function useFlights() {
     const mutation = useMutation({
         mutationFn: queryFlights,
         onSuccess: (data) => {
+            if (data.error) {
+                saveMessages([...messages, {role: 'assistant', content: data.error}])
+                return;
+            }
+            else {
             setFlights(data.flights);
             saveMessages([...messages, {role: 'assistant', content: data.message}])
+            }
         },
         onError: (error) => {
+
             saveMessages([...messages, {role: 'assistant', content: error.message}])
         },
     });
@@ -38,6 +45,9 @@ export default function useFlights() {
         } else {
             messageHistory = [...messages, {role: 'user', content}];
         }
+
+
+
         saveMessages(messageHistory)
         mutation.mutate(messageHistory);
     }
