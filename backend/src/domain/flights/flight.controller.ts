@@ -32,7 +32,6 @@ export async function queryFlights(req: Request, res: Response): Promise<void> {
         if (error instanceof ResponseError || error instanceof InvalidDateError) {
             res.status(400).send(error.message);
         } else {
-            console.error(error);
             res.status(500).send("An error occurred while processing the request. " +
                 "Please change your request and try again.");
         }

@@ -2,7 +2,7 @@ import request from 'supertest';
 import {formatDate} from "../src/utils/date.utils";
 import {nockedFlightAPI, nockedOpenAiAPI} from "./utils/api.mocks";
 import {ChatCompletionMessageParam} from "openai/resources";
-import {app} from "../src/app";
+import app from "../src/app";
 import nock from "nock";
 import createMD5Hash from "../src/utils/hash.string";
 import environment from "../src/enviroment";

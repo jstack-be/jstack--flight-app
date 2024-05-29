@@ -4,9 +4,10 @@
   "description": "backend API for the travel planner FLAPP",
   "main": "dist/app.js",
   "scripts": {
-    "start": "tsc && nodem dist/server.ts",
-    "dev" : "npx nodemon src/server.ts",
-    "test": "jest"
+    "start": "tsc && node dist/app.js",
+    "dev": "npx nodemon src/app.ts",
+    "test": "jest",
+    "build": "tsc"
   },
   "keywords": [],
   "author": "Tristan Huygen en Axell Tielemans",
