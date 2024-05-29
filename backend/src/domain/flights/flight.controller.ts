@@ -25,7 +25,10 @@ export async function queryFlights(req: Request, res: Response): Promise<void> {
 
         const {message, searchParameters} = await generateFlightSearchParameters(messages);
         let flights = await getFlights(searchParameters);
-        flights = await validateFlights(messages, flights);
+        flights = await validateFlights(
+            messages.filter(message => message.role === "user"),
+            flights
+        );
 
         res.status(200).send({message, flights});
     } catch (error) {

@@ -3,7 +3,7 @@ import bodyParser from "body-parser";
 import cors from 'cors';
 import {mountHandlers} from "./routes/routing";
 import helmet from "helmet";
-import {environment} from "./enviroment";
+import environment from "./enviroment";
 import rateLimit from "express-rate-limit";
 
 const app = express();
