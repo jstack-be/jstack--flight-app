@@ -15,7 +15,11 @@ export const getFilterFunction = (): ChatCompletionTool => {
                 properties: {
                     message: {
                         type: 'string',
-                        description: 'Returns a human-like message that tells the user what flight data information is found in the response using the same language as the user.',
+                        description: 'Generates a human-like message based on the query parameters. ' +
+                            'Example: "I will search for flights from Prague to London from 1/1/2022 to 1/2/2022 for 2 adults and 1 child." ' +
+                            'or "Sure, let me find you the best flights from Prague to London from 1/1/2022 to 1/2/2022."' +
+                            'or when the user ask more questions to filter their search query you could use ' +
+                            '"Sure, let me update the search to only include direct flights from Prague to London from 1/1/2022 to 1/2/2022."'
                     },
                     fly_from: {
                         type: 'string',
@@ -122,40 +126,48 @@ export const getFilterFunction = (): ChatCompletionTool => {
                     },
                     dtime_from: {
                         type: 'string',
-                        description: 'result filter, minimal departure time (use only time in whole hours, not minutes; 11:00 means 11AM, 23:00 means 11PM) return value in the format hh:mm',
+                        description: 'a filter to specify at what time the user wants to depart at the earliest (use only time in whole hours, not minutes; 11:00 means 11AM, 23:00 means 11PM) return value in the format hh:mm. ' +
+                            'If not provided, the default value is 00:00',
                     },
                     dtime_to: {
                         type: 'string',
-                        description: 'result filter, maximal departure time (use only time in whole hours, not minutes; 11:00 means 11AM, 23:00 means 11PM) return value in the format hh:mm',
+                        description: 'a filter to specify at what time the user wants to depart at the latest (use only time in whole hours, not minutes; 11:00 means 11AM, 23:00 means 11PM) return value in the format hh:mm. ' +
+                            'If not provided, the default value is 23:59',
                     },
                     atime_from: {
                         type: 'string',
-                        description: 'result filter, minimal arrival time (use only time in whole hours, not minutes; 11:00 means 11AM, 23:00 means 11PM) return value in the format hh:mm',
+                        description: 'a filter to specify at what time the user wants to arrive the earliest (use only time in whole hours, not minutes; 11:00 means 11AM, 23:00 means 11PM) return value in the format hh:mm. '
+                            + 'If not provided, the default value is 00:00',
                     },
                     atime_to: {
                         type: 'string',
-                        description: 'result filter, maximal arrival time (use only time in whole hours, not minutes; 11:00 means 11AM, 23:00 means 11PM) return value in the format hh:mm',
+                        description: 'a filter to specify at what time the user wants to arrive the latest (use only time in whole hours, not minutes; 11:00 means 11AM, 23:00 means 11PM) return value in the format hh:mm. '
+                            + 'If not provided, the default value is 23:59',
                     },
                     ret_dtime_from: {
                         type: 'string',
-                        description: 'result filter, minimal return departure time (use only time in whole hours, not minutes; 11:00 means 11AM, 23:00 means 11PM) return value in the format hh:mm',
+                        description: 'a filter to specify at what time the user wants to depart the earliest during his return (use only time in whole hours, not minutes; 11:00 means 11AM, 23:00 means 11PM) return value in the format hh:mm. ' +
+                            'If not provided, the default value is 00:00',
                     },
                     ret_dtime_to: {
                         type: 'string',
-                        description: 'result filter, maximal return departure time (use only time in whole hours, not minutes; 11:00 means 11AM, 23:00 means 11PM) return value in the format hh:mm',
+                        description: 'a filter to specify at what time the user wants to depart the latest during his return (use only time in whole hours, not minutes; 11:00 means 11AM, 23:00 means 11PM) return value in the format hh:mm. ' +
+                            'If not provided, the default value is 23:59',
                     },
                     ret_atime_from: {
                         type: 'string',
-                        description: 'result filter, minimal return arrival time (use only time in whole hours, not minutes; 11:00 means 11AM, 23:00 means 11PM) return value in the format hh:mm',
+                        description: 'a filter to specify at what time the user wants to arrive the earliest during his return (use only time in whole hours, not minutes; 11:00 means 11AM, 23:00 means 11PM) return value in the format hh:mm. ' +
+                            'If not provided, the default value is 00:00',
                     },
                     ret_atime_to: {
                         type: 'string',
-                        description: 'result filter, maximal return arrival time (use only time in whole hours, not minutes; 11:00 means 11AM, 23:00 means 11PM) return value in the format hh:mm',
+                        description: 'a filter to specify at what time the user wants to arrive the latest during his return (use only time in whole hours, not minutes; 11:00 means 11AM, 23:00 means 11PM) return value in the format hh:mm. ' +
+                            'If not provided, the default value is 23:59',
                     },
                     //todo airlines filter
-                    stopover_from:{
-                      type:'string',
-                        description:'result filter, min length of stopover, 48:00 means 2 days (48 hours)'
+                    stopover_from: {
+                        type: 'string',
+                        description: 'result filter, min length of stopover, 48:00 means 2 days (48 hours)'
                     },
                     max_stopovers: {
                         type: 'integer',
@@ -178,7 +190,7 @@ export const getFilterFunction = (): ChatCompletionTool => {
                     //     description: 'returns the number of results that the user wants to be shown. If not provided by the user use default value 20. The max value is 1000',
                     // }
                 },
-                ['required']: ['message', 'date_from', 'date_to', 'locale', 'curr'],
+                ['required']: ['message', 'date_from', 'date_to', 'locale', 'curr','atime_from','atime_to','dtime_from','dtime_to','fly_from'],
             },
         },
     };
