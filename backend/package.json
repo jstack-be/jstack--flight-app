@@ -4,8 +4,8 @@
   "description": "backend API for the travel planner FLAPP",
   "main": "dist/app.js",
   "scripts": {
-    "start": "tsc && node dist/app.js",
-    "dev": "npx nodemon src/app.ts",
+    "start": "tsc && node dist/server.js",
+    "dev": "npx nodemon src/server.ts",
     "test": "jest",
     "build": "tsc"
   },
