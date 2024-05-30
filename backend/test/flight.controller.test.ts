@@ -5,7 +5,7 @@ import {ChatCompletionMessageParam} from "openai/resources";
 import app from "../src/app";
 import nock from "nock";
 import createMD5Hash from "../src/utils/hash.string";
-import {environment} from "../src/enviroment";
+import environment from "../src/enviroment";
 
 const currentDate = new Date();
 

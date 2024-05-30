@@ -1,5 +1,5 @@
 import nock, {DataMatcherMap} from "nock";
-import {environment} from "../../src/enviroment";
+import environment from "../../src/enviroment";
 
 /**
  * Mocks the flight API by intercepting HTTP requests and providing a predefined response.
