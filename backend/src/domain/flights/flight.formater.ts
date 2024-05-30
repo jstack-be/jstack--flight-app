@@ -23,7 +23,7 @@ function convertToLogoUrl(airline_iata: string): string {
  */
 export function formatFlights(flights: Flight[]): FlightsResponse[] {
     return flights.map(newFlight => {
-        const updatedRoutes = newFlight.route.map(route => ({
+        const updatedRoutes = newFlight.route?.map(route => ({
             id: route.id,
             flyFrom: route.flyFrom,
             flyTo: route.flyTo,

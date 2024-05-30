@@ -115,7 +115,7 @@ function processResponse(completion: any): { message: string, searchParameters: 
         validateDates(jsonObject);
         validateBaggage(jsonObject);
 
-        const message = jsonObject.message.trim() ? jsonObject.message : "Searching for flights...";
+        const message = jsonObject.message?.trim() ? jsonObject.message : "Searching for flights...";
         delete jsonObject.message;
 
         return {message, searchParameters: jsonObject};
