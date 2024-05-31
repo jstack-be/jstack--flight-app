@@ -4,7 +4,7 @@ import Image from "next/image";
 import {Textarea} from "@/components/ui/textarea";
 import {Button} from "@/components/ui/button";
 import {ChatCompletionMessageParam} from "@/app/domain/dashboard/messages/message.types";
-import { ArrowRight } from 'lucide-react';
+import {ArrowRight} from 'lucide-react';
 
 interface MessageBoxProps {
     onClose: () => void,
@@ -22,7 +22,7 @@ interface MessageBoxProps {
  * @param isLoading - boolean to check a message response is loading
  * @param sendMessage - function to send a new message
  */
-export function MessageBox({onClose, isOpen, messages, isLoading, sendMessage}: MessageBoxProps) {
+export function MessageBox({ onClose, isOpen, messages, isLoading, sendMessage }: MessageBoxProps) {
     const messagesEndRef = useRef<HTMLDivElement | null>(null);
 
     useEffect(() => {

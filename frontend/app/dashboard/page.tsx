@@ -36,11 +36,10 @@ export default function Page() {
                             className={`absolute bg-button rounded-full m-4 ${(isOpen && width !== null && width < 1024) ? 'hidden' : ''}`}
                             onClick={() => router.push('/')}> <ArrowLeft/></Button>
                     </div>
-
                 </div>
                 <div className="flex flex-col w-full xl:w-4/5 h-full overflow-y-auto items-center p-6 z-10">
                     <Image src={logo} alt={"afbeelding van vliegtuig logo"} className={"h-32 w-auto mb-6"}/>
-                    <FlightCards flights={flights} isLoading={isLoading} isError={isError} isOpen={isOpen}/>
+                    <FlightCards flights={flights} isLoading={isLoading} isError={isError}/>
                 </div>
                 {!isOpen &&
                     <Button className="absolute bottom-0 w-full rounded-b-none"

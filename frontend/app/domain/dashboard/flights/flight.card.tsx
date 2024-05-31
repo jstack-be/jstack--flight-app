@@ -19,8 +19,7 @@ interface FlightCardsProps {
  * @param isLoading - boolean to check if the flights are loading
  * @param isError - boolean to check if there is an error
  */
-export function FlightCards({flights, isLoading, isError }: FlightCardsProps) {
-
+export function FlightCards({flights, isLoading, isError}: FlightCardsProps) {
     const [hasData, setHasData] = useState(false)
     useEffect(() => {
         if (!isLoading) {
@@ -40,13 +39,12 @@ export function FlightCards({flights, isLoading, isError }: FlightCardsProps) {
                 :
                 <div className={`space-y-4 m-4 w-full ${isLoading && "opacity-50"}`}>
                     {flights.map(flight => (
-                            <FlightCard key={flight.id} {...flight} />
-                ))}
-        </div>
-}
-{
-    isLoading &&
-    <div className="absolute inset-0 flex justify-center items-center">
+                        <FlightCard key={flight.id} {...flight} />
+                    ))}
+                </div>
+            }
+            {isLoading &&
+                <div className="absolute inset-0 flex justify-center items-center">
                     <Image src={"/spinning-plane-white.gif"} alt={"plane spinner"} width={200}
                            height={200}/>
                 </div>
