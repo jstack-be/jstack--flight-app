@@ -11,7 +11,6 @@ interface FlightCardsProps {
     flights: Flight[],
     isLoading: boolean
     isError: boolean
-    isOpen: boolean
 }
 
 /**
@@ -20,7 +19,7 @@ interface FlightCardsProps {
  * @param isLoading - boolean to check if the flights are loading
  * @param isError - boolean to check if there is an error
  */
-export function FlightCards({flights, isLoading, isError, }: FlightCardsProps) {
+export function FlightCards({flights, isLoading, isError }: FlightCardsProps) {
 
     const [hasData, setHasData] = useState(false)
     useEffect(() => {
