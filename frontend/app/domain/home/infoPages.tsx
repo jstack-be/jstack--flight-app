@@ -1,13 +1,13 @@
 import Image from "next/image";
 import logo from "@/public/logo-big.svg";
 
-interface AboutContendPageProps {
+interface ContentBlockProps {
     titel: string;
     children: React.ReactNode;
     className?: string; // Add this line
 }
 
-function AboutContendPage({titel, children, className}: AboutContendPageProps) {
+function ContentBlock({titel, children, className}: ContentBlockProps) {
     return (
         <div className={`flex flex-col lg:flex-row justify-around items-center ${className}`}>
             <div className="flex flex-col lg:w-3/6 p-6">
@@ -27,7 +27,7 @@ function AboutContendPage({titel, children, className}: AboutContendPageProps) {
 
 export function AboutPlanely() {
     return (
-        <AboutContendPage titel={"About Planely"} className={"h-full text-lg"}>
+        <ContentBlock titel={"About Planely"} className={"h-full text-lg"}>
             <p className="text-background-dark pb-3">
                 Consider Planely to be the friend that always finds the best flight.
                 Not only do we tend to find the best flights based on your date and location,
@@ -38,14 +38,14 @@ export function AboutPlanely() {
                 but if Paris is a lot cheaper, that would have the preference?
                 Don’t worry, simply state your specific needs and we will take care of it!
             </p>
-        </AboutContendPage>
+        </ContentBlock>
     );
 }
 
 
 export function HowToUse() {
     return (
-        <AboutContendPage titel={"How to use Planely"} className={"h-full"}>
+        <ContentBlock titel={"How to use Planely"} className={"h-full"}>
             <p className="font-bold leading-relaxed text-xl">
                 Speak planely, travel planely!
             </p>
@@ -64,13 +64,13 @@ export function HowToUse() {
                     Are you flexible with the dates if this would mean that you can save money? Etc.
                 </li>
             </ol>
-        </AboutContendPage>
+        </ContentBlock>
     );
 }
 
 export function Examples() {
     return (
-        <AboutContendPage titel={"Examples"} className={"mt-10"}>
+        <ContentBlock titel={"Examples"} className={"mt-10"}>
             <p className="text-background-dark pb-3 font-bold text-xl">
                 Here are some examples of what you could ask:
             </p>
@@ -88,6 +88,6 @@ export function Examples() {
                     I want to return on the 25th of December 2024. I want to bring 1 suitcase with me.
                 </li>
             </ol>
-        </AboutContendPage>
+        </ContentBlock>
     )
 }

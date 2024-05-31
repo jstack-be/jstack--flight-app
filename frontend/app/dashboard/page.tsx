@@ -1,13 +1,13 @@
 "use client"
 import Image from 'next/image'
-import {MessageBox} from "@/app/domain/dashboard/messages/message.box";
+import {MessageBox} from "@/app/domain/dashboard/messages/messageBox";
 import {Button} from "@/components/ui/button";
 import React, {useEffect, useState} from "react";
 import {useWindowSize} from "@uidotdev/usehooks";
 
 
 import logo from "@/public/logo-sm.svg";
-import {FlightCards} from "@/app/domain/dashboard/flights/flight.card";
+import {FlightCards} from "@/app/domain/dashboard/flights/flightCard";
 import {useRouter} from "next/navigation";
 import {ArrowLeft} from "lucide-react";
 import useFlights from "@/app/lib/client/useFlights";

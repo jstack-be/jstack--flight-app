@@ -9,7 +9,7 @@ import {ArrowRight} from "lucide-react";
 import Image from "next/image";
 import logo from "@/public/logo-big.svg";
 
-export default function MainContend() {
+export default function MainContent() {
     const router = useRouter()
     const {sendMessage, refreshData, isLoading, messages} = useFlights()
 
@@ -38,7 +38,7 @@ export default function MainContend() {
                     placeholder={"Simply type what you are looking for in this text field, " +
                         "provide as much detail as possible to get the best result. " +
                         "Here is an example: Show me the routes from London to Paris " +
-                        "on the 12th of December 2024" +
+                        `on ${new Date().toISOString().split('T')[0]}`+
                         " for 2 adults and 1 child returning between the 20th and 25th of December 2024."}
                     required/>
                 {isLoading ?

@@ -19,7 +19,7 @@ export default async function Page() {
                 <p className="text-gray-600 mb-6">Last Updated: 22/05/2024</p>
 
                 <p className="mb-4">
-                    Welcome to Playenly. We are committed to protecting your privacy and ensuring the security of your
+                    Welcome to Planely. We are committed to protecting your privacy and ensuring the security of your
                     personal information. This Privacy Policy describes how we collect, use, and share information when
                     you use our application.
                 </p>
