@@ -41,12 +41,12 @@ export function MessageBox({onClose, isOpen, messages, isLoading, sendMessage}: 
     if (!isOpen) return;
 
     return (
-        <div className="bg-white h-full w-full overflow-y-auto flex flex-col">
+        <div className="bg-white h-screen w-full overflow-y-auto flex flex-col">
             <div className="flex justify-between lg:hidden mb-1">
                 <h2 className="text-2xl">Message History</h2>
                 <Button onClick={onClose}>X</Button>
-            </div>
-            <div className="overflow-y-auto h-[60dvh] md:h-4/6 lg:h-[75dvh] p-2 flex flex-col">
+            </div> {/* h-[60dvh] */}
+            <div className="overflow-y-auto h-[70dvh] md:h-4/6 lg:h-[75dvh] p-2 flex flex-col">
                 {messages.filter(message => message.role !== 'system').map((message: ChatCompletionMessageParam, index: number) =>
                     <div key={index}
                          className={`${message.role == "user" ? "bg-textarea-user text-textarea-usertext self-start w-4/5" : "bg-textarea-system text-textarea-systemtext self-end w-4/5"} text-sm m-2 px-4 py-3 rounded`}>

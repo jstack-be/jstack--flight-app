@@ -47,6 +47,7 @@ const config = {
                     background: {
                         DEFAULT: "#FE983B",
                         gradient: "#EE8526",
+                        hover: "#FFD8B1"
                     },
                     foreground: "hsl(var(--secondary-foreground))",
                 },
@@ -64,6 +65,7 @@ const config = {
                     systemtext: "#494949",
                     input: "#8E8E8E",
                     sendButtonText: "#1D2D3C",
+                    price:"#5A6CF3"
 
                 },
 

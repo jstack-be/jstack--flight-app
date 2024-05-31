@@ -11,6 +11,7 @@ interface FlightCardsProps {
     flights: Flight[],
     isLoading: boolean
     isError: boolean
+    isOpen: boolean
 }
 
 /**
@@ -19,7 +20,8 @@ interface FlightCardsProps {
  * @param isLoading - boolean to check if the flights are loading
  * @param isError - boolean to check if there is an error
  */
-export function FlightCards({flights, isLoading, isError}: FlightCardsProps) {
+export function FlightCards({flights, isLoading, isError, }: FlightCardsProps) {
+
     const [hasData, setHasData] = useState(false)
     useEffect(() => {
         if (!isLoading) {
@@ -39,12 +41,14 @@ export function FlightCards({flights, isLoading, isError}: FlightCardsProps) {
                 :
                 <div className={`space-y-4 m-4 w-full ${isLoading && "opacity-50"}`}>
                     {flights.map(flight => (
-                        <FlightCard key={flight.id} {...flight} />
-                    ))}
-                </div>
-            }
-            {isLoading &&
-                <div className="absolute inset-0 flex justify-center items-center">
+                        <>
+                            <FlightCard key={flight.id} {...flight} /></>
+                ))}
+        </div>
+}
+{
+    isLoading &&
+    <div className="absolute inset-0 flex justify-center items-center">
                     <Image src={"/spinning-plane-white.gif"} alt={"plane spinner"} width={200}
                            height={200}/>
                 </div>
@@ -100,11 +104,11 @@ export function FlightCard(props: Flight) {
                 <div className="m-4 ms-6"> {/*todo change colors to global*/}
                     <div className="flex md:justify-end my-3 space-x-2 w-full">
                         <p className="text-flightcard-tags">price </p>
-                        <p className="flex text-blue-700 text-lg font-bold">{priceInCurrency}</p>
+                        <p className="flex text-flightcard-price text-lg font-bold">{priceInCurrency}</p>
                     </div>
                     <a href={props.booking_link} target="_blank" rel="noopener noreferrer">
                         <Button
-                            className="bg-amber-500 hover:bg-amber-400 text-primary text-lg h-[37px] w-[300px] md:w-[132px]"> Details </Button>
+                            className="bg-gradient-to-br from-secondary-background to-secondary-background-gradient hover:bg-secondary-background-hover text-primary text-lg h-[37px] w-[300px] md:w-[132px]"> Details </Button>
                     </a>
                 </div>
             </div>
