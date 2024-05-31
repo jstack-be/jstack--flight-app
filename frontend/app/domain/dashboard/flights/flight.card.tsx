@@ -73,8 +73,8 @@ export function FlightCard(props: Flight) {
 
     return (
         <div className="bg-primary rounded-2xl w-full max-w-[850px]">
-            <div className="flex flex-col md:flex-row md:justify-evenly justify-center items-center my-4 md:mx-4">
-                <div className="w-full">
+            <div className="flex flex-col md:flex-row md:justify-evenly justify-center items-center">
+                <div className="w-full p-4 md:pb-4 pb-0">
                     {departureRoutes && (
                         <FlightCardContend
                             formattedDate={departureRoutes.formattedDate}
@@ -101,9 +101,9 @@ export function FlightCard(props: Flight) {
                         />
                     )}
                 </div>
-                <div className="m-4 ms-6"> {/*todo change colors to global*/}
+                <div className="m-4"> {/*todo change colors to global*/}
                     <div className="flex md:justify-end my-3 space-x-2 w-full">
-                        <p className="text-flightcard-tags">price </p>
+
                         <p className="flex text-flightcard-price text-lg font-bold">{priceInCurrency}</p>
                     </div>
                     <a href={props.booking_link} target="_blank" rel="noopener noreferrer">
@@ -119,7 +119,7 @@ export function FlightCardContend(flightData: ProcessedFlightData) {
     return (
         <div>
             <p className="mx-4">{flightData.formattedDate}</p>
-            <div className="flex justify-between items-center w-full md:w-11/12 md:mx-4 mb-2">
+            <div className="flex justify-between items-center w-full md:w-11/12 md:mx-4">
                 <div className="m-2 flex justify-center items-center flex-col xl:flex-row w-1/6">
                     {/*todo change to next/image*/}
                     {flightData.flightLogos.map((logo, index) => (

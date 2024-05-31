@@ -19,6 +19,7 @@ describe('generateFlightSearchParameters', () => {
             content: `I want to travel from New York on ${currentDate}`
         }];
         const expectedParameters = {
+            message: `Searching for flights from New York to anywhere on ${currentDate}`,
             fly_from: 'NYC',
             date_from: currentDate,
             date_to: currentDate,
@@ -29,7 +30,15 @@ describe('generateFlightSearchParameters', () => {
 
         const result = await generateFlightSearchParameters(messages);
 
-        expect(result).toEqual(expectedParameters);
+        expect(result).toEqual({
+            message: `Searching for flights from New York to anywhere on ${currentDate}`,
+            searchParameters: {
+                date_from: currentDate,
+                date_to: currentDate,
+                fly_from: "NYC",
+                limit: 20,
+            },
+        });
     });
 
     it('should throw an error when no arguments are returned from the OpenAI API', async () => {
@@ -41,7 +50,10 @@ describe('generateFlightSearchParameters', () => {
     });
 
     it('should throw an error when no departure place is provided', async () => {
-        const messages:ChatCompletionMessageParam[] = [{role:'user',content:'I want to travel to London on 19/05/2024'}];
+        const messages: ChatCompletionMessageParam[] = [{
+            role: 'user',
+            content: 'I want to travel to London on 19/05/2024'
+        }];
         const incompleteParameters = {
             fly_to: 'LON',
             date_from: '01/01/2023',
@@ -70,7 +82,7 @@ describe('generateFlightSearchParameters', () => {
     });
 
     it('should throw an error when return date is before the departure date', async () => {
-        const nextWeek = addDays(new Date(),7);
+        const nextWeek = addDays(new Date(), 7);
 
         const messages: ChatCompletionMessageParam[] = [{
             role: 'user',

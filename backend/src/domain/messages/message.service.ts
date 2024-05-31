@@ -83,7 +83,6 @@ function validateIataCodes(fly_from: string, fly_to: string) {
     const fly_from_codes = fly_from?.split(',');
     const fly_to_codes = fly_to?.split(',');
 
-
     for (const code of fly_from_codes) {
         if (!iata_code_regex.test(code.trim())) {
             throw new ResponseError("Could not find all provided departure cities or airports. Please change your request and try again.");
@@ -116,7 +115,7 @@ function processResponse(completion: any): { message: string, searchParameters: 
         validateDates(jsonObject);
         validateBaggage(jsonObject);
 
-        const message = jsonObject.message;
+        const message = jsonObject.message?.trim() ? jsonObject.message : "Searching for flights...";
         delete jsonObject.message;
 
         return {message, searchParameters: jsonObject};
