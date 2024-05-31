@@ -21,7 +21,7 @@ interface MessageBoxProps {
  * @param isLoading - boolean to check a message response is loading
  * @param sendMessage - function to send a new message
  */
-export function MessageBox({ onClose, isOpen, messages, isLoading, sendMessage }: MessageBoxProps) {
+export function MessageBox({onClose, isOpen, messages, isLoading, sendMessage}: MessageBoxProps) {
     const messagesEndRef = useRef<HTMLDivElement | null>(null);
 
     useEffect(() => {
@@ -40,29 +40,38 @@ export function MessageBox({ onClose, isOpen, messages, isLoading, sendMessage }
 
     if (!isOpen) return;
 
-    return (<>
-        <div className="bg-gray-200 h-dvh p-6 w-full overflow-y-auto">
+    return (
+        <div className="bg-white h-full w-full overflow-y-auto flex flex-col">
             <div className="flex justify-between lg:hidden mb-1">
                 <h2 className="text-2xl">Message History</h2>
                 <Button onClick={onClose}>X</Button>
             </div>
-            <div className="overflow-y-auto h-[60dvh] md:h-4/6 border border-gray-300 p-2 flex flex-col">
+            <div className="overflow-y-auto h-[60dvh] md:h-4/6 lg:h-[75dvh] p-2 flex flex-col">
                 {messages.filter(message => message.role !== 'system').map((message: ChatCompletionMessageParam, index: number) =>
                     <div key={index}
-                         className={`${message.role == "user" ? "bg-background-message text-primary self-start w-4/5" : "bg-primary text-black self-end w-4/5"} text-sm m-2 px-4 py-3 rounded`}>
+                         className={`${message.role == "user" ? "bg-textarea-user text-textarea-usertext self-start w-4/5" : "bg-textarea-system text-textarea-systemtext self-end w-4/5"} text-sm m-2 px-4 py-3 rounded`}>
                         {message.content}
                     </div>)}
                 {isLoading && <Image src="/loading-message.gif"
-                        alt="loading image" className="bg-primary rounded self-end m-2" width={80} height={80}/>}
+                                     alt="loading image" className="bg-primary rounded self-end m-2" width={80}
+                                     height={80}/>}
                 <div ref={messagesEndRef}/>
             </div>
+            <div className="flex-grow flex flex-col m-2 ">
+                <form className="relative flex flex-col flex-grow items-center" onSubmit={handleSubmit}>
 
-            <form className="flex flex-col items-center" onSubmit={handleSubmit}>
-                <Textarea className="m-2 h-[17dvh] bg-white placeholder:text-textarea-placeholder resize-none"
-                          id="message" name="message"
-                          placeholder={"Ask some more questions to filter your result"} required/>
-                <Button className="bg-button" disabled={isLoading} type="submit">Search Routes</Button>
-            </form>
+
+                    <Textarea className="flex-grow bg-textarea-system placeholder:text-textarea-input resize-none pb-6"
+                              id="message" name="message"
+                              placeholder={"Ask some more questions to filter your result"} required/>
+                    <div className="absolute bottom-3.5 right-3 text-secondary">
+                        <Button className="bg-inherit text-textarea-sendButtonText" disabled={isLoading}
+                                type="submit">Search Routes</Button>
+                    </div>
+
+                </form>
+            </div>
         </div>
-    </>);
+    )
+        ;
 }

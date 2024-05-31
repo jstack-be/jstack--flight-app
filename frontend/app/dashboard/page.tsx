@@ -31,9 +31,12 @@ export default function Page() {
                                 messages={messages}
                                 isLoading={isLoading}
                                 sendMessage={sendMessage}/>
-                    <Button
-                        className={`bg-button rounded-full m-4 ${(isOpen && width !== null && width < 1024) ? 'hidden' : ''}`}
-                        onClick={() => router.push('/')}> <ArrowLeft/></Button>
+                    <div className="width: 0; height: 0">
+                        <Button
+                            className={`absolute bg-button rounded-full m-4 ${(isOpen && width !== null && width < 1024) ? 'hidden' : ''}`}
+                            onClick={() => router.push('/')}> <ArrowLeft/></Button>
+                    </div>
+
                 </div>
                 <div className="flex flex-col w-full xl:w-4/5 h-full overflow-y-auto items-center p-6">
                     <Image src={logo} alt={"afbeelding van vliegtuig logo"} className={"h-32 w-auto mb-6"}/>

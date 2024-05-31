@@ -99,12 +99,12 @@ export function FlightCard(props: Flight) {
                 </div>
                 <div className="m-4 ms-6"> {/*todo change colors to global*/}
                     <div className="flex md:justify-end my-3 space-x-2 w-full">
-                        <p className="text-gray-400">price </p>
+                        <p className="text-flightcard-tags">price </p>
                         <p className="flex text-blue-700 text-lg font-bold">{priceInCurrency}</p>
                     </div>
                     <a href={props.booking_link} target="_blank" rel="noopener noreferrer">
                         <Button
-                            className="bg-amber-500 hover:bg-amber-400 text-primary text-lg h-[37px] w-[300px] md:w-[132px]"> Select </Button>
+                            className="bg-amber-500 hover:bg-amber-400 text-primary text-lg h-[37px] w-[300px] md:w-[132px]"> Details </Button>
                     </a>
                 </div>
             </div>
@@ -124,20 +124,20 @@ export function FlightCardContend(flightData: ProcessedFlightData) {
 
                 </div>
                 <div className="m-2">
-                    <p>{flightData.formattedDepartureTime}</p>
-                    <p>{flightData.flyFrom}</p>
+                    <div className="text-flightcard-darkgrey text-xl">{flightData.formattedDepartureTime}</div>
+                    <div className="text-flightcard-grey text-2xl">{flightData.flyFrom}</div>
                 </div>
                 <div className="w-2/5 flex flex-col justify-center items-center">
-                    <p>{flightData.formattedDepartureDuration}</p>
+                    <div className="text-flightcard-grey">{flightData.formattedDepartureDuration}</div>
                     <div className="flex w-full items-center">
                         <hr className="w-5/6 border-2"/>
                         <Plane className="w-1/6"/>
                     </div>
-                    <p>{flightData.flightSteps}</p>
+                    <div className="text-flightcard-blue">{flightData.flightSteps}</div>
                 </div>
                 <div className="m-2">
-                    <p>{flightData.formattedArrivalTime}</p>
-                    <p>{flightData.flyTo}</p>
+                    <div className="text-flightcard-darkgrey text-xl">{flightData.formattedArrivalTime}</div>
+                    <div className="text-flightcard-grey text-2xl">{flightData.flyTo}</div>
                 </div>
             </div>
         </div>
