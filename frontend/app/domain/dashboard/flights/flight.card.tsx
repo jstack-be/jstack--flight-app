@@ -40,8 +40,7 @@ export function FlightCards({flights, isLoading, isError }: FlightCardsProps) {
                 :
                 <div className={`space-y-4 m-4 w-full ${isLoading && "opacity-50"}`}>
                     {flights.map(flight => (
-                        <>
-                            <FlightCard key={flight.id} {...flight} /></>
+                            <FlightCard key={flight.id} {...flight} />
                 ))}
         </div>
 }
