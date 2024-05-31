@@ -49,7 +49,7 @@ export default function MainContend() {
                     </div> :
                     <div className="absolute bottom-0 right-3 p-2 focus:border-ring text-secondary">
                         <Button type="submit"
-                                className="bg-secondary-background text-primary hover:bg-amber-300"> {/*todo move to global css*/}
+                                className="bg-gradient-to-br from-secondary-background to-secondary-background-gradient text-primary hover:bg-amber-300"> {/*todo move to global css*/}
                             Send <ArrowRight/>
                         </Button>
                     </div>
