@@ -4,6 +4,7 @@ import Image from "next/image";
 import {Textarea} from "@/components/ui/textarea";
 import {Button} from "@/components/ui/button";
 import {ChatCompletionMessageParam} from "@/app/domain/dashboard/messages/message.types";
+import { ArrowRight } from 'lucide-react';
 
 interface MessageBoxProps {
     onClose: () => void,
@@ -42,14 +43,14 @@ export function MessageBox({onClose, isOpen, messages, isLoading, sendMessage}: 
 
     return (
         <div className="bg-white h-screen w-full overflow-y-auto flex flex-col">
-            <div className="flex justify-between lg:hidden mb-1">
+            <div className="flex justify-between lg:hidden m-4 mb-1">
                 <h2 className="text-2xl">Message History</h2>
                 <Button onClick={onClose}>X</Button>
             </div> {/* h-[60dvh] */}
             <div className="overflow-y-auto h-[70dvh] md:h-4/6 lg:h-[75dvh] p-2 flex flex-col">
                 {messages.filter(message => message.role !== 'system').map((message: ChatCompletionMessageParam, index: number) =>
                     <div key={index}
-                         className={`${message.role == "user" ? "bg-textarea-user text-textarea-usertext self-start w-4/5" : "bg-textarea-system text-textarea-systemtext self-end w-4/5"} text-sm m-2 px-4 py-3 rounded`}>
+                         className={`${message.role == "user" ? "bg-textarea-user text-textarea-usertext self-start w-4/5" : "bg-textarea-system text-textarea-systemtext self-end "} text-sm m-2 mx-4 px-4 py-3 rounded w-3/5`}>
                         {message.content}
                     </div>)}
                 {isLoading && <Image src="/loading-message.gif"
@@ -57,7 +58,7 @@ export function MessageBox({onClose, isOpen, messages, isLoading, sendMessage}: 
                                      height={80}/>}
                 <div ref={messagesEndRef}/>
             </div>
-            <div className="flex-grow flex flex-col m-2 ">
+            <div className="flex-grow flex flex-col m-4 ">
                 <form className="relative flex flex-col flex-grow items-center" onSubmit={handleSubmit}>
 
 
@@ -65,8 +66,8 @@ export function MessageBox({onClose, isOpen, messages, isLoading, sendMessage}: 
                               id="message" name="message"
                               placeholder={"Ask some more questions to filter your result"} required/>
                     <div className="absolute bottom-3.5 right-3 text-secondary">
-                        <Button className="bg-inherit text-textarea-sendButtonText" disabled={isLoading}
-                                type="submit">Search Routes</Button>
+                        <Button className="bg-inherit text-textarea-sendButtonText font-bold hover:bg-inherit" disabled={isLoading}
+                                type="submit">Send <ArrowRight /></Button>
                     </div>
 
                 </form>
