@@ -1,4 +1,4 @@
-import {Flight, FlightsResponse} from "./flight.types";
+import {FlightsResponse} from "./flight.types";
 import axios from "axios";
 import environment from "../../enviroment";
 import {FlightSearchParameters} from "../messages/message.types";
@@ -95,7 +95,7 @@ export async function validateFlights(messages: ChatCompletionMessageParam[], fl
     messages.unshift(systemMessage);
 
     // Remove booking_link and airlineLogoUrl's from each flight to reduce amount of tokens
-    const shortenedFlights = flights.map(flight => {
+    const shortenedFlights = structuredClone(flights).map(flight => { //todo use lodash
         delete flight.booking_link;
         flight.route.forEach(route => {
             delete route.airlineLogoUrl;
@@ -110,7 +110,7 @@ export async function validateFlights(messages: ChatCompletionMessageParam[], fl
 
     const completion = await openai.chat.completions.create({
         messages: messages,
-        model: "gpt-3.5-turbo-0125",
+        model: "gpt-4o",
         response_format: {"type": "json_object"},
     });
 
