@@ -37,7 +37,7 @@ export function FlightCards({flights, isLoading, isError}: FlightCardsProps) {
                     <Frown size={72} className="m-2"/> Sorry, no flights found.
                 </p></div>
                 :
-                <div className={`space-y-4 m-4 w-full ${isLoading && "opacity-50"}`}>
+                <div className={`space-y-4 m-4 w-full flex flex-col items-center ${isLoading && "opacity-50"}`}>
                     {flights.map(flight => (
                         <FlightCard key={flight.id} {...flight} />
                     ))}

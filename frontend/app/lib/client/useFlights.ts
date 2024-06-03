@@ -10,21 +10,7 @@ export default function useFlights() {
     const [messages, saveMessages] = useLocalStorage<ChatCompletionMessageParam[]>("messages", []);
     const [flights, setFlights] = useSessionStorage<Flight[]>("flights", []);
     const mutation = useMutation({
-        mutationFn: queryFlights,
-        onSuccess: (data) => {
-            if (data.error) {
-                saveMessages([...messages, {role: 'assistant', content: data.error}])
-                return;
-            }
-            else {
-            setFlights(data.flights);
-            saveMessages([...messages, {role: 'assistant', content: data.message}])
-            }
-        },
-        onError: (error) => {
-
-            saveMessages([...messages, {role: 'assistant', content: error.message}])
-        },
+        mutationFn: queryFlights
     });
 
 
@@ -46,10 +32,18 @@ export default function useFlights() {
             messageHistory = [...messages, {role: 'user', content}];
         }
 
+        mutation.mutate(messageHistory,{
+            onSuccess: (data) => {
+                if (data.error) {
+                    saveMessages([...messageHistory, {role: 'assistant', content: data.error}])
+                    return;
+                } else {
+                    setFlights(data.flights);
+                    saveMessages([...messageHistory, {role: 'assistant', content: data.message}])
+                }
+            },
+        });
 
-
-        saveMessages(messageHistory)
-        mutation.mutate(messageHistory);
     }
 
     function refreshData() {

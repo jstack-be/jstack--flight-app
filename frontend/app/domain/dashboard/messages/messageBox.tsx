@@ -22,7 +22,7 @@ interface MessageBoxProps {
  * @param isLoading - boolean to check a message response is loading
  * @param sendMessage - function to send a new message
  */
-export function MessageBox({ onClose, isOpen, messages, isLoading, sendMessage }: MessageBoxProps) {
+export function MessageBox({onClose, isOpen, messages, isLoading, sendMessage}: MessageBoxProps) {
     const messagesEndRef = useRef<HTMLDivElement | null>(null);
 
     useEffect(() => {
@@ -46,7 +46,8 @@ export function MessageBox({ onClose, isOpen, messages, isLoading, sendMessage }
             <div className="flex justify-between lg:hidden m-4 mb-1">
                 <h2 className="text-2xl">Message History</h2>
                 <Button onClick={onClose}>X</Button>
-            </div> {/* h-[60dvh] */}
+            </div>
+            {/* h-[60dvh] */}
             <div className="overflow-y-auto h-[70dvh] md:h-4/6 lg:h-[75dvh] p-2 flex flex-col">
                 {messages.filter(message => message.role !== 'system').map((message: ChatCompletionMessageParam, index: number) =>
                     <div key={index}
@@ -58,21 +59,16 @@ export function MessageBox({ onClose, isOpen, messages, isLoading, sendMessage }
                                      height={80}/>}
                 <div ref={messagesEndRef}/>
             </div>
-            <div className="flex-grow flex flex-col m-4 ">
-                <form className="relative flex flex-col flex-grow items-center" onSubmit={handleSubmit}>
-
-
-                    <Textarea className="flex-grow bg-textarea-system placeholder:text-textarea-input resize-none pb-6"
-                              id="message" name="message"
-                              placeholder={"Ask some more questions to filter your result"} required/>
-                    <div className="absolute bottom-3.5 right-3 text-secondary">
-                        <Button className="bg-inherit text-textarea-sendButtonText font-bold hover:bg-inherit" disabled={isLoading}
-                                type="submit">Send <ArrowRight /></Button>
-                    </div>
-
-                </form>
-            </div>
+            <form className="relative flex flex-col flex-grow items-center m-4 max-h-40 mt-auto" onSubmit={handleSubmit}>
+                <Textarea
+                    className="flex-grow bg-textarea-system placeholder:text-textarea-input resize-none pb-6"
+                    id="message" name="message"
+                    placeholder={"Ask some more questions to filter your result"} required/>
+                <Button
+                    className="absolute bottom-3.5 right-3 text-secondary bg-inherit text-textarea-sendButtonText font-bold hover:bg-inherit"
+                    disabled={isLoading}
+                    type="submit">Send <ArrowRight/></Button>
+            </form>
         </div>
     )
-        ;
 }
