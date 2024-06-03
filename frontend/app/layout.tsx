@@ -20,11 +20,10 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en">
-
         <body
             className={`${inter.className} ${jua.variable} h-screen bg-gradient-to-br from-background to-background-gradient overflow-hidden`}>
         <Providers>
-            {children}
+                {children}
         </Providers>
         </body>
         </html>

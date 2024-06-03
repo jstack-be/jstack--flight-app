@@ -95,7 +95,6 @@ describe('POST /api/flights', () => {
                             return: 0,
                             total: 16200
                         },
-                        price: 207,
                         booking_link: "https://www.kiwi.com/deep?",
                         route: [{
                             id: "0f6417884d9300009602ee61_0",

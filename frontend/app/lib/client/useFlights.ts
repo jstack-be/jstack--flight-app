@@ -1,28 +1,16 @@
 "use client"
 import {useMutation} from "@tanstack/react-query";
-import {getUserLocation, queryFlights} from "@/app/lib/server/actions";
+import {queryFlights} from "@/app/lib/server/actions";
 import {Flight} from "@/app/domain/dashboard/flights/flight.types";
 import {ChatCompletionMessageParam} from "@/app/domain/dashboard/messages/message.types";
 import {useLocalStorage, useSessionStorage} from "@uidotdev/usehooks";
+import {getUserLocation} from "@/app/lib/client/location";
 
 export default function useFlights() {
     const [messages, saveMessages] = useLocalStorage<ChatCompletionMessageParam[]>("messages", []);
     const [flights, setFlights] = useSessionStorage<Flight[]>("flights", []);
     const mutation = useMutation({
-        mutationFn: queryFlights,
-        onSuccess: (data) => {
-            if (data.error) {
-                saveMessages([...messages, {role: 'assistant', content: data.error}])
-                return;
-            }
-            else {
-            setFlights(data.flights);
-            saveMessages([...messages, {role: 'assistant', content: data.message}])
-            }
-        },
-        onError: (error) => {
-            saveMessages([...messages, {role: 'assistant', content: error.message}])
-        },
+        mutationFn: queryFlights
     });
 
 
@@ -43,8 +31,20 @@ export default function useFlights() {
         } else {
             messageHistory = [...messages, {role: 'user', content}];
         }
+
         saveMessages(messageHistory)
-        mutation.mutate(messageHistory);
+        mutation.mutate(messageHistory,{
+            onSuccess: (data) => {
+                if (data.error) {
+                    saveMessages([...messageHistory, {role: 'assistant', content: data.error}])
+                    return;
+                } else {
+                    setFlights(data.flights);
+                    saveMessages([...messageHistory, {role: 'assistant', content: data.message}])
+                }
+            },
+        });
+
     }
 
     function refreshData() {

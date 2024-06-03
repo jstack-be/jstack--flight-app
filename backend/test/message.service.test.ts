@@ -18,29 +18,27 @@ describe('generateFlightSearchParameters', () => {
             role: 'user',
             content: `I want to travel from New York on ${currentDate}`
         }];
-        const openAIresponse = {
-            message: "Showing flights from New York to anywhere",
+        const expectedParameters = {
+            message: `Searching for flights from New York to anywhere on ${currentDate}`,
             fly_from: 'NYC',
             date_from: currentDate,
             date_to: currentDate,
+            limit: 20
         };
 
-        const expectedParameters = {
-            message: "Showing flights from New York to anywhere",
-            searchParameters: {
-                fly_from: 'NYC',
-                date_from:
-                currentDate,
-                date_to:
-                currentDate,
-            }
-        };
-
-        nockedOpenAiAPI(openAIresponse);
+        nockedOpenAiAPI(expectedParameters);
 
         const result = await generateFlightSearchParameters(messages);
 
-        expect(result).toEqual(expectedParameters);
+        expect(result).toEqual({
+            message: `Searching for flights from New York to anywhere on ${currentDate}`,
+            searchParameters: {
+                date_from: currentDate,
+                date_to: currentDate,
+                fly_from: "NYC",
+                limit: 20,
+            },
+        });
     });
 
     it('should throw an error when no arguments are returned from the OpenAI API', async () => {
@@ -158,21 +156,5 @@ describe('generateFlightSearchParameters', () => {
         nockedOpenAiAPI(invalidParameters);
 
         expect(() => generateFlightSearchParameters(messages)).rejects.toThrow(ResponseError);
-    });
-
-
-})
-
-describe('SortConditionalFlightData', () => {
-    afterEach(() => {
-        nock.cleanAll();
-    });
-
-    it('should sort flight data depending on the message provided', async () => {
-        const messages: ChatCompletionMessageParam[] = [{
-            role: 'user',
-            content: 'I want to travel from New York to London sorted on lowest duration ' +
-                'but if flight is cheaper i want to see those as well'
-        }];
     });
 });

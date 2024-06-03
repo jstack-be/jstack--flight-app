@@ -11,7 +11,7 @@ const config = {
     prefix: "",
     theme: {
         fontFamily: {
-            'sans': ['"Helvetica"','ui-sans-serif', 'system-ui'],
+            'sans': ['"Helvetica"', 'ui-sans-serif', 'system-ui'],
             'Jua': ['var(--font-jua)'],
         },
         container: {
@@ -37,7 +37,7 @@ const config = {
                     message: "#08AECC",
                 },
                 foreground: "#0F989D",
-                button: "#BDFBFF" ,
+                button: "#BDFBFF",
                 primary: {
                     DEFAULT: "#ffffff",
                     foreground: "#004B97",
@@ -47,13 +47,29 @@ const config = {
                     background: {
                         DEFAULT: "#FE983B",
                         gradient: "#EE8526",
+                        hover: "#FFD8B1"
                     },
                     foreground: "hsl(var(--secondary-foreground))",
                 },
-                textarea: {
-                    placeholder: "#AFAFAF",
+                flightcard: {
+                    grey: "#B1B1B1",
+                    blue: "#08AECC",
+                    darkgrey: "#494949",
 
                 },
+                textarea: {
+                    placeholder: "#AFAFAF",
+                    user: "#08AECC",
+                    usertext: "#FFFFFF",
+                    system: "#F8F8FB",
+                    systemtext: "#494949",
+                    input: "#8E8E8E",
+                    sendButtonText: "#1D2D3C",
+                    price:"#5A6CF3"
+
+                },
+
+
                 destructive: {
                     DEFAULT: "hsl(var(--destructive))",
                     foreground: "hsl(var(--destructive-foreground))",

@@ -3,25 +3,52 @@
 import {Button} from "@/components/ui/button";
 import {Frown, Plane} from "lucide-react";
 import {Flight, ProcessedFlightData} from "@/app/domain/dashboard/flights/flight.types";
-import useFlights from "@/app/lib/client/useFlights";
 import useRoutesData from "@/app/lib/client/useRoutesData";
+import Image from "next/image";
+import React, {useEffect, useState} from "react";
 
-export function FlightCards() {
-    const {flights, isLoading, isError} = useFlights();
+interface FlightCardsProps {
+    flights: Flight[],
+    isLoading: boolean
+    isError: boolean
+}
+
+/**
+ * FlightCards component to display the flights
+ * @param flights - array of flights to display
+ * @param isLoading - boolean to check if the flights are loading
+ * @param isError - boolean to check if there is an error
+ */
+export function FlightCards({flights, isLoading, isError}: FlightCardsProps) {
+    const [hasData, setHasData] = useState(false)
+    useEffect(() => {
+        if (!isLoading) {
+            if (!flights?.length || isError) {
+                setHasData(false)
+            } else setHasData(true)
+        }
+    }, [flights, isError, isLoading]);
     //todo add refresh functionality
-    if (isLoading) return <div>Loading...</div>
-    if (!flights?.length || isError) {
-        return (
-            <p className={"flex text-primary items-center text-3xl"}>
-                <Frown size={72} className="m-2"/> Sorry, no flights found.
-            </p>
-        );
-    }
+
     return (
-        <div className="space-y-4 m-4 w-full sm:w-4/5  flex flex-col items-center">
-            {flights.map(flight => (
-                <FlightCard key={flight.id} {...flight} />
-            ))}
+        <div className={`relative w-full sm:w-4/5 flex flex-col items-center ${isLoading && "overflow-hidden"}`}>
+            {(!hasData) ?
+                <div className={`${isLoading && "h-screen"}`}><p className={"flex text-primary items-center text-3xl"}>
+                    <Frown size={72} className="m-2"/> Sorry, no flights found.
+                </p></div>
+                :
+                <div className={`space-y-4 m-4 w-full flex flex-col items-center ${isLoading && "opacity-50"}`}>
+                    {flights.map(flight => (
+                        <FlightCard key={flight.id} {...flight} />
+                    ))}
+                </div>
+            }
+            {isLoading &&
+                <div className="absolute inset-0 flex justify-center items-center">
+                    <Image src={"/spinning-plane-white.gif"} alt={"plane spinner"} width={200}
+                           height={200}/>
+                </div>
+            }
         </div>
     );
 }
@@ -42,8 +69,8 @@ export function FlightCard(props: Flight) {
 
     return (
         <div className="bg-primary rounded-2xl w-full max-w-[850px]">
-            <div className="flex flex-col md:flex-row md:justify-evenly justify-center items-center my-4 md:mx-4">
-                <div className="w-full">
+            <div className="flex flex-col md:flex-row md:justify-evenly justify-center items-center">
+                <div className="w-full p-4 md:pb-4 pb-0">
                     {departureRoutes && (
                         <FlightCardContend
                             formattedDate={departureRoutes.formattedDate}
@@ -70,14 +97,14 @@ export function FlightCard(props: Flight) {
                         />
                     )}
                 </div>
-                <div className="m-4 ms-6"> {/*todo change colors to global*/}
+                <div className="m-4"> {/*todo change colors to global*/}
                     <div className="flex md:justify-end my-3 space-x-2 w-full">
-                        <p className="text-gray-400">price </p>
-                        <p className="flex text-blue-700 text-lg font-bold">{priceInCurrency}</p>
+
+                        <p className="flex text-flightcard-price text-lg font-bold">{priceInCurrency}</p>
                     </div>
                     <a href={props.booking_link} target="_blank" rel="noopener noreferrer">
                         <Button
-                            className="bg-amber-500 hover:bg-amber-400 text-primary text-lg h-[37px] w-[300px] md:w-[132px]"> Select </Button>
+                            className="bg-gradient-to-br from-secondary-background to-secondary-background-gradient hover:bg-secondary-background-hover text-primary text-lg h-[37px] w-[300px] md:w-[132px]"> Details </Button>
                     </a>
                 </div>
             </div>
@@ -88,7 +115,7 @@ export function FlightCardContend(flightData: ProcessedFlightData) {
     return (
         <div>
             <p className="mx-4">{flightData.formattedDate}</p>
-            <div className="flex justify-between items-center w-full md:w-11/12 md:mx-4 mb-2">
+            <div className="flex justify-between items-center w-full md:w-11/12 md:mx-4">
                 <div className="m-2 flex justify-center items-center flex-col xl:flex-row w-1/6">
                     {/*todo change to next/image*/}
                     {flightData.flightLogos.map((logo, index) => (
@@ -97,20 +124,20 @@ export function FlightCardContend(flightData: ProcessedFlightData) {
 
                 </div>
                 <div className="m-2">
-                    <p>{flightData.formattedDepartureTime}</p>
-                    <p>{flightData.flyFrom}</p>
+                    <div className="text-flightcard-darkgrey text-xl">{flightData.formattedDepartureTime}</div>
+                    <div className="text-flightcard-grey text-2xl">{flightData.flyFrom}</div>
                 </div>
                 <div className="w-2/5 flex flex-col justify-center items-center">
-                    <p>{flightData.formattedDepartureDuration}</p>
+                    <div className="text-flightcard-grey">{flightData.formattedDepartureDuration}</div>
                     <div className="flex w-full items-center">
                         <hr className="w-5/6 border-2"/>
                         <Plane className="w-1/6"/>
                     </div>
-                    <p>{flightData.flightSteps}</p>
+                    <div className="text-flightcard-blue">{flightData.flightSteps}</div>
                 </div>
                 <div className="m-2">
-                    <p>{flightData.formattedArrivalTime}</p>
-                    <p>{flightData.flyTo}</p>
+                    <div className="text-flightcard-darkgrey text-xl">{flightData.formattedArrivalTime}</div>
+                    <div className="text-flightcard-grey text-2xl">{flightData.flyTo}</div>
                 </div>
             </div>
         </div>

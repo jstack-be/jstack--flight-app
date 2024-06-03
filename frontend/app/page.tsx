@@ -1,11 +1,11 @@
 "use client"
-import MainContend from "@/app/domain/home/main.contend";
+import MainContent from "@/app/domain/home/mainContent";
 import {ClientOnly} from "@/app/client.only";
 import styles from "./domain/home/home.module.css";
-import ScrollToSection from "@/app/domain/home/section.scroll";
+import ScrollToSection from "@/app/domain/home/sectionScroll";
 import {useRef} from "react";
 import {Footer} from "@/app/domain/home/footer";
-import {AboutPlanely, Examples, HowToUse} from "@/app/domain/home/About";
+import {AboutPlanely, Examples, HowToUse} from "@/app/domain/home/infoPages";
 
 export default function Home() {
     const home = useRef<HTMLDivElement | null>(null);
@@ -18,7 +18,7 @@ export default function Home() {
             <section className="h-screen" ref={home}>
                 <ScrollToSection goToSectionDownRef={about}>
                     <ClientOnly>
-                        <MainContend/>
+                        <MainContent/>
                     </ClientOnly>
                 </ScrollToSection>
             </section>

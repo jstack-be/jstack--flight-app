@@ -1,6 +1,9 @@
 import app from "./app";
 import environment from "./enviroment";
 import rateLimit from "express-rate-limit";
+import {mountHandlers} from "./routes/routing";
+import helmet from "helmet";
+import cors from 'cors';
 
 const port: number = environment.serverPort;
 
@@ -19,8 +22,15 @@ const limiter = rateLimit({
 
 // Apply the rate limiting middleware to all requests.
 app.use(limiter);
+app.use(helmet())
+app.use(cors());
+mountHandlers(app)
 
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
+});
+
+app.get('/', (req, res) => {
+    res.sendStatus(200)
 });
 
