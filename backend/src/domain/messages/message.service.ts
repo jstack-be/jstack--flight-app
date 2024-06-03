@@ -1,6 +1,6 @@
 import InvalidDateError from "../../errors/InvalidDateError";
 import ResponseError from "../../errors/ResponseError";
-import {parseDate} from "../../utils/date.utils";
+import {formatDate, parseDate} from "../../utils/date.utils";
 import {getFilterFunction} from "./message.function";
 import {ChatCompletionMessageParam} from "openai/resources";
 import {FlightSearchParameters} from "./message.types";
@@ -135,7 +135,7 @@ export async function generateFlightSearchParameters(messages: ChatCompletionMes
         content: 'You are a helpful travel planner assistant ' +
             ' Your answers should be short and to the point. ' +
             ' You should let the user know that you can only answer questions about travel routes or how the app works, and not any other information ' +
-            ` The current date is ${new Date().toLocaleDateString()}.` +
+            ` The current date is ${formatDate(new Date())} this is in format dd/mm/yyyy.` +
             ' The given dates should not be more than 45 day before the current date and more than 3 years in the future. '
     };
 
