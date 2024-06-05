@@ -1,0 +1,26 @@
+{
+  "MainContent": {
+    "PlaceholderText": "Tapez simplement ce que vous recherchez dans ce champ de texte, fournissez autant de détails que possible pour obtenir le meilleur résultat. Voici un exemple : Montrez-moi les itinéraires de Londres à Paris le {date} pour 2 adultes et 1 enfant revenant entre le 20 et le 25 décembre 2024.",
+    "SendButton": "Envoyer",
+    "ContinueButton": "Continuer avec votre session de recherche précédente"
+  },
+  "About": {
+    "Title": "À propos de Planely",
+    "Description": "Considérez Planely comme l'ami qui trouve toujours le meilleur vol. Non seulement nous trouvons généralement les meilleurs vols en fonction de votre date et de votre lieu, mais nous vous permettons également de spécifier exactement ce que vous voulez.",
+    "Example": "Peut-être voulez-vous voyager à Londres, mais si Paris est beaucoup moins cher, cela aurait la préférence? Ne vous inquiétez pas, indiquez simplement vos besoins spécifiques et nous nous en occuperons!"
+  },
+  "Usage": {
+    "Title": "Comment utiliser Planely",
+    "Subtitle": "Parlez franchement, voyagez Planely !",
+    "Step1": "Énoncez l'évidence. De où à où voulez-vous aller?",
+    "Step2": "Quelle est la date de départ et de retour (le cas échéant).",
+    "Step3": "Énoncez ce que vous jugez important. Avec combien de personnes volez-vous? Quels bagages emportez-vous avec vous? Êtes-vous flexible avec les dates si cela signifie que vous pouvez économiser de l'argent? Etc."
+  },
+  "Examples": {
+    "Title": "Exemples",
+    "Description": "Voici quelques exemples de ce que vous pourriez demander:",
+    "Example1": "Montrez-moi les itinéraires de Londres à Paris le 12 décembre 2024 pour 2 adultes et 1 enfant revenant entre le 20 et le 25 décembre 2024.",
+    "Example2": "Je veux voler d'Amsterdam à New York le 1er janvier 2025 pour 1 adulte et 1 enfant. Je veux revenir le 10 janvier 2025. Je veux emporter 2 valises avec moi.",
+    "Example3": "Je veux voler de Londres à Paris le 12 décembre 2024 pour 2 adultes et 1 enfant. Je veux revenir le 25 décembre 2024. Je veux emporter 1 valise avec moi."
+  }
+}

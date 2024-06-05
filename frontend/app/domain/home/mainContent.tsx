@@ -3,14 +3,16 @@ import React from "react";
 
 import {Textarea} from "@/components/ui/textarea";
 import {Button} from "@/components/ui/button"
-import {useRouter} from "next/navigation";
 import useFlights from "@/app/lib/client/useFlights";
 import {ArrowRight} from "lucide-react";
 import Image from "next/image";
 import logo from "@/public/logo-big.svg";
+import {useTranslations} from "next-intl";
+import {useRouter} from "@/i18n.config";
 
 export default function MainContent() {
     const router = useRouter()
+    const t = useTranslations("MainContent");
     const {sendMessage, refreshData, isLoading, messages} = useFlights()
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -35,12 +37,9 @@ export default function MainContent() {
                     className="h-48 w-full bg-white placeholder:text-textarea-placeholder md:text-lg resize-none rounded-lg flex-grow"
                     id="message"
                     name="message"
-                    placeholder={"Simply type what you are looking for in this text field, " +
-                        "provide as much detail as possible to get the best result. " +
-                        "Here is an example: Show me the routes from London to Paris " +
-                        `on ${new Date().toISOString().split('T')[0]}`+
-                        " for 2 adults and 1 child returning between the 20th and 25th of December 2024."}
+                    placeholder={t("PlaceholderText",{date:new Date().toISOString().split('T')[0]})}
                     required/>
+
                 {isLoading ?
                     <div
                         className={"absolute bottom-0 w-full h-full rounded-lg bg-white bg-opacity-75 flex justify-center items-center flex-grow"}>
@@ -50,7 +49,7 @@ export default function MainContent() {
                     <div className="absolute bottom-0 right-3 p-2 focus:border-ring text-secondary">
                         <Button type="submit"
                                 className="bg-gradient-to-br from-secondary-background to-secondary-background-gradient text-primary hover:bg-amber-300"> {/*todo move to global css*/}
-                            Send <ArrowRight/>
+                            {t("SendButton")} <ArrowRight/>
                         </Button>
                     </div>
                 }
@@ -59,7 +58,7 @@ export default function MainContent() {
                 <p className="text-lg m-2 text-primary">- or -</p>
                 <Button className="bg-amber-100 text-amber-600"
                         onClick={continueConversation}>{/*todo move to global css*/}
-                    Continue with your previous search session
+                    {t("ContinueButton")}
                 </Button>
             </>}
         </div>

@@ -1,13 +1,19 @@
 "use client"
 import MainContent from "@/app/domain/home/mainContent";
 import {ClientOnly} from "@/app/client.only";
-import styles from "./domain/home/home.module.css";
+import styles from "../domain/home/home.module.css";
 import ScrollToSection from "@/app/domain/home/sectionScroll";
 import {useRef} from "react";
 import {Footer} from "@/app/domain/home/footer";
 import {AboutPlanely, Examples, HowToUse} from "@/app/domain/home/infoPages";
 
-export default function Home() {
+
+type Props = {
+    params: { locale: string };
+};
+
+export default function Home({params: {locale}}: Props) {
+
     const home = useRef<HTMLDivElement | null>(null);
     const about = useRef<HTMLDivElement | null>(null);
     const usage = useRef<HTMLDivElement | null>(null);
