@@ -18,7 +18,7 @@ export default function useFlights() {
         if (!content.trim() || messages === undefined) return;
         let messageHistory: ChatCompletionMessageParam[]
         if (restart) {
-            const userLocation = await getUserLocation();
+            const userLocation = await getUserLocation(); //todo change language to selected language and not the one from the current location
             messageHistory = [
                 {
                     role: 'system',

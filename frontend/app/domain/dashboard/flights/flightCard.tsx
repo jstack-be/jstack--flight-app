@@ -56,6 +56,7 @@ export function FlightCards({flights, isLoading, isError}: FlightCardsProps) {
 }
 
 export function FlightCard(props: Flight) {
+    const t = useTranslations('FlightCard');
     const departureRoutes = useRoutesData(props.route, 'departure', props.duration.departure);
     const returnRoutes = useRoutesData(props.route, 'return', props.duration.return);
 
@@ -106,7 +107,9 @@ export function FlightCard(props: Flight) {
                     </div>
                     <a href={props.booking_link} target="_blank" rel="noopener noreferrer">
                         <Button
-                            className="bg-gradient-to-br from-secondary-background to-secondary-background-gradient hover:bg-secondary-background-hover text-primary text-lg h-[37px] w-[300px] md:w-[132px]"> Details </Button>
+                            className="bg-gradient-to-br from-secondary-background to-secondary-background-gradient hover:bg-secondary-background-hover text-primary text-lg h-[37px] w-[300px] md:w-[132px]">
+                            {t("Details")}
+                        </Button>
                     </a>
                 </div>
             </div>
