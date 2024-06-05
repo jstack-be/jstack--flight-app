@@ -1,5 +1,5 @@
 import Image from "next/image";
-import Link from "next/link";
+import {Link} from "@/i18n.config";
 import {Facebook, Mail, Twitter} from "lucide-react"; //TODO: Replace with Up To Date Icons
 import logo from "@/public/logo-sm.svg";
 import {useTranslations} from "next-intl";
