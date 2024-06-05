@@ -2,8 +2,8 @@ import { StaticImageData } from 'next/image';
 
 import Image from "next/image";
 import logo from "@/public/logo-big.svg";
-import howto from "@/public/howto.jpg";
-import beach from "@/public/beach.jpg";
+import howto from "@/public/HowTo.jpg";
+import beach from "@/public/Beach.jpg";
 
 interface ContentBlockProps {
     titel: string;
@@ -40,8 +40,8 @@ function ContentBlock({titel, children, className, align, imgfor}: ContentBlockP
 
 function showImage(imgfor : StaticImageData | undefined){
     if (imgfor) {
-        return <Image src={imgfor} alt={"The logo of the application"}
-                      className="max-h-[40vh] md:max-h-[50vh] w-auto mb-14 hidden lg:block drop-shadow-2xl object-cover rounded-3xl"/>;
+        return <Image src={imgfor} alt={"image loosely corresponding with the text"}
+                      className="max-h-[40vh] md:max-h-[50vh] max-w-[80vh] mb-14 hidden lg:block drop-shadow-2xl object-cover rounded-3xl"/>;
     }
     return <Image src={logo} alt={"The logo of the application"}
                   className="max-h-[40vh] md:max-h-[60vh] w-auto mb-14 hidden lg:block"/>;
