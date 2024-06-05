@@ -5,6 +5,7 @@ import {Textarea} from "@/components/ui/textarea";
 import {Button} from "@/components/ui/button";
 import {ChatCompletionMessageParam} from "@/app/domain/dashboard/messages/message.types";
 import {ArrowRight} from 'lucide-react';
+import {useTranslations} from "next-intl";
 
 interface MessageBoxProps {
     onClose: () => void,
@@ -24,7 +25,7 @@ interface MessageBoxProps {
  */
 export function MessageBox({onClose, isOpen, messages, isLoading, sendMessage}: MessageBoxProps) {
     const messagesEndRef = useRef<HTMLDivElement | null>(null);
-
+    const t = useTranslations('MessageBox');
     useEffect(() => {
         if (messagesEndRef.current) {
             messagesEndRef.current.scrollIntoView({behavior: 'smooth'});
@@ -44,7 +45,7 @@ export function MessageBox({onClose, isOpen, messages, isLoading, sendMessage}: 
     return (
         <div className="bg-white h-screen w-full overflow-y-auto flex flex-col">
             <div className="flex justify-between lg:hidden m-4 mb-1">
-                <h2 className="text-2xl">Message History</h2>
+                <h2 className="text-2xl">{t("Title")}</h2>
                 <Button onClick={onClose}>X</Button>
             </div>
             {/* h-[60dvh] */}
@@ -59,15 +60,16 @@ export function MessageBox({onClose, isOpen, messages, isLoading, sendMessage}: 
                                      height={80}/>}
                 <div ref={messagesEndRef}/>
             </div>
-            <form className="relative flex flex-col flex-grow items-center m-4 max-h-40 mt-auto" onSubmit={handleSubmit}>
+            <form className="relative flex flex-col flex-grow items-center m-4 max-h-40 mt-auto"
+                  onSubmit={handleSubmit}>
                 <Textarea
                     className="flex-grow bg-textarea-system placeholder:text-textarea-input resize-none pb-6"
                     id="message" name="message"
-                    placeholder={"Ask some more questions to filter your result"} required/>
+                    placeholder={t("PlaceholderText")} required/>
                 <Button
                     className="absolute bottom-3.5 right-3 text-secondary bg-inherit text-textarea-sendButtonText font-bold hover:bg-inherit"
                     disabled={isLoading}
-                    type="submit">Send <ArrowRight/></Button>
+                    type="submit">{t("SendButton")} <ArrowRight/></Button>
             </form>
         </div>
     )

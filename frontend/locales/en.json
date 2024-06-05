@@ -55,5 +55,16 @@
     "ChangesToThisPrivacyPolicy": "5. Changes to This Privacy Policy",
     "UpdatePolicy": "We may update our Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page. Changes are effective when they are posted on this page.",
     "ThankYou": "Thank you for using Planely. We value your privacy and are committed to protecting your personal information."
+  },
+  "Dashboard": {
+    "HistoryButton": "Show message history"
+  },
+  "MessageBox": {
+    "Title": "Message History",
+    "SendButton": "Send",
+    "PlaceholderText": "Ask some more questions to filter your result"
+  },
+  "FlightCards": {
+    "NoFlights": "Sorry, no flights found."
   }
 }

@@ -55,5 +55,17 @@
     "ChangesToThisPrivacyPolicy": "5. Modifications de cette politique de confidentialité",
     "UpdatePolicy": "Nous pouvons mettre à jour notre politique de confidentialité de temps en temps. Nous vous informerons de tout changement en publiant la nouvelle politique de confidentialité sur cette page. Les changements sont effectifs lorsqu'ils sont publiés sur cette page.",
     "ThankYou": "Merci d'utiliser Planely. Nous valorisons votre vie privée et nous nous engageons à protéger vos informations personnelles."
+  },
+  "Dashboard": {
+    "HistoryButton": "Afficher l’historique des messages"
+  },
+  "MessageBox": {
+    "Title": "Historique des messages",
+    "SendButton": "Envoyer",
+    "PlaceholderText": "Posez d’autres questions pour filtrer votre résultat"
+
+  },
+  "FlightCards": {
+    "NoFlights": "Désolé, aucun vol trouvé."
   }
 }
