@@ -22,5 +22,12 @@
     "Example1": "Montrez-moi les itinéraires de Londres à Paris le 12 décembre 2024 pour 2 adultes et 1 enfant revenant entre le 20 et le 25 décembre 2024.",
     "Example2": "Je veux voler d'Amsterdam à New York le 1er janvier 2025 pour 1 adulte et 1 enfant. Je veux revenir le 10 janvier 2025. Je veux emporter 2 valises avec moi.",
     "Example3": "Je veux voler de Londres à Paris le 12 décembre 2024 pour 2 adultes et 1 enfant. Je veux revenir le 25 décembre 2024. Je veux emporter 1 valise avec moi."
+  },
+  "Footer": {
+    "Documents": "Documents",
+    "PrivacyPolicy": "Politique de confidentialité",
+    "TermsConditions": "Termes & Conditions",
+    "TermsUse": "Conditions d'util",
+    "ContactUs": "Contactez-nous"
   }
 }
