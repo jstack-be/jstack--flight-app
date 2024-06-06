@@ -1,15 +1,28 @@
+import { StaticImageData } from 'next/image';
+
 import Image from "next/image";
 import logo from "@/public/logo-big.svg";
+import howto from "@/public/HowTo.jpg";
+import beach from "@/public/Beach.jpg";
 
 interface ContentBlockProps {
     titel: string;
     children: React.ReactNode;
     className?: string; // Add this line
+    align?: "left" | "right"; // Add this line
+    imgfor?: StaticImageData;
 }
 
-function ContentBlock({titel, children, className}: ContentBlockProps) {
+function ContentBlock({titel, children, className, align, imgfor}: ContentBlockProps) {
     return (
+
+
         <div className={`flex flex-col lg:flex-row justify-around items-center ${className}`}>
+
+            {align === "left" &&
+                showImage(imgfor)
+            }
+
             <div className="flex flex-col lg:w-3/6 p-6">
                 <h2 className="text-5xl md:text-7xl text-primary font-sans">
                     {titel}
@@ -18,16 +31,25 @@ function ContentBlock({titel, children, className}: ContentBlockProps) {
                     {children}
                 </div>
             </div>
-            <Image src={logo} alt={"The logo of the application"}
-                   className="max-h-[40vh] md:max-h-[60vh] w-auto mb-14 hidden lg:block"/>
+            {align === "right" &&
+                showImage(imgfor)
+            }
         </div>
     );
 }
 
+function showImage(imgfor : StaticImageData | undefined){
+    if (imgfor) {
+        return <Image src={imgfor} alt={"image loosely corresponding with the text"}
+                      className="max-h-[40vh] md:max-h-[50vh] max-w-[80vh] mb-14 hidden lg:block drop-shadow-2xl object-cover rounded-3xl"/>;
+    }
+    return <Image src={logo} alt={"The logo of the application"}
+                  className="max-h-[40vh] md:max-h-[60vh] w-auto mb-14 hidden lg:block"/>;
+}
 
 export function AboutPlanely() {
     return (
-        <ContentBlock titel={"About Planely"} className={"h-full text-lg"}>
+        <ContentBlock titel={"About Planely"} className={"h-full text-lg"} align={"left"}>
             <p className="text-background-dark pb-3">
                 Consider Planely to be the friend that always finds the best flight.
                 Not only do we tend to find the best flights based on your date and location,
@@ -45,7 +67,10 @@ export function AboutPlanely() {
 
 export function HowToUse() {
     return (
-        <ContentBlock titel={"How to use Planely"} className={"h-full"}>
+        <ContentBlock titel={"How to use Planely"}
+                      className={"h-full"}
+                      align={"right"}
+                      imgfor={howto}>
             <p className="font-bold leading-relaxed text-xl">
                 Speak planely, travel planely!
             </p>
@@ -70,7 +95,7 @@ export function HowToUse() {
 
 export function Examples() {
     return (
-        <ContentBlock titel={"Examples"} className={"mt-10"}>
+        <ContentBlock titel={"Examples"} className={"mt-10"} align={"left"} imgfor={beach}>
             <p className="text-background-dark pb-3 font-bold text-xl">
                 Here are some examples of what you could ask:
             </p>
