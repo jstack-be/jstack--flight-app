@@ -100,9 +100,8 @@ export function FlightCard(props: Flight) {
                         />
                     )}
                 </div>
-                <div className="m-4"> {/*todo change colors to global*/}
+                <div className="m-4">
                     <div className="flex md:justify-end my-3 space-x-2 w-full">
-
                         <p className="flex text-flightcard-price text-lg font-bold">{priceInCurrency}</p>
                     </div>
                     <a href={props.booking_link} target="_blank" rel="noopener noreferrer">
