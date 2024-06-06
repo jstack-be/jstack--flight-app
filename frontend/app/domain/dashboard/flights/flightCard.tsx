@@ -119,7 +119,7 @@ export function FlightCardContend(flightData: ProcessedFlightData) {
                 <div className="m-2 flex justify-center items-center flex-col xl:flex-row w-1/6">
                     {/*todo change to next/image*/}
                     {flightData.flightLogos.map((logo, index) => (
-                        <Image className="m-2 w-7 h-7" key={index} src={logo} alt={"Logo from the flying airline"}/>
+                        <img className="m-2 w-7 h-7" key={index} src={logo} alt={"Logo from the flying airline"}/>
                     ))}
 
                 </div>
