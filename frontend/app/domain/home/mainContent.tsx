@@ -37,7 +37,7 @@ export default function MainContent() {
                     className="h-48 w-full bg-white placeholder:text-textarea-placeholder md:text-lg resize-none rounded-lg flex-grow"
                     id="message"
                     name="message"
-                    placeholder={t("PlaceholderText",{date:new Date().toISOString().split('T')[0]})}
+                    placeholder={t("PlaceholderText", {date: new Date().toISOString().split('T')[0]})}
                     required/>
 
                 {isLoading ?

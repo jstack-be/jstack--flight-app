@@ -2,15 +2,18 @@ import type {Metadata} from "next";
 import {Inter, Jua} from "next/font/google";
 import "../globals.css";
 import Providers from "@/app/providers";
-import {getMessages} from "next-intl/server";
+import {getMessages, unstable_setRequestLocale} from "next-intl/server";
 import {NextIntlClientProvider} from "next-intl";
 import LocaleSwitcher from "@/app/domain/LocaleSwitcher";
-import {Locale} from "@/i18n.config";
+import {Locale, locales} from "@/i18n.config";
 
 
 const jua = Jua({weight: "400", preload: false, variable: '--font-jua'})
 const inter = Inter({subsets: ["latin"], variable: '--font-jua'});
 
+export function generateStaticParams() {
+    return locales.map((locale) => ({locale}));
+}
 
 export const metadata: Metadata = {
     title: "Planely",
@@ -19,11 +22,12 @@ export const metadata: Metadata = {
 
 export default async function RootLayout({
                                              children,
-                                             params: {locale}
+                                             params: {locale},
                                          }: Readonly<{
     children: React.ReactNode;
     params: { locale: Locale };
 }>) {
+    unstable_setRequestLocale(locale);
     // Providing all messages to the client
     // side is the easiest way to get started
     const messages = await getMessages();

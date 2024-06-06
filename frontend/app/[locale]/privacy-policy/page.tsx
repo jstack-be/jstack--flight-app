@@ -3,8 +3,10 @@ import {Button} from "@/components/ui/button";
 import React from "react";
 import {useTranslations} from "next-intl";
 import {Link} from "@/i18n.config";
+import {unstable_setRequestLocale} from "next-intl/server";
 
-export default function Page() {
+export default function Page({params: {locale},}: Readonly<{ params: { locale: string } }>) {
+    unstable_setRequestLocale(locale);
     const t = useTranslations("PrivacyPolicy");
 
     return (

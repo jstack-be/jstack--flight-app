@@ -7,13 +7,7 @@ import {useRef} from "react";
 import {Footer} from "@/app/domain/home/footer";
 import {AboutPlanely, Examples, HowToUse} from "@/app/domain/home/infoPages";
 
-
-type Props = {
-    params: { locale: string };
-};
-
-export default function Home({params: {locale}}: Props) {
-
+export default function Home() {
     const home = useRef<HTMLDivElement | null>(null);
     const about = useRef<HTMLDivElement | null>(null);
     const usage = useRef<HTMLDivElement | null>(null);
@@ -44,7 +38,6 @@ export default function Home({params: {locale}}: Props) {
                         <div className="flex-grow content-center">
                             <Examples/>
                         </div>
-
                         <Footer/>
                     </div>
                 </ScrollToSection>
