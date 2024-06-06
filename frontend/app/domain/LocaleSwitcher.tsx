@@ -22,10 +22,11 @@ export default function LocaleSwitcher({
     const router = useRouter();
 
     const changeLocale = (
-        // event: React.ChangeEvent<HTMLSelectElement>,
         newLocale: Locale
     ) => {
-        // const newLocale = event.target.value as Locale;
+        // router.replace() will prefix the pathname
+        // with this `newLocale`, effectively changing
+        // languages by navigating to the new url.
         router.replace(pathname, {locale: newLocale});
     };
 
