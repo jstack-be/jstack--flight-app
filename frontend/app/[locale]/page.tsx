@@ -41,7 +41,10 @@ export default function Home({params: {locale}}: Props) {
             <div ref={example}>
                 <ScrollToSection goToSectionUpRef={usage}>
                     <div className="flex flex-col justify-between h-full">
-                        <Examples/>
+                        <div className="flex-grow content-center">
+                            <Examples/>
+                        </div>
+
                         <Footer/>
                     </div>
                 </ScrollToSection>
