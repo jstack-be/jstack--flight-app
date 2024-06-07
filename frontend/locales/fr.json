@@ -1,7 +1,6 @@
 {
   "MainContent": {
-    "PlaceholderText": "Tapez simplement ce que vous recherchez dans ce champ de texte, fournissez autant de détails que possible pour obtenir le meilleur résultat. Voici un exemple : Montrez-moi les itinéraires de Londres à Paris le {date} pour 2 adultes et 1 enfant revenant entre le 20 et le 25 décembre 2024.",
-    "SendButton": "Envoyer",
+    "PlaceholderText": "Tapez simplement ce que vous recherchez dans ce champ de texte, fournissez autant de détails que possible pour obtenir le meilleur résultat. Voici un exemple : Montrez-moi les itinéraires partant de Londres pour Paris pendant la première semaine de juin pour 2 adultes et 1 enfant revenant entre le 20 et le 25 décembre.",    "SendButton": "Envoyer",
     "ContinueButton": "Continuer avec votre session de recherche précédente"
   },
   "About": {
@@ -32,7 +31,7 @@
   },
   "PrivacyPolicy": {
     "Title": "Politique de confidentialité",
-    "LastUpdated": "Dernière mise à jour : {date}",
+    "LastUpdated": "Dernière mise à jour : {date,date,short}",
     "Intro": "Bienvenue sur Planely. Nous nous engageons à protéger votre vie privée et à assurer la sécurité de vos informations personnelles. Cette politique de confidentialité décrit comment nous collectons, utilisons et partageons les informations lorsque vous utilisez notre application.",
     "Agreement": "En utilisant notre service, vous acceptez la collecte et l'utilisation des informations conformément à cette politique. Si vous n'êtes pas d'accord avec nos politiques et pratiques, veuillez ne pas utiliser notre service.",
     "InformationWeCollect": "1. Informations que nous collectons",

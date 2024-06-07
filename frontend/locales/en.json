@@ -1,6 +1,6 @@
 {
   "MainContent": {
-    "PlaceholderText": "Simply type what you are looking for in this text field, provide as much detail as possible to get the best result. Here is an example: Show me the routes from London to Paris on {date} for 2 adults and 1 child returning between the 20th and 25th of December 2024.",
+    "PlaceholderText": "Simply type what you are looking for in this text field, provide as much detail as possible to get the best result. Here is an example: Show me the routes departing from London to Paris during the first week of June for 2 adults and 1 child returning between the 20th and 25th of December.",
     "SendButton": "Send",
     "ContinueButton": "Continue with your previous search session"
   },
@@ -32,7 +32,7 @@
   },
   "PrivacyPolicy": {
     "Title": "Privacy Policy",
-    "LastUpdated": "Last Updated: {date}",
+    "LastUpdated": "Last Updated: {date,date,short}",
     "Intro": "Welcome to Planely. We are committed to protecting your privacy and ensuring the security of your personal information. This Privacy Policy describes how we collect, use, and share information when you use our application.",
     "Agreement": "By using our Service, you agree to the collection and use of information in accordance with this policy. If you do not agree with our policies and practices, please do not use our Service.",
     "InformationWeCollect": "1. Information We Collect",

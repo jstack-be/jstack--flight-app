@@ -35,7 +35,7 @@ export default function LocaleSwitcher({
             <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                     <Button type="button" variant="ghost" size="icon">
-                        {locale.toUpperCase()}<GlobeIcon className="ps-2 size-5"/>
+                        {locale.toUpperCase()}<GlobeIcon className="ps-2 size-5 text-secondary-text"/>
                     </Button>
                 </DropdownMenuTrigger>
 
