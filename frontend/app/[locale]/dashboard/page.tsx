@@ -8,13 +8,15 @@ import {useWindowSize} from "@uidotdev/usehooks";
 
 import logo from "@/public/logo-sm.svg";
 import {FlightCards} from "@/app/domain/dashboard/flights/flightCard";
-import {useRouter} from "next/navigation";
 import {ArrowLeft} from "lucide-react";
 import useFlights from "@/app/lib/client/useFlights";
+import {useTranslations} from "next-intl";
+import {useRouter} from "@/i18n.config";
 
 export default function Page() {
     const {width, height} = useWindowSize();
     const router = useRouter();
+    const t = useTranslations('Dashboard')
     const [isOpen, setIsOpen] = useState(true)
     const {flights, messages, sendMessage, isLoading, isError} = useFlights();
 
@@ -44,7 +46,7 @@ export default function Page() {
                 {!isOpen &&
                     <Button className="absolute bottom-0 w-full rounded-b-none"
                             onClick={() => setIsOpen(true)}>
-                        Show message history
+                        {t('HistoryButton')}
                     </Button>
                 }
         </main>

@@ -1,7 +1,7 @@
 "use client"
 import MainContent from "@/app/domain/home/mainContent";
 import {ClientOnly} from "@/app/client.only";
-import styles from "./domain/home/home.module.css";
+import styles from "../domain/home/home.module.css";
 import ScrollToSection from "@/app/domain/home/sectionScroll";
 import {useRef} from "react";
 import {Footer} from "@/app/domain/home/footer";
@@ -38,7 +38,6 @@ export default function Home() {
                         <div className="flex-grow content-center">
                             <Examples/>
                         </div>
-
                         <Footer/>
                     </div>
                 </ScrollToSection>

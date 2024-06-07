@@ -1,25 +1,6 @@
 import {ProcessedFlightData, Route} from "@/app/domain/dashboard/flights/flight.types";
 import {useEffect, useState} from "react";
-
-const formatDuration = (duration: number) => {
-    const hours = Math.floor(duration / 3600);
-    const minutes = Math.floor((duration % 3600) / 60);
-    return `${hours ? hours + 'h ' : ''}${minutes ? minutes + 'min' : ''}`.trim();
-}
-
-const formatDate = (date: Date) => date.toLocaleDateString('en-US', {
-    weekday: 'short',
-    day: 'numeric',
-    month: 'short'
-});
-
-const formatTime = (dateTime: Date) => dateTime.toLocaleTimeString('en-US', {
-    hour: '2-digit',
-    minute: '2-digit',
-    hour12: false
-});
-
-const formatStops = (stops: number) => stops === 0 ? 'Direct' : stops === 1 ? '1 stop' : `${stops} stops`;
+import {useFormatter, useTranslations} from "next-intl";
 
 const removeDupLogoUrls = (arr: string[]): string[] => {
     let unique: string[] = [];
@@ -33,6 +14,8 @@ const removeDupLogoUrls = (arr: string[]): string[] => {
 
 export default function useRoutesData(routes: Route[], flightType: 'departure' | 'return', flightDuration: number): ProcessedFlightData | null {
     const [filteredRoutes, setFilteredRoutes] = useState<Route[]>([])
+    const t = useTranslations('FlightCard');
+    const format = useFormatter();
 
     useEffect(() => {
         if (flightType === 'departure') {
@@ -42,6 +25,26 @@ export default function useRoutesData(routes: Route[], flightType: 'departure' |
         }
     }, [routes, flightType]);
     if (!filteredRoutes[0]) return null;
+
+    const formatDate = (date: Date) => format.dateTime(date, {
+        weekday: 'short',
+        day: 'numeric',
+        month: 'short'
+    });
+
+    const formatTime = (dateTime: Date) => format.dateTime(dateTime,  {
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false
+    });
+
+    const formatDuration = (duration: number) => {
+        const hours = Math.floor(duration / 3600);
+        const minutes = Math.floor((duration % 3600) / 60);
+        return t('duration', { hours, minutes });
+    }
+
+    const formatStops = (stops: number) => t('stops', { stops });
 
     const departureDateTime = new Date(filteredRoutes[0].local_departure);
     const arrivalDateTime = new Date(filteredRoutes[filteredRoutes.length - 1].local_arrival);
