@@ -1,0 +1,75 @@
+{
+  "MainContent": {
+    "PlaceholderText": "Tapez simplement ce que vous recherchez dans ce champ de texte, fournissez autant de détails que possible pour obtenir le meilleur résultat. Voici un exemple : Montrez-moi les itinéraires partant de Londres pour Paris pendant la première semaine de juin pour 2 adultes et 1 enfant revenant entre le 20 et le 25 décembre.",    "SendButton": "Envoyer",
+    "ContinueButton": "Continuer avec votre session de recherche précédente"
+  },
+  "About": {
+    "Title": "À propos de Planely",
+    "Description": "Considérez Planely comme l'ami qui trouve toujours le meilleur vol. Non seulement nous trouvons généralement les meilleurs vols en fonction de votre date et de votre lieu, mais nous vous permettons également de spécifier exactement ce que vous voulez.",
+    "Example": "Peut-être voulez-vous voyager à Londres, mais si Paris est beaucoup moins cher, cela aurait la préférence? Ne vous inquiétez pas, indiquez simplement vos besoins spécifiques et nous nous en occuperons!"
+  },
+  "Usage": {
+    "Title": "Comment utiliser Planely",
+    "Subtitle": "Parlez franchement, voyagez Planely !",
+    "Step1": "Énoncez l'évidence. De où à où voulez-vous aller?",
+    "Step2": "Quelle est la date de départ et de retour (le cas échéant).",
+    "Step3": "Énoncez ce que vous jugez important. Avec combien de personnes volez-vous? Quels bagages emportez-vous avec vous? Êtes-vous flexible avec les dates si cela signifie que vous pouvez économiser de l'argent? Etc."
+  },
+  "Examples": {
+    "Title": "Exemples",
+    "Description": "Voici quelques exemples de ce que vous pourriez demander:",
+    "Example1": "Montrez-moi les itinéraires de Londres à Paris le 12 décembre 2024 pour 2 adultes et 1 enfant revenant entre le 20 et le 25 décembre 2024.",
+    "Example2": "Je veux voler d'Amsterdam à New York le 1er janvier 2025 pour 1 adulte et 1 enfant. Je veux revenir le 10 janvier 2025. Je veux emporter 2 valises avec moi.",
+    "Example3": "Je veux voler de Londres à Paris le 12 décembre 2024 pour 2 adultes et 1 enfant. Je veux revenir le 25 décembre 2024. Je veux emporter 1 valise avec moi."
+  },
+  "Footer": {
+    "Documents": "Documents",
+    "PrivacyPolicy": "Politique de confidentialité",
+    "TermsConditions": "Termes & Conditions",
+    "TermsUse": "Conditions d'util",
+    "ContactUs": "Contactez-nous"
+  },
+  "PrivacyPolicy": {
+    "Title": "Politique de confidentialité",
+    "LastUpdated": "Dernière mise à jour : {date,date,short}",
+    "Intro": "Bienvenue sur Planely. Nous nous engageons à protéger votre vie privée et à assurer la sécurité de vos informations personnelles. Cette politique de confidentialité décrit comment nous collectons, utilisons et partageons les informations lorsque vous utilisez notre application.",
+    "Agreement": "En utilisant notre service, vous acceptez la collecte et l'utilisation des informations conformément à cette politique. Si vous n'êtes pas d'accord avec nos politiques et pratiques, veuillez ne pas utiliser notre service.",
+    "InformationWeCollect": "1. Informations que nous collectons",
+    "InformationYouProvide": "a. Informations que vous fournissez",
+    "SearchQueries": "Requêtes de recherche : Lorsque vous utilisez notre service, vous fournissez des invites de recherche pour trouver des vols, tels que la destination, les dates et d'autres préférences de voyage.",
+    "InformationAutomaticallyCollected": "b. Informations collectées automatiquement",
+    "PublicIPAddress": "Adresse IP publique : Nous collectons automatiquement votre adresse IP publique lorsque vous accédez à notre service. Cela nous aide à vous aider à remplir le lieu de départ en identifiant votre emplacement géographique approximatif.",
+    "UsageData": "Données d'utilisation : Nous pouvons collecter des informations sur la façon dont vous accédez et utilisez notre service. Cela peut inclure votre type de navigateur, votre type d'appareil, les pages visitées, le temps passé sur les pages et d'autres données de diagnostic.",
+    "HowWeUseYourInformation": "2. Comment nous utilisons vos informations",
+    "UseCollectedInfo": "Nous utilisons les informations collectées pour les finalités suivantes :",
+    "ProvideImproveService": "Pour fournir et améliorer notre service : Utiliser votre adresse IP publique pour suggérer des lieux de départ et affiner les résultats de recherche.",
+    "PersonalizeExperience": "Pour personnaliser votre expérience : Adapter notre service pour mieux répondre à vos besoins et préférences.",
+    "AnalyzeUsage": "Pour analyser l'utilisation : Comprendre comment notre service est utilisé pour améliorer sa fonctionnalité et l'expérience utilisateur.",
+    "SharingYourInformation": "3. Partage de vos informations",
+    "DoNotSell": "Nous ne vendons pas, n'échangeons pas ou ne transférons pas autrement vos informations personnellement identifiables à des tiers, sauf comme décrit ci-dessous :",
+    "ServiceProviders": "Fournisseurs de services : Nous pouvons partager vos informations avec des fournisseurs de services tiers qui nous aident à exploiter notre service et à mener nos affaires.",
+    "LegalRequirements": "Exigences légales : Nous pouvons divulguer vos informations si nous y sommes obligés par la loi ou en réponse à des demandes valides d'autorités publiques (par exemple, un tribunal ou une agence gouvernementale).",
+    "SecurityOfYourInformation": "4. Sécurité de vos informations",
+    "ImplementSecurity": "Nous mettons en œuvre des mesures de sécurité raisonnables pour protéger vos informations contre l'accès non autorisé, la modification, la divulgation ou la destruction. Cependant, aucune méthode de transmission sur Internet ou de stockage électronique n'est 100% sécurisée, et nous ne pouvons garantir une sécurité absolue.",
+    "ChangesToThisPrivacyPolicy": "5. Modifications de cette politique de confidentialité",
+    "UpdatePolicy": "Nous pouvons mettre à jour notre politique de confidentialité de temps en temps. Nous vous informerons de tout changement en publiant la nouvelle politique de confidentialité sur cette page. Les changements sont effectifs lorsqu'ils sont publiés sur cette page.",
+    "ThankYou": "Merci d'utiliser Planely. Nous valorisons votre vie privée et nous nous engageons à protéger vos informations personnelles."
+  },
+  "Dashboard": {
+    "HistoryButton": "Afficher l’historique des messages"
+  },
+  "MessageBox": {
+    "Title": "Historique des messages",
+    "SendButton": "Envoyer",
+    "PlaceholderText": "Posez d’autres questions pour filtrer votre résultat"
+
+  },
+  "FlightCards": {
+    "NoFlights": "Désolé, aucun vol trouvé."
+  },
+  "FlightCard": {
+    "Details": "Détails",
+    "duration": "{hours, plural, =0 {} one {#h} other {#h}} {minutes, plural, =0 {} one {#min} other {#min}}",
+    "stops": "{stops, plural, =0 {Direct} one {# arrêt} other {# arrêts}}"
+  }
+}

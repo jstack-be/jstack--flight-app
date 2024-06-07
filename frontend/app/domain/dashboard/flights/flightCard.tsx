@@ -6,6 +6,7 @@ import {Flight, ProcessedFlightData} from "@/app/domain/dashboard/flights/flight
 import useRoutesData from "@/app/lib/client/useRoutesData";
 import Image from "next/image";
 import React, {useEffect, useState} from "react";
+import {useTranslations} from "next-intl";
 
 import spinningPlane from "@/public/spinning-plane-white.gif";
 
@@ -23,6 +24,7 @@ interface FlightCardsProps {
  * @param isError - boolean to check if there is an error
  */
 export function FlightCards({flights, isLoading, isError}: FlightCardsProps) {
+    const t = useTranslations('FlightCards');
     const [hasData, setHasData] = useState(false)
     useEffect(() => {
         if (!isLoading) {
@@ -37,7 +39,7 @@ export function FlightCards({flights, isLoading, isError}: FlightCardsProps) {
         <div className={`relative w-full sm:w-4/5 flex flex-col items-center ${isLoading && "overflow-hidden"}`}>
             {(!hasData) ?
                 <div className={`${isLoading && "h-screen"}`}><p className={"flex text-primary items-center text-3xl"}>
-                    <Frown size={72} className="m-2"/> Sorry, no flights found.
+                    <Frown size={72} className="m-2"/> {t("NoFlights")}
                 </p></div>
                 :
                 <div className={`space-y-4 m-4 w-full flex flex-col items-center ${isLoading && "opacity-50"}`}>
@@ -57,6 +59,7 @@ export function FlightCards({flights, isLoading, isError}: FlightCardsProps) {
 }
 
 export function FlightCard(props: Flight) {
+    const t = useTranslations('FlightCard');
     const departureRoutes = useRoutesData(props.route, 'departure', props.duration.departure);
     const returnRoutes = useRoutesData(props.route, 'return', props.duration.return);
 
@@ -100,14 +103,15 @@ export function FlightCard(props: Flight) {
                         />
                     )}
                 </div>
-                <div className="m-4"> {/*todo change colors to global*/}
+                <div className="m-4">
                     <div className="flex md:justify-end my-3 space-x-2 w-full">
-
                         <p className="flex text-flightcard-price text-lg font-bold">{priceInCurrency}</p>
                     </div>
                     <a href={props.booking_link} target="_blank" rel="noopener noreferrer">
                         <Button
-                            className="bg-gradient-to-br from-secondary-background to-secondary-background-gradient hover:bg-secondary-background-hover text-primary text-lg h-[37px] w-[300px] md:w-[132px]"> Details </Button>
+                            className="bg-gradient-to-br from-secondary-background to-secondary-background-gradient hover:bg-secondary-background-hover text-primary text-lg h-[37px] w-[300px] md:w-[132px]">
+                            {t("Details")}
+                        </Button>
                     </a>
                 </div>
             </div>
