@@ -1,6 +1,4 @@
-import { StaticImageData } from 'next/image';
-
-import Image from "next/image";
+import Image, {StaticImageData} from 'next/image';
 import logo from "@/public/logo-big.svg";
 import howto from "@/public/HowTo.jpg";
 import beach from "@/public/Beach.jpg";
@@ -15,14 +13,10 @@ interface ContentBlockProps {
 
 function ContentBlock({titel, children, className, align, imgfor}: ContentBlockProps) {
     return (
-
-
         <div className={`flex flex-col lg:flex-row justify-around items-center ${className}`}>
-
             {align === "left" &&
                 showImage(imgfor)
             }
-
             <div className="flex flex-col lg:w-3/6 p-6">
                 <h2 className="text-5xl md:text-7xl text-primary font-sans">
                     {titel}
