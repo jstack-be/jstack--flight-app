@@ -5,6 +5,7 @@ import {Textarea} from "@/components/ui/textarea";
 import {Button} from "@/components/ui/button";
 import {ChatCompletionMessageParam} from "@/app/domain/dashboard/messages/message.types";
 import {ArrowRight} from 'lucide-react';
+import loading from "@/public/loading-message.gif";
 
 interface MessageBoxProps {
     onClose: () => void,
@@ -54,8 +55,8 @@ export function MessageBox({onClose, isOpen, messages, isLoading, sendMessage}: 
                          className={`${message.role == "user" ? "bg-textarea-user text-textarea-usertext self-start w-4/5" : "bg-textarea-system text-textarea-systemtext self-end "} text-sm m-2 mx-4 px-4 py-3 rounded w-3/5`}>
                         {message.content}
                     </div>)}
-                {isLoading && <Image src="/loading-message.gif"
-                                     alt="loading image" className="bg-primary rounded self-end m-2" width={80}
+                {isLoading && <Image src={loading}
+                                     alt="loading image" className="bg-primary rounded self-end m-2"
                                      height={80}/>}
                 <div ref={messagesEndRef}/>
             </div>

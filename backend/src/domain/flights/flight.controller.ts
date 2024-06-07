@@ -4,6 +4,15 @@ import {getFlights} from "./flight.service";
 import {ChatCompletionMessageParam} from "openai/resources";
 import InvalidDateError from "../../errors/InvalidDateError";
 import ResponseError from "../../errors/ResponseError";
+import winston from "winston";
+
+const logger = winston.createLogger({
+    level: 'info',
+    format: winston.format.json(),
+    transports: [
+        new winston.transports.Console(),
+    ]
+});
 
 
 /**
@@ -17,6 +26,8 @@ import ResponseError from "../../errors/ResponseError";
  */
 export async function queryFlights(req: Request, res: Response): Promise<void> {
     try {
+        logger.info('commence Querying flights');
+
         const messages: ChatCompletionMessageParam[] = req.body;
         if (!messages || messages.length === 0 || messages[0].content.length === 0) {
             res.status(400).send("No message provided");

@@ -49,7 +49,7 @@ export default function MainContent() {
                     </div> :
                     <div className="absolute bottom-0 right-3 p-2 focus:border-ring text-secondary">
                         <Button type="submit"
-                                className="bg-gradient-to-br from-secondary-background to-secondary-background-gradient text-primary hover:bg-amber-300"> {/*todo move to global css*/}
+                                className="bg-secondary-background text-primary hover:bg-secondary-background-hover hover:text-secondary-text">
                             Send <ArrowRight/>
                         </Button>
                     </div>
@@ -57,8 +57,12 @@ export default function MainContent() {
             </form>
             {!!messages.length && !isLoading && <>
                 <p className="text-lg m-2 text-primary">- or -</p>
-                <Button className="bg-amber-100 text-amber-600"
-                        onClick={continueConversation}>{/*todo move to global css*/}
+                <Button className="bg-secondary-background-hover
+                ring ring-transparent
+                hover:ring-secondary-background
+                hover:bg-secondary-background-hover
+                text-secondary-text"
+                        onClick={continueConversation}>
                     Continue with your previous search session
                 </Button>
             </>}
