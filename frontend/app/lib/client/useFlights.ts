@@ -5,10 +5,12 @@ import {Flight} from "@/app/domain/dashboard/flights/flight.types";
 import {ChatCompletionMessageParam} from "@/app/domain/dashboard/messages/message.types";
 import {useLocalStorage, useSessionStorage} from "@uidotdev/usehooks";
 import {getUserLocation} from "@/app/lib/client/location";
+import {useLocale} from "next-intl";
 
 export default function useFlights() {
     const [messages, saveMessages] = useLocalStorage<ChatCompletionMessageParam[]>("messages", []);
     const [flights, setFlights] = useSessionStorage<Flight[]>("flights", []);
+    const locale = useLocale()
     const mutation = useMutation({
         mutationFn: queryFlights
     });
@@ -23,7 +25,7 @@ export default function useFlights() {
                 {
                     role: 'system',
                     content: `Use this data if not provided: current city to depart from is ${userLocation.city} in ${userLocation.country_name},
-                    used currency is ${userLocation.currency.code} and languages are ${userLocation.languages.substring(0, 2)}`
+                    used currency is ${userLocation.currency.code} and languages are ${locale}`
                 },
                 {role: 'user', content}
             ];
