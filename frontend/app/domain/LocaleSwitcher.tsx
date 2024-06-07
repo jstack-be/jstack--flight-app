@@ -31,11 +31,14 @@ export default function LocaleSwitcher({
     };
 
     return (
-        <div className={"fixed z-50 top-4 right-4"}>
+        <div className={"fixed z-20 top-4 right-4"}>
             <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                    <Button type="button" variant="ghost" size="icon">
-                        {locale.toUpperCase()}<GlobeIcon className="ps-2 size-5 text-secondary-text"/>
+                    <Button type="button" variant="ghost" size="icon"
+                            className={"bg-secondary-background-hover ring ring-transparent " +
+                                "hover:ring-secondary-background " +
+                                "hover:bg-secondary-background-hover text-secondary-text px-10"}>
+                        <div className={"flex"} >{locale.toUpperCase()}<GlobeIcon className="ps-2 size-5"/></div>
                     </Button>
                 </DropdownMenuTrigger>
 
