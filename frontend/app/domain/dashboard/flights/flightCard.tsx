@@ -8,6 +8,9 @@ import Image from "next/image";
 import React, {useEffect, useState} from "react";
 import {useTranslations} from "next-intl";
 
+import spinningPlane from "@/public/spinning-plane-white.gif";
+
+
 interface FlightCardsProps {
     flights: Flight[],
     isLoading: boolean
@@ -47,7 +50,7 @@ export function FlightCards({flights, isLoading, isError}: FlightCardsProps) {
             }
             {isLoading &&
                 <div className="absolute inset-0 flex justify-center items-center">
-                    <Image src={"/spinning-plane-white.gif"} alt={"plane spinner"} width={200}
+                    <Image src={spinningPlane} alt={"plane spinner"} width={200}
                            height={200}/>
                 </div>
             }
@@ -123,7 +126,7 @@ export function FlightCardContend(flightData: ProcessedFlightData) {
                 <div className="m-2 flex justify-center items-center flex-col xl:flex-row w-1/6">
                     {/*todo change to next/image*/}
                     {flightData.flightLogos.map((logo, index) => (
-                        <img className="m-2 w-7 h-7" key={index} src={logo} alt={"Logo from the flying airline"}/>
+                        <img className="m-2 w-7 h-7" key={index} src={logo} alt={"Logo from the airline"}/>
                     ))}
 
                 </div>
