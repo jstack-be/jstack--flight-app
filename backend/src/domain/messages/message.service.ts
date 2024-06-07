@@ -5,12 +5,22 @@ import {getFilterFunction} from "./message.function";
 import {ChatCompletionMessageParam} from "openai/resources";
 import {FlightSearchParameters} from "./message.types";
 import openai from "../../openai";
+import winston from 'winston';
 
 /**
  * Function to validate dates
  * @param {any} jsonObject - The object containing the dates to validate
  * @throws {InvalidDateError} If the dates are not within the valid range
  */
+
+const logger = winston.createLogger({
+    level: 'info',
+    format: winston.format.json(),
+    transports: [
+        new winston.transports.Console(),
+    ]
+});
+
 function validateDates(jsonObject: any) {
     const currentDate = new Date();
     const dateFrom = parseDate(jsonObject.date_from);
@@ -109,7 +119,7 @@ function processResponse(completion: any): { message: string, searchParameters: 
     const args = responseMessage?.tool_calls?.[0]?.function?.arguments;
     if (!!args) {
         let jsonObject = JSON.parse(args);
-        console.log(jsonObject);
+        logger.info('json object', jsonObject);
 
         validateIataCodes(jsonObject.fly_from, jsonObject.fly_to);
         validateDates(jsonObject);
@@ -130,6 +140,7 @@ function processResponse(completion: any): { message: string, searchParameters: 
  * @returns {Promise<FlightSearchParameters>} The flight search parameters
  */
 export async function generateFlightSearchParameters(messages: ChatCompletionMessageParam[]) {
+    console.info('Generating flight search parameters through function calling');
     const systemMessage: ChatCompletionMessageParam = {
         role: 'system',
         content: 'You are a helpful travel planner assistant ' +
