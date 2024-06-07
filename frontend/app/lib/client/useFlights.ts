@@ -20,7 +20,7 @@ export default function useFlights() {
         if (!content.trim() || messages === undefined) return;
         let messageHistory: ChatCompletionMessageParam[]
         if (restart) {
-            const userLocation = await getUserLocation(); //todo change language to selected language and not the one from the current location
+            const userLocation = await getUserLocation();
             messageHistory = [
                 {
                     role: 'system',
@@ -33,7 +33,7 @@ export default function useFlights() {
         } else {
             messageHistory = [...messages, {role: 'user', content}];
         }
-
+        saveMessages([...messageHistory])
         mutation.mutate(messageHistory,{
             onSuccess: (data) => {
                 if (data.error) {

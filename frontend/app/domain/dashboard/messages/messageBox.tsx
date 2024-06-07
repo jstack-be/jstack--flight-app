@@ -57,8 +57,8 @@ export function MessageBox({onClose, isOpen, messages, isLoading, sendMessage}: 
                         {message.content}
                     </div>)}
                 {isLoading && <Image src={loading}
-                                     alt="loading image" className="bg-primary rounded self-end m-2"
-                                     height={80}/>}
+                                     alt="loading image" className="bg-textarea-system rounded self-end m-2 mx-4"
+                                     height={40}/>}
                 <div ref={messagesEndRef}/>
             </div>
             <form className="relative flex flex-col flex-grow items-center m-4 max-h-40 mt-auto"
