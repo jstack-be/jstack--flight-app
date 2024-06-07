@@ -1,6 +1,7 @@
 {
   "MainContent": {
-    "PlaceholderText": "Tapez simplement ce que vous recherchez dans ce champ de texte, fournissez autant de détails que possible pour obtenir le meilleur résultat. Voici un exemple : Montrez-moi les itinéraires partant de Londres pour Paris pendant la première semaine de juin pour 2 adultes et 1 enfant revenant entre le 20 et le 25 décembre.",    "SendButton": "Envoyer",
+    "PlaceholderText": "Tapez simplement ce que vous recherchez dans ce champ de texte, fournissez autant de détails que possible pour obtenir le meilleur résultat. Voici un exemple : Montrez-moi les itinéraires partant de Londres pour Paris pendant la première semaine de juin pour 2 adultes et 1 enfant revenant entre le 20 et le 25 décembre.",
+    "SendButton": "Envoyer",
     "ContinueButton": "Continuer avec votre session de recherche précédente"
   },
   "About": {
@@ -55,6 +56,56 @@
     "UpdatePolicy": "Nous pouvons mettre à jour notre politique de confidentialité de temps en temps. Nous vous informerons de tout changement en publiant la nouvelle politique de confidentialité sur cette page. Les changements sont effectifs lorsqu'ils sont publiés sur cette page.",
     "ThankYou": "Merci d'utiliser Planely. Nous valorisons votre vie privée et nous nous engageons à protéger vos informations personnelles."
   },
+  "TermsAndConditions": {
+    "Title": "Termes et Conditions",
+    "LastUpdated": "Dernière mise à jour: 07/06/2024",
+    "Intro": "Bienvenue sur Planenly, une application de moteur de recherche de voyages qui utilise la technologie OpenAI pour transformer les messages des utilisateurs en recherches de vols. En accédant ou en utilisant notre service, vous acceptez de respecter et d'être lié par les termes et conditions suivants. Veuillez les lire attentivement.",
+    "AcceptanceOfTerms": {
+      "Title": "1. Acceptation des Termes",
+      "Content": "En utilisant Planenly, vous acceptez et acceptez ces Termes et Conditions, ainsi que notre Politique de Confidentialité, qui est incorporée ici par référence. Si vous n'êtes pas d'accord avec ces termes, veuillez ne pas utiliser nos services."
+    },
+    "DescriptionOfService": {
+      "Title": "2. Description du Service",
+      "Content": "Planenly est un moteur de recherche de voyages qui utilise la technologie OpenAI pour interpréter les messages des utilisateurs et fournir des résultats de recherche de vols pertinents. Notre service vise à simplifier le processus de recherche de vols en comprenant les requêtes en langage naturel."
+    },
+    "UserResponsibilities": {
+      "Title": "3. Responsabilités de l'Utilisateur",
+      "ProhibitedActivities": "Vous acceptez de ne pas abuser de notre service, y compris mais sans s'y limiter à participer à des activités frauduleuses, à envoyer du spam, ou à tenter de perturber notre service."
+    },
+    "UseOfOpenAITechnology": {
+      "Title": "4. Utilisation de la Technologie OpenAI",
+      "DataProcessing": "Vos messages et requêtes seront traités par la technologie OpenAI pour générer des résultats de recherche de vols.",
+      "Accuracy": "Bien que nous nous efforcions de fournir des résultats précis et pertinents, nous ne pouvons garantir l'exactitude des informations fournies par OpenAI."
+    },
+    "PrivacyPolicy": {
+      "Title": "5. Politique de Confidentialité",
+      "Content": "Votre vie privée est importante pour nous. Veuillez consulter notre Politique de Confidentialité pour comprendre comment nous collectons, utilisons et protégeons vos informations."
+    },
+    "IntellectualProperty": {
+      "Title": "6. Propriété Intellectuelle",
+      "Content": "Tous les contenus, marques et données sur Planenly, y compris mais sans s'y limiter le texte, les graphiques, les logos et les logiciels, sont la propriété de Planenly ou de ses concédants et sont protégés par les lois applicables en matière de propriété intellectuelle."
+    },
+    "LimitationOfLiability": {
+      "Title": "7. Limitation de Responsabilité",
+      "ServiceAvailability": "Planenly ne garantit pas que notre service sera disponible en tout temps ou exempt d'erreurs.",
+      "UseOfInformation": "Planenly n'est pas responsable des décisions que vous prenez sur la base des informations fournies par notre service.",
+      "ThirdPartyServices": "Notre service peut inclure des liens vers des sites web ou des services tiers. Nous ne sommes pas responsables du contenu ou des pratiques de ces tiers."
+    },
+    "Indemnification": {
+      "Title": "8. Indemnisation",
+      "Content": "Vous acceptez d'indemniser, de défendre et de dégager de toute responsabilité Planenly, ses affiliés, et ses dirigeants, directeurs, employés et agents respectifs de toute réclamation, responsabilité, dommages et dépenses découlant de votre utilisation de notre service ou de votre violation de ces termes."
+    },
+    "ChangesToTerms": {
+      "Title": "9. Modifications aux Termes",
+      "Content": "Nous nous réservons le droit de modifier ces Termes et Conditions à tout moment. Toute modification sera effective immédiatement après sa publication sur notre site web. Votre utilisation continue de notre service après toute modification constitue votre acceptation des nouveaux termes."
+    },
+    "ContactInformation": {
+      "Title": "10. Informations de Contact",
+      "Content": "Si vous avez des questions ou des préoccupations concernant ces Termes et Conditions, veuillez nous contacter à:",
+      "Email": "Email: support@planenly.com"
+    },
+    "ThankYou": "Merci d'avoir choisi Planenly!"
+  },
   "Dashboard": {
     "HistoryButton": "Afficher l’historique des messages"
   },
@@ -62,7 +113,6 @@
     "Title": "Historique des messages",
     "SendButton": "Envoyer",
     "PlaceholderText": "Posez d’autres questions pour filtrer votre résultat"
-
   },
   "FlightCards": {
     "NoFlights": "Désolé, aucun vol trouvé."
