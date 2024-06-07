@@ -13,8 +13,6 @@ const logger = winston.createLogger({
         new winston.transports.Console(),
     ]
 });
-
-
 /**
  * Handles flight queries by generating flight search parameters based on the user's conversation,
  * fetching travel data from the flight search API, and sending the flights as the response.
