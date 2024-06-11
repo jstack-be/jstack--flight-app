@@ -13,18 +13,13 @@ import {useRouter} from "@/i18n.config";
 export default function MainContent() {
     const router = useRouter()
     const t = useTranslations("MainContent");
-    const {sendMessage, refreshData, isLoading, messages} = useFlights()
+    const {restartConversation, messages} = useFlights()
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const formData = new FormData(event.currentTarget);
         const message = formData.get("message") as string;
-        await sendMessage(message, true);
-        router.push('/dashboard')
-    }
-
-    function continueConversation() {
-        refreshData()
+        await restartConversation(message);
         router.push('/dashboard')
     }
 
@@ -39,29 +34,21 @@ export default function MainContent() {
                     name="message"
                     placeholder={t("PlaceholderText")}
                     required/>
-
-                {isLoading ?
-                    <div
-                        className={"absolute bottom-0 w-full h-full rounded-lg bg-white bg-opacity-75 flex justify-center items-center flex-grow"}>
-                        <Image src={"/spinning-plane.gif"} alt={"plane spinner"} className={""} width={100}
-                               height={100} unoptimized/>
-                    </div> :
-                    <div className="absolute bottom-0 right-3 p-2 focus:border-ring text-secondary">
-                        <Button type="submit"
-                                className="bg-secondary-background text-primary hover:bg-secondary-background-hover hover:text-secondary-text">
-                            {t("SendButton")} <ArrowRight/>
-                        </Button>
-                    </div>
-                }
+                <div className="absolute bottom-0 right-3 p-2 focus:border-ring text-secondary">
+                    <Button type="submit"
+                            className="bg-secondary-background text-primary hover:bg-secondary-background-hover hover:text-secondary-text">
+                        {t("SendButton")} <ArrowRight/>
+                    </Button>
+                </div>
             </form>
-            {!!messages.length && !isLoading && <>
+            {!!messages.length && <>
                 <p className="text-lg m-2 text-primary">- or -</p>
                 <Button className="bg-secondary-background-hover
                 ring ring-transparent
                 hover:ring-secondary-background
                 hover:bg-secondary-background-hover
                 text-secondary-text"
-                        onClick={continueConversation}>
+                        onClick={() => router.push('/dashboard')}>
                     {t("ContinueButton")}
                 </Button>
             </>}
