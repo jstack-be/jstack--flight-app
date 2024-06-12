@@ -31,7 +31,7 @@ export default function LocaleSwitcher({
     };
 
     return (
-        <div className={"fixed top-4 right-4"}>
+        <div className={"fixed top-4 right-4 z-10"}>
             <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                     <Button type="button" variant="ghost" size="icon"

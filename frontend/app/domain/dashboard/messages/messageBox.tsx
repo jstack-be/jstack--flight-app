@@ -44,7 +44,7 @@ export function MessageBox({onClose, isOpen, messages, isLoading, sendMessage}: 
     if (!isOpen) return;
 
     return (
-        <div className="bg-white h-screen w-full overflow-y-auto flex flex-col">
+        <div className="bg-white h-screen w-full overflow-y-auto flex flex-col z-40">
             <div className="flex justify-between lg:hidden m-4 mb-1">
                 <h2 className="text-2xl">{t("Title")}</h2>
                 <Button onClick={onClose}>X</Button>

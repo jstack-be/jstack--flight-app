@@ -8,12 +8,13 @@ import {useWindowSize} from "@uidotdev/usehooks";
 
 import logo from "@/public/logo-sm.svg";
 import {FlightCards} from "@/app/domain/dashboard/flights/flightCard";
-import {ArrowLeft} from "lucide-react";
+import {ArrowLeft, RefreshCw} from "lucide-react";
 import useFlights from "@/app/lib/client/useFlights";
 import {useTranslations} from "next-intl";
-import {useRouter} from "@/i18n.config";
+import {Locale, useRouter} from "@/i18n.config";
+import LocaleSwitcher from "@/app/domain/LocaleSwitcher";
 
-export default function Page() {
+export default function Page({params: {locale},}: Readonly<{ params: { locale: Locale }; }>) {
     const {width, height} = useWindowSize();
     const router = useRouter();
     const t = useTranslations('Dashboard')
@@ -27,7 +28,6 @@ export default function Page() {
     }, [width, height]);
 
     useEffect(() => {
-        console.log("fetching data")
         fetchData();
     }, []);
 
@@ -38,19 +38,21 @@ export default function Page() {
 
     return (
         <main className="h-screen w-full fixed lg:flex">
-            <div className="flex absolute lg:relative w-full xl:1/5 lg:w-2/5 lg:space-x-4 z-30">
+            <div className="flex absolute lg:relative w-full xl:1/5 lg:w-2/5 lg:space-x-4 z-40">
                 <MessageBox isOpen={isOpen} onClose={() => setIsOpen(false)}
                             messages={messages}
                             isLoading={isLoading}
                             sendMessage={sendMessage}/>
-                <div className="width: 0; height: 0">
-                    <Button
-                        className={`absolute bg-button rounded-full m-4 ${(isOpen && width !== null && width < 1024) ? 'hidden' : ''}`}
-                        onClick={() => router.push('/')}> <ArrowLeft/></Button>
-                </div>
             </div>
             <div className="flex flex-col w-full xl:w-4/5 h-full overflow-y-auto items-center p-6 z-10">
-                <Image src={logo} alt={"afbeelding van vliegtuig logo"} className={"h-32 w-auto mb-6"}/>
+                <div className={`fixed top-4 left-4 sm:ms-4 sm:left-1/3 z-20 space-x-4 ${(isOpen && width !== null && width < 1024) ? 'hidden' : ''}`}>
+                    <Button
+                        className={"bg-button rounded-full"}
+                        onClick={() => router.push('/')}> <ArrowLeft/></Button>
+                    <Button className="bg-button rounded-full" onClick={fetchData} disabled={isLoading}><RefreshCw/></Button>
+                    <LocaleSwitcher locale={locale}/>
+                </div>
+                <Image src={logo} alt={"afbeelding van vliegtuig logo"} className={"h-32 w-auto my-6"}/>
                 <FlightCards flights={flights} isLoading={isLoading} isError={isError}/>
             </div>
             {!isOpen &&

@@ -2,10 +2,11 @@ import {ArrowLeft} from "lucide-react";
 import {Button} from "@/components/ui/button";
 import React from "react";
 import {useTranslations} from "next-intl";
-import {Link} from "@/i18n.config";
+import {Link, Locale} from "@/i18n.config";
 import {unstable_setRequestLocale} from "next-intl/server";
+import LocaleSwitcher from "@/app/domain/LocaleSwitcher";
 
-export default function Page({params: {locale},}: Readonly<{ params: { locale: string } }>) {
+export default function Page({params: {locale},}: Readonly<{ params: { locale: Locale } }>) {
     unstable_setRequestLocale(locale);
     const t = useTranslations("PrivacyPolicy");
 
@@ -16,6 +17,7 @@ export default function Page({params: {locale},}: Readonly<{ params: { locale: s
                     <ArrowLeft/>
                 </Button>
             </Link>
+            <LocaleSwitcher locale={locale}/>
             <div className={"container md:w-4/6 mb-12"}>
                 <h1 className="text-4xl font-bold mb-4">{t("Title")}</h1>
                 <p className="text-gray-600 mb-6">{t("LastUpdated", {date: new Date("2024-05-22")})}</p>

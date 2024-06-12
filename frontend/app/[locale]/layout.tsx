@@ -4,7 +4,6 @@ import "../globals.css";
 import Providers from "@/app/providers";
 import {getMessages, unstable_setRequestLocale} from "next-intl/server";
 import {NextIntlClientProvider} from "next-intl";
-import LocaleSwitcher from "@/app/domain/LocaleSwitcher";
 import {Locale, locales} from "@/i18n.config";
 
 
@@ -38,7 +37,6 @@ export default async function RootLayout({
             className={`${inter.className} ${jua.variable} h-screen bg-gradient-to-br from-background to-background-gradient`}>
         <NextIntlClientProvider messages={messages}>
             <Providers>
-                <LocaleSwitcher locale={locale}/>
                 {children}
             </Providers>
         </NextIntlClientProvider>
