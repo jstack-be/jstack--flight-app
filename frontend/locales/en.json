@@ -71,5 +71,10 @@
     "Details": "Details",
     "duration": "{hours, plural, =0 {} one {#h} other {#h}} {minutes, plural, =0 {} one {#min} other {#min}}",
     "stops": "{stops, plural, =0 {Direct} one {# stop} other {# stops}}"
+  },
+  "RefreshDialog": {
+    "Title": "Refresh search results",
+    "Description": "Would you like to refresh the search results to see the latest flights?",
+    "RefreshButton": "Refresh"
   }
 }

@@ -13,6 +13,7 @@ import useFlights from "@/app/lib/client/useFlights";
 import {useTranslations} from "next-intl";
 import {Locale, useRouter} from "@/i18n.config";
 import LocaleSwitcher from "@/app/domain/LocaleSwitcher";
+import {RefreshDialog} from "@/app/domain/dashboard/flights/refreshDialog";
 
 export default function Page({params: {locale},}: Readonly<{ params: { locale: Locale }; }>) {
     const {width, height} = useWindowSize();
@@ -45,11 +46,14 @@ export default function Page({params: {locale},}: Readonly<{ params: { locale: L
                             sendMessage={sendMessage}/>
             </div>
             <div className="flex flex-col w-full xl:w-4/5 h-full overflow-y-auto items-center p-6 z-10">
-                <div className={`fixed top-4 left-4 sm:ms-4 sm:left-1/3 z-20 space-x-4 ${(isOpen && width !== null && width < 1024) ? 'hidden' : ''}`}>
+                <RefreshDialog flights={flights} fetchData={fetchData}/>
+                <div
+                    className={`fixed top-4 left-4 sm:ms-4 sm:left-1/3 z-20 space-x-4 ${(isOpen && width !== null && width < 1024) ? 'hidden' : ''}`}>
                     <Button
                         className={"bg-button rounded-full"}
                         onClick={() => router.push('/')}> <ArrowLeft/></Button>
-                    <Button className="bg-button rounded-full" onClick={fetchData} disabled={isLoading}><RefreshCw/></Button>
+                    <Button className="bg-button rounded-full" onClick={fetchData}
+                            disabled={isLoading}><RefreshCw/></Button>
                     <LocaleSwitcher locale={locale}/>
                 </div>
                 <Image src={logo} alt={"afbeelding van vliegtuig logo"} className={"h-32 w-auto my-6"}/>
