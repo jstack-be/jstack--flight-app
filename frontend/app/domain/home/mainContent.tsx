@@ -3,14 +3,16 @@ import React from "react";
 
 import {Textarea} from "@/components/ui/textarea";
 import {Button} from "@/components/ui/button"
-import {useRouter} from "next/navigation";
 import useFlights from "@/app/lib/client/useFlights";
 import {ArrowRight} from "lucide-react";
 import Image from "next/image";
 import logo from "@/public/logo-big.svg";
+import {useTranslations} from "next-intl";
+import {useRouter} from "@/i18n.config";
 
 export default function MainContent() {
     const router = useRouter()
+    const t = useTranslations("MainContent");
     const {sendMessage, refreshData, isLoading, messages} = useFlights()
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -35,12 +37,9 @@ export default function MainContent() {
                     className="h-48 w-full bg-white placeholder:text-textarea-placeholder md:text-lg resize-none rounded-lg flex-grow"
                     id="message"
                     name="message"
-                    placeholder={"Simply type what you are looking for in this text field, " +
-                        "provide as much detail as possible to get the best result. " +
-                        "Here is an example: Show me the routes from London to Paris " +
-                        `on ${new Date().toISOString().split('T')[0]}`+
-                        " for 2 adults and 1 child returning between the 20th and 25th of December 2024."}
+                    placeholder={t("PlaceholderText")}
                     required/>
+
                 {isLoading ?
                     <div
                         className={"absolute bottom-0 w-full h-full rounded-lg bg-white bg-opacity-75 flex justify-center items-center flex-grow"}>
@@ -50,7 +49,7 @@ export default function MainContent() {
                     <div className="absolute bottom-0 right-3 p-2 focus:border-ring text-secondary">
                         <Button type="submit"
                                 className="bg-secondary-background text-primary hover:bg-secondary-background-hover hover:text-secondary-text">
-                            Send <ArrowRight/>
+                            {t("SendButton")} <ArrowRight/>
                         </Button>
                     </div>
                 }
@@ -63,7 +62,7 @@ export default function MainContent() {
                 hover:bg-secondary-background-hover
                 text-secondary-text"
                         onClick={continueConversation}>
-                    Continue with your previous search session
+                    {t("ContinueButton")}
                 </Button>
             </>}
         </div>

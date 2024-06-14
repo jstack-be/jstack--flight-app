@@ -1,9 +1,8 @@
-import { StaticImageData } from 'next/image';
-
-import Image from "next/image";
+import Image, {StaticImageData} from 'next/image';
 import logo from "@/public/logo-big.svg";
 import howto from "@/public/HowTo.jpg";
 import beach from "@/public/Beach.jpg";
+import {useTranslations} from "next-intl";
 
 interface ContentBlockProps {
     titel: string;
@@ -15,14 +14,10 @@ interface ContentBlockProps {
 
 function ContentBlock({titel, children, className, align, imgfor}: ContentBlockProps) {
     return (
-
-
         <div className={`flex flex-col lg:flex-row justify-around items-center ${className}`}>
-
             {align === "left" &&
                 showImage(imgfor)
             }
-
             <div className="flex flex-col lg:w-3/6 p-6">
                 <h2 className="text-5xl md:text-7xl text-primary font-sans">
                     {titel}
@@ -38,7 +33,7 @@ function ContentBlock({titel, children, className, align, imgfor}: ContentBlockP
     );
 }
 
-function showImage(imgfor : StaticImageData | undefined){
+function showImage(imgfor: StaticImageData | undefined) {
     if (imgfor) {
         return <Image src={imgfor} alt={"image loosely corresponding with the text"}
                       className="max-h-[40vh] md:max-h-[50vh] max-w-[80vh] mb-14 hidden lg:block drop-shadow-2xl object-cover rounded-3xl"/>;
@@ -48,17 +43,14 @@ function showImage(imgfor : StaticImageData | undefined){
 }
 
 export function AboutPlanely() {
+    const t = useTranslations("About");
     return (
-        <ContentBlock titel={"About Planely"} className={"h-full text-lg"} align={"left"}>
-            <p className="text-background-dark pb-3">
-                Consider Planely to be the friend that always finds the best flight.
-                Not only do we tend to find the best flights based on your date and location,
-                we also allow to specify exactly what you want.
+        <ContentBlock titel={t("Title")} className={"h-full text-lg text-background-dark"} align={"left"}>
+            <p className="pb-3">
+                {t("Description")}
             </p>
-            <p className="text-background-dark">
-                Maybe you want to travel to London,
-                but if Paris is a lot cheaper, that would have the preference?
-                Don’t worry, simply state your specific needs and we will take care of it!
+            <p>
+                {t("Example")}
             </p>
         </ContentBlock>
     );
@@ -66,52 +58,35 @@ export function AboutPlanely() {
 
 
 export function HowToUse() {
+    const t = useTranslations("Usage");
+
     return (
-        <ContentBlock titel={"How to use Planely"}
-                      className={"h-full"}
-                      align={"right"}
-                      imgfor={howto}>
+        <ContentBlock titel={t("Title")} className={"h-full"} align={"right"} imgfor={howto}>
             <p className="font-bold leading-relaxed text-xl">
-                Speak planely, travel planely!
+                {t("Subtitle")}
             </p>
 
             <ol className="my-3 text-lg space-y-1 list-decimal list-inside">
-                <li>State the obvious. <span className="font-bold">From</span> where to where do you want to
-                    go?
-                </li>
-                <li>What’s the<span className="font-bold"> depart</span> and <span
-                    className="font-bold">return </span>
-                    date (if any).
-                </li>
-                <li>
-                    State <span className="font-bold">whatever you find important</span>.
-                    How many people are you flying with? What luggage are you bringing with you?
-                    Are you flexible with the dates if this would mean that you can save money? Etc.
-                </li>
+                <li>{t("Step1")}</li>
+                <li>{t("Step2")}</li>
+                <li>{t("Step3")}</li>
             </ol>
         </ContentBlock>
     );
 }
 
 export function Examples() {
+    const t = useTranslations("Examples");
+
     return (
-        <ContentBlock titel={"Examples"} className={"mt-10"} align={"left"} imgfor={beach}>
+        <ContentBlock titel={t("Title")} className={"mt-10"} align={"left"} imgfor={beach}>
             <p className="text-background-dark pb-3 font-bold text-xl">
-                Here are some examples of what you could ask:
+                {t("Description")}
             </p>
             <ol className="text-background-dark leading-relaxed text-lg space-y-1 list-decimal list-inside">
-                <li>
-                    Show me the routes from London to Paris on the 12th of December 2024 for 2 adults and 1
-                    child returning between the 20th and 25th of December 2024.
-                </li>
-                <li>
-                    I want to fly from Amsterdam to New York on the 1st of January 2025 for 1 adult and 1
-                    child. I want to return on the 10th of January 2025. I want to bring 2 suitcases with me.
-                </li>
-                <li>
-                    I want to fly from London to Paris on the 12th of December 2024 for 2 adults and 1 child.
-                    I want to return on the 25th of December 2024. I want to bring 1 suitcase with me.
-                </li>
+                <li>{t("Example1")}</li>
+                <li>{t("Example2")}</li>
+                <li>{t("Example3")}</li>
             </ol>
         </ContentBlock>
     )
