@@ -16,47 +16,49 @@ export default function useFlights() {
     });
 
 
-    async function sendMessage(content: string, restart = false) {
+    async function restartConversation(content: string) {
         if (!content.trim() || messages === undefined) return;
-        let messageHistory: ChatCompletionMessageParam[]
-        if (restart) {
-            const userLocation = await getUserLocation();
-            messageHistory = [
-                {
-                    role: 'system',
-                    content: `Use this data if not provided: current city to depart from is ${userLocation.city} in ${userLocation.country_name},
+        const userLocation = await getUserLocation();
+        const messageHistory: ChatCompletionMessageParam[] = [
+            {
+                role: 'system',
+                content: `Use this data if not provided: current city to depart from is ${userLocation.city} in ${userLocation.country_name},
                     used currency is ${userLocation.currency.code} and languages are ${locale}`
-                },
-                {role: 'user', content}
-            ];
-            setFlights([]);
-        } else {
-            messageHistory = [...messages, {role: 'user', content}];
-        }
+            },
+            {role: 'user', content}
+        ];
+        setFlights([]);
         saveMessages([...messageHistory])
-        mutation.mutate(messageHistory,{
+    }
+
+    function addMessage(content: string, role: ChatCompletionMessageParam['role'] = "user") {
+        //todo validate role
+        if (messages.length === 0 || messages[messages.length - 1].role !== 'assistant') {
+            saveMessages([...messages, {role, content} as ChatCompletionMessageParam]);
+        }
+    }
+
+    function fetchData() {
+        if (!messages?.length) return;
+        mutation.mutate(messages, {
             onSuccess: (data) => {
                 if (data.error) {
-                    saveMessages([...messageHistory, {role: 'assistant', content: data.error}])
+                    addMessage(data.error, "assistant")
                     return;
                 } else {
                     setFlights(data.flights);
-                    saveMessages([...messageHistory, {role: 'assistant', content: data.message}])
+                    addMessage(data.message, "assistant")
                 }
             },
         });
-
-    }
-
-    function refreshData() {
-        mutation.mutate(messages);
     }
 
     return {
         messages,
         flights,
-        sendMessage,
-        refreshData,
+        restartConversation,
+        addMessage,
+        fetchData,
         isLoading: mutation.isPending,
         isError: mutation.isError,
         isSuccess: mutation.isSuccess,

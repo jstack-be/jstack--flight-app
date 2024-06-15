@@ -13,7 +13,7 @@ interface MessageBoxProps {
     isOpen: boolean,
     messages: ChatCompletionMessageParam[],
     isLoading: boolean,
-    sendMessage: (content: string, restart?: boolean) => Promise<void>
+    sendMessage: (content: string) => Promise<void>
 }
 
 /**
@@ -44,12 +44,11 @@ export function MessageBox({onClose, isOpen, messages, isLoading, sendMessage}: 
     if (!isOpen) return;
 
     return (
-        <div className="bg-white h-screen w-full overflow-y-auto flex flex-col">
+        <div className="bg-white h-screen w-full overflow-y-auto flex flex-col z-40">
             <div className="flex justify-between lg:hidden m-4 mb-1">
                 <h2 className="text-2xl">{t("Title")}</h2>
                 <Button onClick={onClose}>X</Button>
             </div>
-            {/* h-[60dvh] */}
             <div className="overflow-y-auto h-[70dvh] md:h-4/6 lg:h-[75dvh] p-2 flex flex-col">
                 {messages.filter(message => message.role !== 'system').map((message: ChatCompletionMessageParam, index: number) =>
                     <div key={index}

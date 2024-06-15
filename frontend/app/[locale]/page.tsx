@@ -6,8 +6,10 @@ import ScrollToSection from "@/app/domain/home/sectionScroll";
 import {useRef} from "react";
 import {Footer} from "@/app/domain/home/footer";
 import {AboutPlanely, Examples, HowToUse} from "@/app/domain/home/infoPages";
+import LocaleSwitcher from "@/app/domain/LocaleSwitcher";
+import {Locale} from "@/i18n.config";
 
-export default function Home() {
+export default function Home({params: {locale},}: Readonly<{ params: { locale: Locale }; }>) {
     const home = useRef<HTMLDivElement | null>(null);
     const about = useRef<HTMLDivElement | null>(null);
     const usage = useRef<HTMLDivElement | null>(null);
@@ -15,6 +17,7 @@ export default function Home() {
 
     return (
         <main className={styles.homeContainer}>
+            <LocaleSwitcher locale={locale}/>
             <section className="h-screen" ref={home}>
                 <ScrollToSection goToSectionDownRef={about}>
                     <ClientOnly>
