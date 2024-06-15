@@ -18,7 +18,7 @@ export default function Page({params: {locale},}: Readonly<{ params: { locale: s
             </Link>
             <div className={"container md:w-4/6 mb-12 space-y-4"}>
                 <h1 className="text-4xl font-bold mb-4">{t("Title")}</h1>
-                <p className="text-gray-600 mb-6">{t("LastUpdated")}</p>
+                <p className="italic mb-6">{t("LastUpdated")}</p>
 
                 <p>{t("Intro")}</p>
 
