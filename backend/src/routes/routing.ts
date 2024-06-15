@@ -7,5 +7,6 @@ import {queryFlights} from "../domain/flights/flight.controller";
  * @param {Express} app - The Express application.
  */
 export function mountHandlers(app: Express): void {
+
     app.post('/api/flights', queryFlights);
 }

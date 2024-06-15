@@ -19,7 +19,7 @@ export default function ScrollToSection({ children, goToSectionUpRef, goToSectio
 
             {goToSectionUpRef && (
                 <button
-                    className={`${styles.upArrow} m-4 text-primary`}
+                    className={`hidden sm:block absolute top-0 left-0 right-0 mx-auto w-10 h-10 z-10 m-4 text-primary`}
                     onClick={() => scrollTo(goToSectionUpRef)}
                 >
                     <ChevronUp className="w-30"/>
@@ -28,7 +28,7 @@ export default function ScrollToSection({ children, goToSectionUpRef, goToSectio
 
             {goToSectionDownRef && (
                 <button
-                    className={`${styles.downArrow} m-4 text-primary`}
+                    className={`hidden sm:block absolute bottom-0 left-0 right-0 mx-auto w-10 h-10 z-10 m-4 text-primary`}
                     onClick={() => scrollTo(goToSectionDownRef)}
                 >
                     <ChevronDown className="w-30"/>

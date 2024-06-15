@@ -5,6 +5,15 @@ import {FlightSearchParameters} from "../messages/message.types";
 import {formatFlights} from "./flight.formater";
 import {ChatCompletionMessageParam} from "openai/resources";
 import openai from "../../openai";
+import winston from "winston";
+
+const logger = winston.createLogger({
+    level: 'info',
+    format: winston.format.json(),
+    transports: [
+        new winston.transports.Console(),
+    ]
+});
 
 /**
  * Fetches travel data from the flight search API.
@@ -15,6 +24,7 @@ import openai from "../../openai";
  */
 export async function getFlights(requestParameters: FlightSearchParameters): Promise<FlightsResponse[]> {
     requestParameters.limit = 20;
+    logger.info('Fetching flights');
 
     const config = {
         headers: {
@@ -24,6 +34,7 @@ export async function getFlights(requestParameters: FlightSearchParameters): Pro
     }
 
     const response = await axios.get(environment.flightSearchUrl, config)
+    logger.info('received response from the flight search API');
     return formatFlights(response.data.data);
 }
 

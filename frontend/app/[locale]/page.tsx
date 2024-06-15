@@ -1,13 +1,15 @@
 "use client"
 import MainContent from "@/app/domain/home/mainContent";
 import {ClientOnly} from "@/app/client.only";
-import styles from "./domain/home/home.module.css";
+import styles from "../domain/home/home.module.css";
 import ScrollToSection from "@/app/domain/home/sectionScroll";
 import {useRef} from "react";
 import {Footer} from "@/app/domain/home/footer";
 import {AboutPlanely, Examples, HowToUse} from "@/app/domain/home/infoPages";
+import LocaleSwitcher from "@/app/domain/LocaleSwitcher";
+import {Locale} from "@/i18n.config";
 
-export default function Home() {
+export default function Home({params: {locale},}: Readonly<{ params: { locale: Locale }; }>) {
     const home = useRef<HTMLDivElement | null>(null);
     const about = useRef<HTMLDivElement | null>(null);
     const usage = useRef<HTMLDivElement | null>(null);
@@ -15,6 +17,7 @@ export default function Home() {
 
     return (
         <main className={styles.homeContainer}>
+            <LocaleSwitcher locale={locale}/>
             <section className="h-screen" ref={home}>
                 <ScrollToSection goToSectionDownRef={about}>
                     <ClientOnly>
@@ -35,7 +38,9 @@ export default function Home() {
             <div ref={example}>
                 <ScrollToSection goToSectionUpRef={usage}>
                     <div className="flex flex-col justify-between h-full">
-                        <Examples/>
+                        <div className="flex-grow content-center">
+                            <Examples/>
+                        </div>
                         <Footer/>
                     </div>
                 </ScrollToSection>

@@ -49,7 +49,6 @@ const config = {
                         gradient: "#EE8526",
                         hover: "#FFD8B1"
                     },
-                    foreground: "hsl(var(--secondary-foreground))",
                 },
                 flightcard: {
                     grey: "#B1B1B1",
@@ -110,6 +109,11 @@ const config = {
                 "accordion-down": "accordion-down 0.2s ease-out",
                 "accordion-up": "accordion-up 0.2s ease-out",
             },
+        },
+    },
+    variants: {
+        extend: {
+            backgroundColor: ['hover', 'focus'],
         },
     },
     plugins: [require("tailwindcss-animate")],
