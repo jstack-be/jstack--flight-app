@@ -24,6 +24,8 @@ const limiter = rateLimit({
 app.use(limiter);
 app.use(helmet())
 app.use(cors());
+
+console.info('Mounting handlers')
 mountHandlers(app)
 
 app.listen(port, () => {
