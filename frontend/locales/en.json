@@ -56,6 +56,56 @@
     "UpdatePolicy": "We may update our Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page. Changes are effective when they are posted on this page.",
     "ThankYou": "Thank you for using Planely. We value your privacy and are committed to protecting your personal information."
   },
+  "TermsAndConditions": {
+    "Title": "Terms and Conditions",
+    "LastUpdated": "Last Updated: 07/06/2024",
+    "Intro": "Welcome to Planenly, a travel search engine application that uses OpenAI technology to transform user messages into flight searches. By accessing or using our service, you agree to comply with and be bound by the following terms and conditions. Please review them carefully.",
+    "AcceptanceOfTerms": {
+      "Title": "1. Acceptance of Terms",
+      "Content": "By using Planenly, you accept and agree to these Terms and Conditions, as well as our Privacy Policy, which is incorporated herein by reference. If you do not agree to these terms, please do not use our services."
+    },
+    "DescriptionOfService": {
+      "Title": "2. Description of Service",
+      "Content": "Planenly is a travel search engine that leverages OpenAI technology to interpret user messages and provide relevant flight search results. Our service aims to simplify the process of finding flights by understanding natural language queries."
+    },
+    "UserResponsibilities": {
+      "Title": "3. User Responsibilities",
+      "ProhibitedActivities": "You agree not to misuse our service, including but not limited to engaging in fraudulent activities, sending spam, or attempting to disrupt our service."
+    },
+    "UseOfOpenAITechnology": {
+      "Title": "4. Use of OpenAI Technology",
+      "DataProcessing": "Your messages and queries will be processed by OpenAI's technology to generate flight search results.",
+      "Accuracy": "While we strive to provide accurate and relevant results, we cannot guarantee the accuracy of the information provided by OpenAI."
+    },
+    "PrivacyPolicy": {
+      "Title": "5. Privacy Policy",
+      "Content": "Your privacy is important to us. Please review our Privacy Policy to understand how we collect, use, and protect your information."
+    },
+    "IntellectualProperty": {
+      "Title": "6. Intellectual Property",
+      "Content": "All content, trademarks, and data on Planenly, including but not limited to text, graphics, logos, and software, are the property of Planenly or its licensors and are protected by applicable intellectual property laws."
+    },
+    "LimitationOfLiability": {
+      "Title": "7. Limitation of Liability",
+      "ServiceAvailability": "Planenly does not guarantee that our service will be available at all times or free from errors.",
+      "UseOfInformation": "Planenly is not responsible for any decisions you make based on the information provided through our service.",
+      "ThirdPartyServices": "Our service may include links to third-party websites or services. We are not responsible for the content or practices of these third parties."
+    },
+    "Indemnification": {
+      "Title": "8. Indemnification",
+      "Content": "You agree to indemnify, defend, and hold harmless Planenly, its affiliates, and its respective officers, directors, employees, and agents from any claims, liabilities, damages, and expenses arising out of your use of our service or your violation of these terms."
+    },
+    "ChangesToTerms": {
+      "Title": "9. Changes to Terms",
+      "Content": "We reserve the right to modify these Terms and Conditions at any time. Any changes will be effective immediately upon posting on our website. Your continued use of our service after any such changes constitutes your acceptance of the new terms."
+    },
+    "ContactInformation": {
+      "Title": "10. Contact Information",
+      "Content": "If you have any questions or concerns about these Terms and Conditions, please contact us at:",
+      "Email": "Email: support@planenly.com"
+    },
+    "ThankYou": "Thank you for choosing Planenly!"
+  },
   "Dashboard": {
     "HistoryButton": "Show message history"
   },
