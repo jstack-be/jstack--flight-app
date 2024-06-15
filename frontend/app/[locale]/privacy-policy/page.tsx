@@ -20,7 +20,7 @@ export default function Page({params: {locale},}: Readonly<{ params: { locale: L
             <LocaleSwitcher locale={locale}/>
             <div className={"container md:w-4/6 mb-12"}>
                 <h1 className="text-4xl font-bold mb-4">{t("Title")}</h1>
-                <p className="text-gray-600 mb-6">{t("LastUpdated", {date: new Date("2024-05-22")})}</p>
+                <p className="italic mb-6">{t("LastUpdated", {date: new Date("2024-05-22")})}</p>
 
                 <p className="mb-4">
                     {t("Intro")}
