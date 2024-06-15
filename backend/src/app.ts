@@ -1,5 +1,6 @@
 import express from 'express';
 import bodyParser from "body-parser";
+import {mountHandlers} from "./routes/routing";
 
 const app = express();
 
