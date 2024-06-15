@@ -1,6 +1,6 @@
 import {Request, Response} from "express";
 import {generateFlightSearchParameters} from "../messages/message.service";
-import {getFlights} from "./flight.service";
+import {getFlights, validateFlights} from "./flight.service";
 import {ChatCompletionMessageParam} from "openai/resources";
 import InvalidDateError from "../../errors/InvalidDateError";
 import ResponseError from "../../errors/ResponseError";
@@ -35,7 +35,12 @@ export async function queryFlights(req: Request, res: Response): Promise<void> {
         logger.info('message has been provided');
         const {message, searchParameters} = await generateFlightSearchParameters(messages);
         let flights = await getFlights(searchParameters);
+        flights = await validateFlights(
+            messages.filter(message => message.role === "user"),
+            flights
+        );
         logger.info('sending response to the user');
+
         res.status(200).send({message, flights});
     } catch (error) {
         if (error instanceof ResponseError || error instanceof InvalidDateError) {

@@ -49,7 +49,7 @@ describe('POST /api/flights', () => {
 
         expect(res.status).toBe(400);
     });
-
+    //todo fix test
     it('should return 200 and flight data if messages are valid', async () => {
         const messages = `I want to travel from London to Antwerp on ${formatDate(currentDate)}`;
 
