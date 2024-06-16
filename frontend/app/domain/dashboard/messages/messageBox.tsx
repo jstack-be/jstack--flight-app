@@ -13,7 +13,7 @@ interface MessageBoxProps {
     isOpen: boolean,
     messages: ChatCompletionMessageParam[],
     isLoading: boolean,
-    sendMessage: (content: string) => Promise<void>
+    sendMessage: (content: string) => void
 }
 
 /**
@@ -38,7 +38,7 @@ export function MessageBox({onClose, isOpen, messages, isLoading, sendMessage}: 
         const formData = new FormData(event.currentTarget);
         const message = formData.get("message") as string;
         event.currentTarget.reset(); // Clear the form
-        await sendMessage(message);
+        sendMessage(message);
     }
 
     if (!isOpen) return;

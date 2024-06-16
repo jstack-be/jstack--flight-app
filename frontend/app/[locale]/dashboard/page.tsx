@@ -18,9 +18,9 @@ import {RefreshDialog} from "@/app/domain/dashboard/flights/refreshDialog";
 export default function Page({params: {locale},}: Readonly<{ params: { locale: Locale }; }>) {
     const {width, height} = useWindowSize();
     const router = useRouter();
-    const t = useTranslations('Dashboard')
-    const [isOpen, setIsOpen] = useState(true)
-    const {flights, messages, addMessage, isLoading, isError, fetchData} = useFlights();
+    const t = useTranslations('Dashboard');
+    const [isOpen, setIsOpen] = useState(true);
+    const {flights, messages, continueConversation, isLoading, isError, fetchData} = useFlights();
 
     useEffect(() => {
         if (width !== null && height !== null) {
@@ -32,18 +32,13 @@ export default function Page({params: {locale},}: Readonly<{ params: { locale: L
         fetchData();
     }, []);
 
-    const sendMessage = async (content: string) => {
-        addMessage(content, "user");
-        fetchData();
-    }
-
     return (
         <main className="h-screen w-full fixed lg:flex">
             <div className="flex absolute lg:relative w-full xl:1/5 lg:w-2/5 lg:space-x-4 z-40">
                 <MessageBox isOpen={isOpen} onClose={() => setIsOpen(false)}
                             messages={messages}
                             isLoading={isLoading}
-                            sendMessage={sendMessage}/>
+                            sendMessage={continueConversation}/>
             </div>
             <div className="flex flex-col w-full xl:w-4/5 h-full overflow-y-auto items-center p-6 z-10">
                 <RefreshDialog flights={flights} fetchData={fetchData}/>

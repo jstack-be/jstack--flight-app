@@ -15,7 +15,6 @@ export default function useFlights() {
         mutationFn: queryFlights
     });
 
-
     async function restartConversation(content: string) {
         if (!content.trim() || messages === undefined) return;
         const userLocation = await getUserLocation();
@@ -32,10 +31,25 @@ export default function useFlights() {
     }
 
     function addMessage(content: string, role: ChatCompletionMessageParam['role'] = "user") {
-        //todo validate role
-        if (messages.length === 0 || messages[messages.length - 1].role !== 'assistant') {
+        if (messages.length === 0 || messages[messages.length - 1].role !== role) {
             saveMessages([...messages, {role, content} as ChatCompletionMessageParam]);
         }
+    }
+
+    const continueConversation = (content: string) => {
+        const messageHistory = [...messages, {role: "user", content} as ChatCompletionMessageParam];
+        saveMessages(messageHistory);
+        mutation.mutate(messageHistory, {
+            onSuccess: (data) => {
+                if (data.error) {
+                    saveMessages([...messageHistory, {role:"assistant", content:data.error}])
+                    return;
+                } else {
+                    setFlights(data.flights);
+                    saveMessages([...messageHistory, {role:"assistant", content:data.message}])
+                }
+            },
+        });
     }
 
     function fetchData() {
@@ -59,6 +73,7 @@ export default function useFlights() {
         restartConversation,
         addMessage,
         fetchData,
+        continueConversation,
         isLoading: mutation.isPending,
         isError: mutation.isError,
         isSuccess: mutation.isSuccess,
